@@ -21,10 +21,6 @@ m - del
 y - insert
 ```
 
-# How to install
-Installation code is in progress.  
-To run: clone the repo, build with Visual Studio, run the executable.
-
 # Thanks to
 [Thomas Bocek](https://github.com/tbocek): check him out and thanks for the starting point.  
 [Martin Stone, Touch Cursor](https://github.com/martin-stone/touchcursor): wonderful project for cursor movement when coding.
