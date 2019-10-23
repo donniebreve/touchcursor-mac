@@ -1,10 +1,9 @@
-// build
-// gcc -Wall queue.c touchcursor.c test.c  -o ../out/test
-
 #include <stdio.h>
-#include <stdarg.h>
 #include <string.h>
-#include <linux/input.h>
+
+#include "../lib/stdarg.h"
+
+//#include <linux/input.h>
 
 // minunit http://www.jera.com/techinfo/jtns/jtn002.html
 #define mu_assert(message, test) do { if (!(test)) return message; } while (0)

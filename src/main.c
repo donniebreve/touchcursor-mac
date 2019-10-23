@@ -5,8 +5,10 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <errno.h>
-#include <linux/input.h>
-#include <linux/uinput.h>
+
+//#include <linux/input.h>
+//#include <linux/uinput.h>
+
 #include <dirent.h>
 
 #include <pwd.h>
@@ -59,33 +61,33 @@ int main(int argc, char* argv[])
     bindOutput();
 
     // Read events
-    struct input_event inputEvent;
+    //struct input_event inputEvent;
     ssize_t result;
-    while (1)
-    {
-        result = read(input, &inputEvent, sizeof(inputEvent));
-        if (result == (ssize_t) - 1)
-        {
-            if (errno == EINTR) continue;
-        }
-        if (result == (ssize_t)0)
-        {
-            return ENOENT;
-        }
-        if (result != sizeof(inputEvent))
-        {
-            return EIO;
-        }
-        // We only want to manipulate key presses
-        if (inputEvent.type == EV_KEY
-            && !isModifier(inputEvent.code)
-            && (inputEvent.value == 0 || inputEvent.value == 1 || inputEvent.value == 2))
-        {
-            processKey(inputEvent.type, inputEvent.code, inputEvent.value);
-        }
-        else
-        {
-            emit(inputEvent.type, inputEvent.code, inputEvent.value);
-        }
-    }
+//    while (1)
+//    {
+//        result = read(input, &inputEvent, sizeof(inputEvent));
+//        if (result == (ssize_t) - 1)
+//        {
+//            if (errno == EINTR) continue;
+//        }
+//        if (result == (ssize_t)0)
+//        {
+//            return ENOENT;
+//        }
+//        if (result != sizeof(inputEvent))
+//        {
+//            return EIO;
+//        }
+//        // We only want to manipulate key presses
+//        if (inputEvent.type == EV_KEY
+//            && !isModifier(inputEvent.code)
+//            && (inputEvent.value == 0 || inputEvent.value == 1 || inputEvent.value == 2))
+//        {
+//            processKey(inputEvent.type, inputEvent.code, inputEvent.value);
+//        }
+//        else
+//        {
+//            emit(inputEvent.type, inputEvent.code, inputEvent.value);
+//        }
+//    }
 }
