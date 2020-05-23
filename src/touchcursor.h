@@ -1,8 +1,16 @@
-#ifndef touchcursor_header
-#define touchcursor_header
+#ifndef touchcursor_h
+#define touchcursor_h
 
-int isMapped(int code);
-int isModifier(int code);
-void processKey(int code, int type, int value);
+#include <stdio.h>
+
+/**
+ * Processes a key input event. Converts and emits events as necessary.
+ */
+void processKey(int code, int value);
+
+/**
+ * Drops all the currently held keys.
+ */
+void dropKeys(void);
 
 #endif
