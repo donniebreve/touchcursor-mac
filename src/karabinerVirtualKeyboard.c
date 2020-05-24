@@ -3,9 +3,13 @@
 #include <IOKit/hidsystem/IOHIDTypes.h>
 
 #include "hidInformation.h"
+#include "keys.h"
 #include "karabinerVirtualKeyboard.h"
 
+// The io connect reference for the virtual keyboard
 io_connect_t outputConnect;
+// The karabiner keyboard report state
+KarabinerVirtualKeyboardReport karabinerVirtualKeyboardReport;
 
 // Karabiner virtual keyboard HID report descriptor
 const uint8_t karabinerVirtualKeyboardReportDescriptor[] = {
@@ -83,15 +87,17 @@ const uint8_t karabinerVirtualKeyboardReportDescriptor[] = {
 /*
  * Prints the input report information.
  */
+int outputNum = 0;
 void printKarabinerVirtualKeyboardInputReport(KarabinerVirtualKeyboardReport* report)
 {
-    printf("  id:        %i\n",   report->id);
+    printf("%i id:        %i\n", outputNum++, report->id);
     printf("  modifiers: %02x\n", report->modifiers);
     printf("  reserved:  %02x\n", report->reserved);
-    for (int i = 0; i < 32; i++)
+    for (int i = 0; i < 6; i++)
     {
         printf("  keys[%i]:   %i\n", i, report->keys[i]);
     }
+    printf("\n");
 }
 
 /**
@@ -99,6 +105,10 @@ void printKarabinerVirtualKeyboardInputReport(KarabinerVirtualKeyboardReport* re
  */
 IOHIDDeviceRef bindKarabinerVirtualKeyboard(void)
 {
+    // Default values
+    karabinerVirtualKeyboardReport.id = 1;
+    karabinerVirtualKeyboardReport.reserved = 0;
+    for (int i = 0; i < 32; i++) karabinerVirtualKeyboardReport.keys[i] = 0;
     // Find the karabiner root service
     CFMutableDictionaryRef rootServiceMatch = IOServiceNameMatching(karabinerVirtualHIDRootName);
     io_service_t rootService = IOServiceGetMatchingService(kIOMasterPortDefault, rootServiceMatch);
@@ -159,5 +169,97 @@ IOHIDDeviceRef bindKarabinerVirtualKeyboard(void)
     {
         printf("Success\n");
         return outputDevice;
+    }
+}
+
+/*
+report.modifiers.insert(pqrs::karabiner_virtual_hid_device::hid_report::modifier::right_shift);
+void insert(modifier value) {
+        modifiers_ |= static_cast<uint8_t>(value);
+      }
+      
+left_control = 0x1 << 0,
+left_shift = 0x1 << 1,
+left_option = 0x1 << 2,
+left_command = 0x1 << 3,
+right_control = 0x1 << 4,
+right_shift = 0x1 << 5,
+right_option = 0x1 << 6,
+right_command = 0x1 << 7,
+*/
+
+/**
+ * Adds a modifier to the state.
+ */
+void modifierDown(uint8_t code)
+{
+    uint8_t modifier = 0;
+    switch (code)
+    {
+        case KEY_LEFTCTRL: { modifier = 1; break; }
+        case KEY_LEFTSHIFT: { modifier = 2; break; }
+        case KEY_LEFTALT: { modifier = 4; break; }
+        case KEY_LEFTMETA: { modifier = 8; break; }
+        case KEY_RIGHTCTRL: { modifier = 16; break; }
+        case KEY_RIGHTSHIFT: { modifier = 32; break; }
+        case KEY_RIGHTALT: { modifier = 64; break; }
+        case KEY_RIGHTMETA: { modifier = 128; break; }
+    }
+    karabinerVirtualKeyboardReport.modifiers |= modifier;
+}
+
+/**
+ * Removes a modifier from the state.
+ */
+void modifierUp(uint8_t code)
+{
+    uint8_t modifier = 0;
+    switch (code)
+    {
+        case KEY_LEFTCTRL: { modifier = 1; break; }
+        case KEY_LEFTSHIFT: { modifier = 2; break; }
+        case KEY_LEFTALT: { modifier = 4; break; }
+        case KEY_LEFTMETA: { modifier = 8; break; }
+        case KEY_RIGHTCTRL: { modifier = 16; break; }
+        case KEY_RIGHTSHIFT: { modifier = 32; break; }
+        case KEY_RIGHTALT: { modifier = 64; break; }
+        case KEY_RIGHTMETA: { modifier = 128; break; }
+    }
+    karabinerVirtualKeyboardReport.modifiers &= ~(modifier);
+}
+
+/**
+ * Adds a key to the state.
+ */
+void keyDown(uint8_t code)
+{
+    bool indexSet = false;
+    uint8_t keyIndex = 0;
+    for (int i = 0; i < 32; i++)
+    {
+        if (!indexSet && karabinerVirtualKeyboardReport.keys[i] == 0)
+        {
+            keyIndex = i;
+            indexSet = true;
+        }
+        if (karabinerVirtualKeyboardReport.keys[i] == code)
+        {
+            return;
+        }
+    }
+    karabinerVirtualKeyboardReport.keys[keyIndex] = code;
+}
+
+/**
+ * Removes a key from the state.
+ */
+void keyUp(uint8_t code)
+{
+    for (int i = 0; i < 32; i++)
+    {
+        if (karabinerVirtualKeyboardReport.keys[i] == code)
+        {
+            karabinerVirtualKeyboardReport.keys[i] = 0;
+        }
     }
 }

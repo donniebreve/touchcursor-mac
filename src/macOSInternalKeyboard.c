@@ -167,7 +167,7 @@ IOHIDDeviceRef bindMacOSInternalKeyboard(IOHIDManagerRef hidManager)
                 IOHIDDeviceRef inputDevice = devices[i];
                 printDeviceInformation(inputDevice, false, false, false);
                 
-                // Filter the input values we want to see
+                // To do: Filter the input values we want to see
                 //IOHIDDeviceSetInputValueMatching(, )
                 
                 // Open the device and capture all input
@@ -195,11 +195,9 @@ void printMacOSInternalKeyboardInputReport(MacOSInternalKeyboardReport* report)
     printf("  id:        %i\n",   report->id);
     printf("  modifiers: %02x\n", report->modifiers);
     printf("  reserved:  %02x\n", report->reserved);
-    printf("  keys[0]:   %i\n",   report->keys[0]);
-    printf("  keys[1]:   %i\n",   report->keys[1]);
-    printf("  keys[2]:   %i\n",   report->keys[2]);
-    printf("  keys[3]:   %i\n",   report->keys[3]);
-    printf("  keys[4]:   %i\n",   report->keys[4]);
-    printf("  keys[5]:   %i\n",   report->keys[5]);
+    for (int i = 0; i < 1; i++)
+    {
+        printf("  keys[%i]:   %i\n", i, report->keys[i]);
+    }
     printf("  media:     %02x\n", report->media);
 }

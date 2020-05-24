@@ -13,7 +13,7 @@
 #include "touchcursor.h"
 
 // The state machine states
-static enum states
+enum states
 {
     idle,
     hyper,
@@ -62,8 +62,9 @@ static int convert(int code)
 /**
  * Processes a key input event. Converts and emits events as necessary.
  */
-void processKey(int code, int value)
+void processKey(int type, int code, int value)
 {
+    // printf("processKey: code=%i value=%i state=%i\n", code, value, state);
     switch (state)
     {
         case idle: // 0
@@ -77,12 +78,12 @@ void processKey(int code, int value)
                 }
                 else
                 {
-                    emit(code, value);
+                    emit(0, code, value);
                 }
             }
             else
             {
-                emit(code, value);
+                emit(0, code, value);
             }
             break;
 
@@ -94,9 +95,9 @@ void processKey(int code, int value)
                     state = idle;
                     if (!hyperEmitted)
                     {
-                        emit(hyperKey, 1);
+                        emit(0, hyperKey, 1);
                     }
-                    emit(hyperKey, 0);
+                    emit(0, hyperKey, 0);
                 }
             }
             else if (isMapped(code))
@@ -108,23 +109,23 @@ void processKey(int code, int value)
                 }
                 else
                 {
-                    emit(code, value);
+                    emit(0, code, value);
                 }
             }
             else
             {
-                if (isDown(value))
+                if (!isModifier(code) && isDown(value))
                 {
                     if (!hyperEmitted)
                     {
-                        emit(hyperKey, 1);
+                        emit(0, hyperKey, 1);
                         hyperEmitted = 1;
                     }
-                    emit(code, value);
+                    emit(0, code, value);
                 }
                 else
                 {
-                    emit(code, value);
+                    emit(0, code, value);
                 }
             }
             break;
@@ -137,14 +138,14 @@ void processKey(int code, int value)
                     state = idle;
                     if (!hyperEmitted)
                     {
-                        emit(hyperKey, 1);
+                        emit(0, hyperKey, 1);
                     }
                     int length = lengthOfQueue();
                     for (int i = 0; i < length; i++)
                     {
-                        emit(dequeue(), 1);
+                        emit(0, dequeue(), 1);
                     }
-                    emit(hyperKey, 0);
+                    emit(0, hyperKey, 0);
                 }
             }
             else if (isMapped(code))
@@ -154,25 +155,25 @@ void processKey(int code, int value)
                 {
                     if (lengthOfQueue() != 0)
                     {
-                        emit(convert(peek()), 1);
+                        emit(0, convert(peek()), 1);
                     }
                     enqueue(code);
-                    emit(convert(code), value);
+                    emit(0, convert(code), value);
                 }
                 else
                 {
                     int length = lengthOfQueue();
                     for (int i = 0; i < length; i++)
                     {
-                        emit(convert(dequeue()), 1);
+                        emit(0, convert(dequeue()), 1);
                     }
-                    emit(convert(code), value);
+                    emit(0, convert(code), value);
                 }
             }
             else
             {
                 state = map;
-                emit(code, value);
+                emit(0, code, value);
             }
             break;
 
@@ -185,7 +186,7 @@ void processKey(int code, int value)
                     int length = lengthOfQueue();
                     for (int i = 0; i < length; i++)
                     {
-                        emit(convert(dequeue()), 0);
+                        emit(0, convert(dequeue()), 0);
                     }
                 }
             }
@@ -194,31 +195,17 @@ void processKey(int code, int value)
                 if (isDown(value))
                 {
                     enqueue(code);
-                    emit(convert(code), value);
+                    emit(0, convert(code), value);
                 }
                 else
                 {
-                    emit(convert(code), value);
+                    emit(0, convert(code), value);
                 }
             }
             else
             {
-                emit(code, value);
+                emit(0, code, value);
             }
             break;
-    }
-}
-
-/**
- * Drops all the currently held keys.
- */
-void dropKeys()
-{
-    int length = lengthOfQueue();
-    for (int i = 0; i < length; i++)
-    {
-        int code = dequeue();
-        emit(code, 0);
-        emit(convert(code), 0);
     }
 }

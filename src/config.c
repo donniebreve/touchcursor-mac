@@ -210,10 +210,10 @@ void readConfiguration()
         {
             case device:
             {
-                if (eventPath[0] == '\0')
-                {
-                    findDeviceEvent(line);
-                }
+//                if (eventPath[0] == '\0')
+//                {
+//                    findDeviceEvent(line);
+//                }
                 continue;
             }
 

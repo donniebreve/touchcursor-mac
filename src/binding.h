@@ -19,6 +19,6 @@ int bindOutput(void);
 /**
  * Emits a key event.
  */
-void emit(int code, int value);
+void emit(int type, int code, int value);
 
 #endif

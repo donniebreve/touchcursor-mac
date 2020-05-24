@@ -6,7 +6,7 @@
 /**
  * Processes a key input event. Converts and emits events as necessary.
  */
-void processKey(int code, int value);
+void processKey(int type, int code, int value);
 
 /**
  * Drops all the currently held keys.
