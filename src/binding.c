@@ -20,6 +20,19 @@ static IOHIDManagerRef hidManager;
 static IOHIDDeviceRef inputDevice;
 static IOHIDDeviceRef outputDevice;
 
+KarabinerVirtualKeyboardReport kReport;
+
+void emit_report(KarabinerVirtualKeyboardReport* report)
+{
+    printKarabinerVirtualKeyboardInputReport(report);
+    uint32_t post_keyboard_input_report_method = 3;
+    IOReturn virtualKeyboardResult = IOConnectCallStructMethod(outputConnect, post_keyboard_input_report_method, report, sizeof(karabinerVirtualKeyboardReport), NULL, 0);
+    if (virtualKeyboardResult != kIOReturnSuccess)
+    {
+        printf("%s\n", getIOReturnString(virtualKeyboardResult));
+    }
+}
+
 /**
  * Emits a key event.
  */
@@ -33,19 +46,13 @@ void emit(int type, int code, int value)
     }
     if (value) keyDown(code);
     else keyUp(code);
-    //printKarabinerVirtualKeyboardInputReport(&karabinerVirtualKeyboardReport);
-    uint32_t post_keyboard_input_report_method = 3;
-    IOReturn virtualKeyboardResult = IOConnectCallStructMethod(outputConnect, post_keyboard_input_report_method, &karabinerVirtualKeyboardReport, sizeof(karabinerVirtualKeyboardReport), NULL, 0);
-    if (virtualKeyboardResult != kIOReturnSuccess)
-    {
-        printf("%s\n", getIOReturnString(virtualKeyboardResult));
-    }
+    emit_report(&karabinerVirtualKeyboardReport);
 }
 
-/*
+/**
  * The input value callback method.
  */
-void macOSKeyboardInputValueCallback(
+void keyboardInputValueCallback(
     void* context,
     IOReturn result,
     void* sender,
@@ -54,33 +61,52 @@ void macOSKeyboardInputValueCallback(
     IOHIDElementRef element = IOHIDValueGetElement(value);
     uint32_t code = IOHIDElementGetUsage(element);
     uint32_t down = (int)IOHIDValueGetIntegerValue(value);
+    
+    printf("received code: %d value: %d\n", code, down);
+    
+    if (code == 3)
+    {
+        emit(0, code, down);
+    }
     if (3 < code && code < 232)
     {
-        /*
-        printf("code: %d down: %d\n", code, down);
-        // Invalid argument
-        IOReturn sendResult = IOHIDDeviceSetValue(outputDevice, element, value);
-        if (sendResult != kIOReturnSuccess)
-        {
-            printf("%s\n", getIOReturnString(sendResult));
-        }
-        // General error
-        karabinerKeyboardReport report;
-        report.id = 1;
-        report.keys[0] = 7;
-        IOReturn sendResult = IOHIDDeviceSetReport(outputDevice, kIOHIDReportTypeInput, 1, (uint8_t*)(&report), sizeof(report));
-        if (sendResult != kIOReturnSuccess)
-        {
-            printf("%s\n", getIOReturnString(sendResult));
-        }
-        */
-        
-        // Process the input
         processKey(0, code, down);
     }
 }
 
 /*
+ * The input report callback method.
+ */
+static void keyboardInputReportCallback(
+    void* context,
+    IOReturn result,
+    void* sender,
+    IOHIDReportType reportType,
+    uint32_t reportID,
+    uint8_t* report,
+    CFIndex reportLength)
+{
+    printf("Received report: %i\n", reportID);
+    printf("Report type: %i\n", reportType);
+    printf("Report length: %ld\n", reportLength);
+    // if (reportID == 1)
+    // {
+    //     MacOSInternalKeyboardReport* macReport = (MacOSInternalKeyboardReport*)report;
+    //     printMacOSInternalKeyboardInputReport(macReport);
+        
+    //     kReport.id = 1;
+    //     kReport.reserved = 0;
+    //     kReport.modifiers = macReport->modifiers;
+    //     for (int i = 0; i < 6; i++)
+    //     {
+    //         kReport.keys[i] = macReport->keys[i];
+    //     }
+        
+    //     emit_report(&kReport);
+    // }
+}
+
+/**
  * Creates the HID manager.
  */
 void createHIDManager()
@@ -97,7 +123,7 @@ void createHIDManager()
     //IOHIDManagerOpen(hidManager, kIOHIDOptionsTypeNone);
 }
 
-/*
+/**
  * Binds the input device.
  */
 int bindInput()
@@ -108,21 +134,21 @@ int bindInput()
         return 0;
     }
     // Register the input value callback (key down/up)
-    IOHIDDeviceRegisterInputValueCallback(
-        inputDevice,
-        macOSKeyboardInputValueCallback,
-        NULL);
-    // Register the input report callback (total key state, not working, might be easier in the long run)
-    //IOHIDDeviceRegisterInputReportCallback(
+    //IOHIDDeviceRegisterInputValueCallback(
     //    inputDevice,
-    //    macOSKeyboardReportBuffer,
-    //    macOSKeyboardMaxInputReportSize,
-    //    macOSKeyboardInputReportCallback,
+    //    keyboardInputValueCallback,
     //    NULL);
+    // Register the input report callback (total key state, not working, might be easier in the long run)
+    IOHIDDeviceRegisterInputReportCallback(
+        inputDevice,
+        macOSKeyboardReportBuffer,
+        65,
+        keyboardInputReportCallback,
+        NULL);
     return 1;
 }
 
-/*
+/**
  * Binds the output device.
  */
 int bindOutput()

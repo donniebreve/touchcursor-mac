@@ -10,8 +10,8 @@
 // The io connect reference for the virtual keyboard
 extern io_connect_t outputConnect;
 
-/*
- * Primary input report definition for the macOS keyboard
+/**
+ * Primary input report definition for the Karabiner keyboard
  */
 typedef struct {
     uint8_t id;
@@ -19,6 +19,22 @@ typedef struct {
     uint8_t reserved;
     uint8_t keys[32];
 } KarabinerVirtualKeyboardReport;
+
+/**
+ * Consumer input report definition for the Karabiner keyboard
+ */
+typedef struct {
+    uint8_t id;
+    uint8_t keys[32];
+} KarabinerVirtualKeyboardConsumerReport;
+
+/*
+ * Primary input report definition for the Karabiner keyboard
+ */
+typedef struct {
+    uint8_t id;
+    uint8_t modifiers;
+} KarabinerVirtualKeyboardLedReport;
 
 // The karabiner keyboard report state
 extern KarabinerVirtualKeyboardReport karabinerVirtualKeyboardReport;

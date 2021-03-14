@@ -17,9 +17,9 @@ int isModifier(int code)
         case KEY_RIGHTALT:
         case KEY_LEFTMETA:
         case KEY_RIGHTMETA:
-        //case KEY_CAPSLOCK:
-        //case KEY_NUMLOCK:
-        //case KEY_SCROLLLOCK:
+        case KEY_CAPSLOCK:
+        case KEY_NUMLOCK:
+        case KEY_SCROLLLOCK:
             return 1;
         default:
             return 0;

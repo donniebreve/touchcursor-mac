@@ -15,6 +15,6 @@ char* getIOReturnString(IOReturn ioReturn);
 /*
  * Prints information about the device.
  */
-void printDeviceInformation(IOHIDDeviceRef device, bool path, bool reportSize, bool reportDescriptor);
+void printDeviceInformation(IOHIDDeviceRef device, bool path, bool reportSize, bool reportDescriptor, bool elements);
 
 #endif
