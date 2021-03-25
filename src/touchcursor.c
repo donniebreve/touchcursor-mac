@@ -12,14 +12,8 @@
 #include "binding.h"
 #include "touchcursor.h"
 
-// The state machine states
-enum states
-{
-    idle,
-    hyper,
-    delay,
-    map
-} state;
+// The state machine state
+enum states state = idle;
 
 // Flag if the hyper key has been emitted
 static int hyperEmitted;
@@ -64,7 +58,7 @@ static int convert(int code)
  */
 void processKey(int type, int code, int value)
 {
-    // printf("processKey: code=%i value=%i state=%i\n", code, value, state);
+    printf("processKey: code=%i value=%i state=%i ... ", code, value, state);
     switch (state)
     {
         case idle: // 0
@@ -208,4 +202,5 @@ void processKey(int type, int code, int value)
             }
             break;
     }
+    printf("processKey: state=%i\n", state);
 }

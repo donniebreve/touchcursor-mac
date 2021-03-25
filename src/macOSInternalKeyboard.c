@@ -30,7 +30,9 @@ IOHIDDeviceRef bindMacOSInternalKeyboard(IOHIDManagerRef hidManager)
                 printDeviceInformation(inputDevice, false, false, false, false);
                 // Open the device and capture all input
                 printf("Capturing the MacOS Internal Keyboard... ");
-                IOReturn result = IOHIDDeviceOpen(devices[i], kIOHIDOptionsTypeNone); //kIOHIDOptionsTypeSeizeDevice);
+                // Use kIOHIDOptionsTypeNone to capture events without interrupting the device
+                // Use kIOHIDOptionsTypeSeizeDevice to capture the device and all inputs
+                IOReturn result = IOHIDDeviceOpen(devices[i], kIOHIDOptionsTypeSeizeDevice);
                 if (result != kIOReturnSuccess)
                 {
                     printf("%s\n", getIOReturnString(result));
