@@ -46,7 +46,6 @@ IOHIDDeviceRef bindMacOSInternalKeyboard(IOHIDManagerRef hidManager)
             }
         }
     }
-    printf("Failed to capture the MacOS Internal Keyboard.\n");
     return NULL;
 }
 

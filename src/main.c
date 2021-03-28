@@ -15,12 +15,12 @@ int main(int argc, char* argv[])
     createHIDManager();
     if (!bindInput())
     {
-        printf("error: could not capture the keyboard device\n");
+        printf("error: Failed to capture the input device. Try allowing input monitoring for this executable in 'Security & Privacy'.\n");
         exit(1);
     }
     if (!bindOutput())
     {
-        printf("error: could not create the virtual keyboard device\n");
+        printf("error: Failed to connect to the output device. Maybe Karabiner Elements is not installed?\n");
         exit(1);
     }
     printf("info: running\n");

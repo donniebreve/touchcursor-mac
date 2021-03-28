@@ -9,8 +9,8 @@
 #include "keys.h"
 #include "karabinerVirtualKeyboard.h"
 
-// The io connect reference for the virtual keyboard
-io_connect_t outputConnect;
+// The io connect reference for the virtual keyboard service
+io_connect_t serviceConnection;
 // The karabiner keyboard report state
 KarabinerVirtualKeyboardReport karabinerVirtualKeyboardReport;
 
@@ -25,12 +25,18 @@ IOHIDDeviceRef bindKarabinerVirtualKeyboard(IOHIDManagerRef hidManager)
     for (int i = 0; i < 32; i++) karabinerVirtualKeyboardReport.keys[i] = 0;
     // Find the karabiner root service
     CFMutableDictionaryRef rootServiceMatch = IOServiceNameMatching(karabinerVirtualHIDRootName);
-    io_service_t rootService = IOServiceGetMatchingService(kIOMasterPortDefault, rootServiceMatch);
-    // Open the service
-    IOReturn serviceOpenResult = IOServiceOpen(rootService, mach_task_self(), kIOHIDServerConnectType, &outputConnect);
-    if (serviceOpenResult != kIOReturnSuccess)
+    io_service_t service = IOServiceGetMatchingService(kIOMasterPortDefault, rootServiceMatch);
+    if (service == 0)
     {
-        printf("%s\n", getIOReturnString(serviceOpenResult));
+        printf("error: pqrs root service not found.\n");
+        return 0;
+    }
+    // Open the service
+    IOReturn result = IOServiceOpen(service, mach_task_self(), kIOHIDServerConnectType, &serviceConnection);
+    if (result != kIOReturnSuccess)
+    {
+        printf("error: serviceOpenResult=%s\n", getIOReturnString(result));
+        return 0;
     }
     // Create the virtual keyboard
     // This is the pqrs::karabiner_virtual_hid_device::properties::keyboard_initialization class, one uint8_t
@@ -38,10 +44,10 @@ IOHIDDeviceRef bindKarabinerVirtualKeyboard(IOHIDManagerRef hidManager)
     // This is the method reference to karabiner_virtual_hid_device::user_client_method::initialize_virtual_hid_keyboard
     // See user_client_method enum in karabiner_virtual_hid_device.hpp
     uint32_t initialize_virtual_hid_keyboard_method = 0;
-    IOReturn virtualKeyboardResult = IOConnectCallStructMethod(outputConnect, initialize_virtual_hid_keyboard_method, &properties, sizeof(properties), NULL, 0);
-    if (virtualKeyboardResult != kIOReturnSuccess)
+    result = IOConnectCallStructMethod(serviceConnection, initialize_virtual_hid_keyboard_method, &properties, sizeof(properties), NULL, 0);
+    if (result != kIOReturnSuccess)
     {
-        printf("%s\n", getIOReturnString(virtualKeyboardResult));
+        printf("error: deviceConnectResult=%s\n", getIOReturnString(result));
     }
     
     // Keyboard reports it is ready even when it is not, sleep a little to give it some time to start
@@ -119,7 +125,6 @@ IOHIDDeviceRef bindKarabinerVirtualKeyboard(IOHIDManagerRef hidManager)
             }
         }
     }
-    printf("Failed to capture the Karabiner Virtual Keyboard.\n");
     return NULL;
 }
 
@@ -128,17 +133,17 @@ IOHIDDeviceRef bindKarabinerVirtualKeyboard(IOHIDManagerRef hidManager)
  */
 void sendKarabinerVirtualKeyboardReport()
 {
-    //printKarabinerVirtualKeyboardInputReport(report);
+    printKarabinerVirtualKeyboardReport(&karabinerVirtualKeyboardReport);
     uint32_t post_keyboard_input_report_method = 3;
-    IOReturn virtualKeyboardResult = IOConnectCallStructMethod(outputConnect, post_keyboard_input_report_method, &karabinerVirtualKeyboardReport, sizeof(karabinerVirtualKeyboardReport), NULL, 0);
+    IOReturn virtualKeyboardResult = IOConnectCallStructMethod(serviceConnection, post_keyboard_input_report_method, &karabinerVirtualKeyboardReport, sizeof(karabinerVirtualKeyboardReport), NULL, 0);
     if (virtualKeyboardResult != kIOReturnSuccess)
     {
         printf("sendReport: result=%s\n", getIOReturnString(virtualKeyboardResult));
     }
 }
 
-/*
- * Prints the input report information.
+/**
+ * Prints the report information.
  */
 static int outputNum = 0;
 void printKarabinerVirtualKeyboardReport(KarabinerVirtualKeyboardReport* report)

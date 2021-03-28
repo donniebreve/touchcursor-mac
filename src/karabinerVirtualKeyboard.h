@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <IOKit/IOKitLib.h>
 
-#define karabinerVirtualHIDRootName "org_pqrs_driver_Karabiner_VirtualHIDDevice_VirtualHIDRoot_v061000"
-#define karabinerVirtualHIDKeyboardName "org_pqrs_driver_Karabiner_VirtualHIDDevice_VirtualHIDKeyboard_v061000"
+#define karabinerVirtualHIDRootName "org_pqrs_Karabiner_DriverKit_VirtualHIDDeviceRoot" //"org_pqrs_driver_Karabiner_VirtualHIDDevice_VirtualHIDRoot_v061000"
+#define karabinerVirtualHIDKeyboardName "org_pqrs_Karabiner_DriverKit_VirtualHIDKeyboard"
 
 #define pqrsVendorID 5824
 #define pqrsProductID 10203
@@ -21,7 +21,7 @@ typedef struct {
 } KarabinerVirtualKeyboardReport;
 
 // The io connect reference for the virtual keyboard
-extern io_connect_t outputConnect;
+extern io_connect_t serviceConnection;
 // The karabiner keyboard report state
 extern KarabinerVirtualKeyboardReport karabinerVirtualKeyboardReport;
 

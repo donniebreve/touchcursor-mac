@@ -36,6 +36,7 @@
 /* Begin PBXFileReference section */
 		F642480B261039C7005D8FE5 /* emit.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = emit.c; sourceTree = "<group>"; };
 		F642480C261039C7005D8FE5 /* emit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = emit.h; sourceTree = "<group>"; };
+		F6492CD726105C7D003F6006 /* touchcursor-mac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "touchcursor-mac.entitlements"; sourceTree = "<group>"; };
 		F665293C235D26B800F63895 /* touchcursor-mac */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "touchcursor-mac"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F67BBEA924719FCE008B4A0A /* binding.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = binding.c; sourceTree = "<group>"; };
 		F67BBEAB2471AFF0008B4A0A /* hidInformation.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = hidInformation.c; sourceTree = "<group>"; };
@@ -73,6 +74,7 @@
 		F6652933235D26B800F63895 = {
 			isa = PBXGroup;
 			children = (
+				F6492CD726105C7D003F6006 /* touchcursor-mac.entitlements */,
 				F6EEF189235D32A4003BBF2C /* lib */,
 				F6EEF175235D2821003BBF2C /* src */,
 				F665293D235D26B800F63895 /* Products */,
@@ -156,7 +158,7 @@
 		F6652934235D26B800F63895 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1140;
+				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = donniebreve;
 				TargetAttributes = {
 					F665293B235D26B800F63895 = {
@@ -230,6 +232,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -288,6 +291,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -317,9 +321,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "touchcursor-mac.entitlements";
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -327,9 +335,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "touchcursor-mac.entitlements";
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
