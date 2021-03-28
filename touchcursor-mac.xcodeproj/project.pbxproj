@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F642480D261039C7005D8FE5 /* emit.c in Sources */ = {isa = PBXBuildFile; fileRef = F642480B261039C7005D8FE5 /* emit.c */; };
 		F67BBEAA24719FCE008B4A0A /* binding.c in Sources */ = {isa = PBXBuildFile; fileRef = F67BBEA924719FCE008B4A0A /* binding.c */; };
 		F67BBEAD2471AFF0008B4A0A /* hidInformation.c in Sources */ = {isa = PBXBuildFile; fileRef = F67BBEAB2471AFF0008B4A0A /* hidInformation.c */; };
 		F67BBEB32479CE2B008B4A0A /* macOSInternalKeyboard.c in Sources */ = {isa = PBXBuildFile; fileRef = F67BBEB22479CE2B008B4A0A /* macOSInternalKeyboard.c */; };
@@ -33,6 +34,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F642480B261039C7005D8FE5 /* emit.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = emit.c; sourceTree = "<group>"; };
+		F642480C261039C7005D8FE5 /* emit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = emit.h; sourceTree = "<group>"; };
 		F665293C235D26B800F63895 /* touchcursor-mac */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "touchcursor-mac"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F67BBEA924719FCE008B4A0A /* binding.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = binding.c; sourceTree = "<group>"; };
 		F67BBEAB2471AFF0008B4A0A /* hidInformation.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = hidInformation.c; sourceTree = "<group>"; };
@@ -88,6 +91,8 @@
 		F6EEF175235D2821003BBF2C /* src */ = {
 			isa = PBXGroup;
 			children = (
+				F642480B261039C7005D8FE5 /* emit.c */,
+				F642480C261039C7005D8FE5 /* emit.h */,
 				F67BBEA924719FCE008B4A0A /* binding.c */,
 				F67BBEB92479DD26008B4A0A /* binding.h */,
 				F67BBEBB2479DF81008B4A0A /* config.c */,
@@ -187,6 +192,7 @@
 				F67BBEBC2479DF81008B4A0A /* config.c in Sources */,
 				F67BBEC22479E4E5008B4A0A /* touchcursor.c in Sources */,
 				F67BBEBF2479DFC1008B4A0A /* keys.c in Sources */,
+				F642480D261039C7005D8FE5 /* emit.c in Sources */,
 				F67BBEB82479DCBA008B4A0A /* main.c in Sources */,
 				F67BBEB32479CE2B008B4A0A /* macOSInternalKeyboard.c in Sources */,
 				F67BBEC52479E567008B4A0A /* queue.c in Sources */,

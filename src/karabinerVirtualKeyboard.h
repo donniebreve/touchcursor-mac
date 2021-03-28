@@ -7,8 +7,8 @@
 #define karabinerVirtualHIDRootName "org_pqrs_driver_Karabiner_VirtualHIDDevice_VirtualHIDRoot_v061000"
 #define karabinerVirtualHIDKeyboardName "org_pqrs_driver_Karabiner_VirtualHIDDevice_VirtualHIDKeyboard_v061000"
 
-// The io connect reference for the virtual keyboard
-extern io_connect_t outputConnect;
+#define pqrsVendorID 5824
+#define pqrsProductID 10203
 
 /**
  * Primary input report definition for the Karabiner keyboard
@@ -20,6 +20,11 @@ typedef struct {
     uint8_t keys[32];
 } KarabinerVirtualKeyboardReport;
 
+// The io connect reference for the virtual keyboard
+extern io_connect_t outputConnect;
+// The karabiner keyboard report state
+extern KarabinerVirtualKeyboardReport karabinerVirtualKeyboardReport;
+
 /**
  * Consumer input report definition for the Karabiner keyboard
  */
@@ -28,7 +33,7 @@ typedef struct {
     uint8_t keys[32];
 } KarabinerVirtualKeyboardConsumerReport;
 
-/*
+/**
  * Primary input report definition for the Karabiner keyboard
  */
 typedef struct {
@@ -36,37 +41,39 @@ typedef struct {
     uint8_t modifiers;
 } KarabinerVirtualKeyboardLedReport;
 
-// The karabiner keyboard report state
-extern KarabinerVirtualKeyboardReport karabinerVirtualKeyboardReport;
-
-/*
+/**
  * Binds the Karabiner virtual keyboard.
  */
-IOHIDDeviceRef bindKarabinerVirtualKeyboard(void);
+IOHIDDeviceRef bindKarabinerVirtualKeyboard(IOHIDManagerRef hidManager);
 
-/*
+/**
+ * Sends a HID report to the Karabiner Device.
+ */
+void sendKarabinerVirtualKeyboardReport(void);
+
+/**
  * Prints the input report information.
  */
-void printKarabinerVirtualKeyboardInputReport(KarabinerVirtualKeyboardReport* report);
+void printKarabinerVirtualKeyboardReport(KarabinerVirtualKeyboardReport* report);
 
 /**
  * Adds a modifier to the state.
  */
-void modifierDown(uint8_t code);
+void setKarabinerVirtualKeyboardModifierDown(uint8_t code);
 
 /**
  * Removes a modifier from the state.
  */
-void modifierUp(uint8_t code);
+void setKarabinerVirtualKeyboardModifierUp(uint8_t code);
 
 /**
  * Adds a key to the state.
  */
-void keyDown(uint8_t code);
+void setKarabinerVirtualKeyboardKeyDown(uint8_t code);
 
 /**
  * Removes a key from the state.
  */
-void keyUp(uint8_t code);
+void setKarabinerVirtualKeyboardKeyUp(uint8_t code);
 
 #endif

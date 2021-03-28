@@ -10,6 +10,7 @@
 #include "queue.h"
 #include "config.h"
 #include "binding.h"
+#include "emit.h"
 #include "touchcursor.h"
 
 // The state machine state
@@ -58,7 +59,7 @@ static int convert(int code)
  */
 void processKey(int type, int code, int value)
 {
-    printf("processKey: code=%i value=%i state=%i ... ", code, value, state);
+    //printf("processKey: code=%i value=%i state=%i ... ", code, value, state);
     switch (state)
     {
         case idle: // 0
@@ -202,5 +203,5 @@ void processKey(int type, int code, int value)
             }
             break;
     }
-    printf("processKey: state=%i\n", state);
+    //printf("processKey: state=%i\n", state);
 }

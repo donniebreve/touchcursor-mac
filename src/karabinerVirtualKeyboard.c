@@ -14,27 +14,10 @@ io_connect_t outputConnect;
 // The karabiner keyboard report state
 KarabinerVirtualKeyboardReport karabinerVirtualKeyboardReport;
 
-/*
- * Prints the input report information.
- */
-static int outputNum = 0;
-void printKarabinerVirtualKeyboardInputReport(KarabinerVirtualKeyboardReport* report)
-{
-    printf("%i karabiner\n", outputNum++);
-    printf("  id:        %i\n", report->id);
-    printf("  modifiers: %02x\n", report->modifiers);
-    printf("  reserved:  %02x\n", report->reserved);
-    for (int i = 0; i < 6; i++)
-    {
-        printf("  keys[%i]:   %i\n", i, report->keys[i]);
-    }
-    printf("\n");
-}
-
 /**
  * Binds the Karabiner virtual keyboard.
  */
-IOHIDDeviceRef bindKarabinerVirtualKeyboard(void)
+IOHIDDeviceRef bindKarabinerVirtualKeyboard(IOHIDManagerRef hidManager)
 {
     // Default values
     karabinerVirtualKeyboardReport.id = 1;
@@ -63,6 +46,7 @@ IOHIDDeviceRef bindKarabinerVirtualKeyboard(void)
     
     // Keyboard reports it is ready even when it is not, sleep a little to give it some time to start
     usleep(500);
+
     /* This seems unecessary if we wait instead
     // Check if the keyboard is ready
     bool isReady = false;
@@ -80,33 +64,100 @@ IOHIDDeviceRef bindKarabinerVirtualKeyboard(void)
     }
     */
     
-    // Find the karabiner keyboard service
-    printf("Opening the Karabiner virtual keyboard... ");
-    CFMutableDictionaryRef keyboardServiceMatch = IOServiceNameMatching(karabinerVirtualHIDKeyboardName);
-    io_service_t keyboardService = IOServiceGetMatchingService(kIOMasterPortDefault, keyboardServiceMatch);
-    IOHIDDeviceRef outputDevice = IOHIDDeviceCreate(kCFAllocatorDefault, keyboardService);
-    if (outputDevice <= 0)
+//    // Find the karabiner keyboard service
+//    printf("Opening the Karabiner virtual keyboard... ");
+//    CFMutableDictionaryRef keyboardServiceMatch = IOServiceNameMatching(karabinerVirtualHIDKeyboardName);
+//    io_service_t keyboardService = IOServiceGetMatchingService(kIOMasterPortDefault, keyboardServiceMatch);
+//    IOHIDDeviceRef outputDevice = IOHIDDeviceCreate(kCFAllocatorDefault, keyboardService);
+//    if (outputDevice <= 0)
+//    {
+//        printf("Failed to create the device\n");
+//    }
+//    // Open the karabiner keyboard
+//    virtualKeyboardResult = IOHIDDeviceOpen(outputDevice, kIOHIDOptionsTypeNone);
+//    if (virtualKeyboardResult != kIOReturnSuccess)
+//    {
+//        printf("%s\n", getIOReturnString(virtualKeyboardResult));
+//        return NULL;
+//    }
+//    else
+//    {
+//        printf("Success\n");
+//        return outputDevice;
+//    }
+
+    // Get set of devices
+    CFSetRef deviceSet = IOHIDManagerCopyDevices(hidManager);
+    CFIndex deviceCount = CFSetGetCount(deviceSet);
+    IOHIDDeviceRef* devices = calloc(deviceCount, sizeof(IOHIDDeviceRef));
+    CFSetGetValues(deviceSet, (const void **)devices);
+    // Iterate devices
+    for (CFIndex i = 0; i < deviceCount; i++)
     {
-        printf("Failed to create the device\n");
+        // Check if the device is a keyboard, this also opens the device
+        if (IOHIDDeviceConformsTo(devices[i], kHIDPage_GenericDesktop, kHIDUsage_GD_Keyboard))
+        {
+            // Check if this is the apple keyboard, expand this later to use a GUI selection
+            uint32_t productID = getProductID(devices[i]);
+            uint32_t vendorID = getVendorID(devices[i]);
+            if (productID == pqrsProductID && vendorID == pqrsVendorID)
+            {
+                IOHIDDeviceRef inputDevice = devices[i];
+                printDeviceInformation(inputDevice, false, false, false, false);
+                // Open the device and capture all input
+                printf("Capturing the Karabiner Virtual Keyboard... ");
+                // Use kIOHIDOptionsTypeNone to capture events without interrupting the device
+                // Use kIOHIDOptionsTypeSeizeDevice to capture the device and all inputs
+                IOReturn result = IOHIDDeviceOpen(devices[i], kIOHIDOptionsTypeNone);
+                if (result != kIOReturnSuccess)
+                {
+                    printf("%s\n", getIOReturnString(result));
+                    return NULL;
+                }
+                printf("Success\n");
+                return inputDevice;
+            }
+        }
     }
-    // Open the karabiner keyboard
-    virtualKeyboardResult = IOHIDDeviceOpen(outputDevice, kIOHIDOptionsTypeNone);
+    printf("Failed to capture the Karabiner Virtual Keyboard.\n");
+    return NULL;
+}
+
+/**
+ * Sends a HID report to the Karabiner Device.
+ */
+void sendKarabinerVirtualKeyboardReport()
+{
+    //printKarabinerVirtualKeyboardInputReport(report);
+    uint32_t post_keyboard_input_report_method = 3;
+    IOReturn virtualKeyboardResult = IOConnectCallStructMethod(outputConnect, post_keyboard_input_report_method, &karabinerVirtualKeyboardReport, sizeof(karabinerVirtualKeyboardReport), NULL, 0);
     if (virtualKeyboardResult != kIOReturnSuccess)
     {
-        printf("%s\n", getIOReturnString(virtualKeyboardResult));
-        return NULL;
+        printf("sendReport: result=%s\n", getIOReturnString(virtualKeyboardResult));
     }
-    else
+}
+
+/*
+ * Prints the input report information.
+ */
+static int outputNum = 0;
+void printKarabinerVirtualKeyboardReport(KarabinerVirtualKeyboardReport* report)
+{
+    printf("%i karabiner\n", outputNum++);
+    printf("  id:        %i\n", report->id);
+    printf("  modifiers: %02x\n", report->modifiers);
+    printf("  reserved:  %02x\n", report->reserved);
+    for (int i = 0; i < 6; i++)
     {
-        printf("Success\n");
-        return outputDevice;
+        printf("  keys[%i]:   %i\n", i, report->keys[i]);
     }
+    printf("\n");
 }
 
 /**
  * Adds a modifier to the state.
  */
-void modifierDown(uint8_t code)
+void setKarabinerVirtualKeyboardModifierDown(uint8_t code)
 {
     uint8_t modifier = 0;
     switch (code)
@@ -126,7 +177,7 @@ void modifierDown(uint8_t code)
 /**
  * Removes a modifier from the state.
  */
-void modifierUp(uint8_t code)
+void setKarabinerVirtualKeyboardModifierUp(uint8_t code)
 {
     uint8_t modifier = 0;
     switch (code)
@@ -146,7 +197,7 @@ void modifierUp(uint8_t code)
 /**
  * Adds a key to the state.
  */
-void keyDown(uint8_t code)
+void setKarabinerVirtualKeyboardKeyDown(uint8_t code)
 {
     bool indexSet = false;
     uint8_t keyIndex = 0;
@@ -168,7 +219,7 @@ void keyDown(uint8_t code)
 /**
  * Removes a key from the state.
  */
-void keyUp(uint8_t code)
+void setKarabinerVirtualKeyboardKeyUp(uint8_t code)
 {
     for (int i = 0; i < 32; i++)
     {

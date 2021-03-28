@@ -1,11 +1,14 @@
 #include <IOKit/IOKitLib.h>
 #include <IOKit/hid/IOHIDValue.h>
 #include <IOKit/hid/IOHIDDeviceTypes.h>
+#include <pthread.h>
 
 #include "hidInformation.h"
 #include "macOSInternalKeyboard.h"
+#include "touchcursor.h"
+#include "emit.h"
 
-/*
+/**
  * Binds the macOS internal keyboard.
  */
 IOHIDDeviceRef bindMacOSInternalKeyboard(IOHIDManagerRef hidManager)
@@ -47,7 +50,55 @@ IOHIDDeviceRef bindMacOSInternalKeyboard(IOHIDManagerRef hidManager)
     return NULL;
 }
 
-/*
+/**
+ * The input value callback method.
+ */
+void macOSKeyboardInputValueCallback(
+    void* context,
+    IOReturn result,
+    void* sender,
+    IOHIDValueRef value)
+{
+    IOHIDElementRef element = IOHIDValueGetElement(value);
+    uint32_t code = IOHIDElementGetUsage(element);
+    uint32_t down = (int)IOHIDValueGetIntegerValue(value);
+    //printf("received code: %d value: %d\n", code, down);
+    if (code == 3) // I've forgotten the relevance of code 3
+    {
+        emit(0, code, down);
+    }
+    if (3 < code && code < 232)
+    {
+        processKey(0, code, down);
+        // Since we do not get repeated key down events from MacOS
+        // Send the key event again to move to the hyper state after a short delay
+        if (down && state == delay)
+        {
+            pthread_t thread_id;
+            int* arg = malloc(sizeof(int));
+            *arg = code;
+            pthread_create(&thread_id, NULL, sendDelayed, arg);
+            pthread_detach(thread_id);
+        }
+    }
+}
+
+/**
+ * "Sends" a key event after a short delay.
+ */
+void* sendDelayed(void* arg)
+{
+    int code = *(int*)arg;
+    usleep(100 * 1000); // milliseconds * microseconds
+    if (state == delay)
+    {
+        processKey(0, code, 1);
+    }
+    free(arg);
+    return 0;
+}
+
+/**
  * Prints the input report information.
  */
 static int outputNum = 0;
