@@ -13,8 +13,7 @@
 static IOHIDDeviceRef device;
 
 static pthread_t repeatThread;
-static int repeat = 0;
-static int repeatCode = 0;
+static int repeatCode;
 
 /**
  * Binds the macOS internal keyboard.
@@ -70,51 +69,40 @@ static void* repeatLoop(void* arg)
 {
     int code = *(int*)arg;
     usleep(500 * 1000); // milliseconds * microseconds
-    while (repeat)
+    while (repeatThread == pthread_self() && repeatCode == code)
     {
         processKey(1, code, 1);
         usleep(100 * 1000);
     }
     free(arg);
+    pthread_exit(NULL);
     return 0;
 }
 
-void stopRepeatThread(void)
-{
-    if (repeatThread != 0)
-    {
-        repeat = 0;
-        pthread_join(repeatThread, (void*)-1);
-        printf("stopped %i\n", repeatThread);
-        repeatThread = 0;
-    }
-}
-
+/**
+ * Stops the current key repeating thread.
+ */
 void stopRepeat(int code)
 {
-    if (repeatCode == code)
+    if (repeatThread > 0 && repeatCode == code)
     {
+        repeatThread = 0;
         repeatCode = -1;
-        stopRepeatThread();
     }
 }
 
 /**
  * Starts a key repeat thread.
- * Every key down needs to kill the previous thread and start a new one.
+ * Spawns new threads for every key down, the repeat loop will exit if the repeat thread has been superseded.
  */
 void startRepeat(int code)
 {
-    stopRepeatThread();
-    repeat = 1;
-    
     int* arg = malloc(sizeof(int));
     *arg = code;
-    
+    repeatCode = code;
     pthread_t thread_id;
-    pthread_create(&thread_id, NULL, repeatLoop, NULL);
+    pthread_create(&thread_id, NULL, repeatLoop, arg);
     repeatThread = thread_id;
-    printf("thread: %i\n", repeatThread);
     pthread_detach(thread_id);
 }
 
@@ -141,6 +129,7 @@ void macOSKeyboardInputValueCallback(
         // It seems like since we have captured the device, key repeat functionality is lost.
         // Here is my *probably bad* implementation of a key repeat.
         // Every key down needs to kill the previous thread and start a new one.
+        // Maybe keep the thread, but make two threads, one for the delay and one for the repeat
         // Every key up needs to kill the thread, if the code matches the current repeatCode.
         if (!down)
         {
