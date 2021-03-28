@@ -17,6 +17,9 @@
 		F67BBEBF2479DFC1008B4A0A /* keys.c in Sources */ = {isa = PBXBuildFile; fileRef = F67BBEBE2479DFC1008B4A0A /* keys.c */; };
 		F67BBEC22479E4E5008B4A0A /* touchcursor.c in Sources */ = {isa = PBXBuildFile; fileRef = F67BBEC12479E4E5008B4A0A /* touchcursor.c */; };
 		F67BBEC52479E567008B4A0A /* queue.c in Sources */ = {isa = PBXBuildFile; fileRef = F67BBEC42479E567008B4A0A /* queue.c */; };
+		F67C30FD2610F9A90038E7DA /* cgEventVirtualKeyboard.mm in Sources */ = {isa = PBXBuildFile; fileRef = F67C30FC2610F9A90038E7DA /* cgEventVirtualKeyboard.mm */; };
+		F67C31002610FA870038E7DA /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F67C30FF2610FA870038E7DA /* Carbon.framework */; };
+		F67C31032610FAA60038E7DA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F67C31022610FAA60038E7DA /* Foundation.framework */; };
 		F6EEF188235D303C003BBF2C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6EEF187235D303C003BBF2C /* IOKit.framework */; };
 		F6EEF18B235D32C0003BBF2C /* stdarg.h in Sources */ = {isa = PBXBuildFile; fileRef = F6EEF18A235D32C0003BBF2C /* stdarg.h */; };
 /* End PBXBuildFile section */
@@ -55,6 +58,10 @@
 		F67BBEC12479E4E5008B4A0A /* touchcursor.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = touchcursor.c; sourceTree = "<group>"; };
 		F67BBEC32479E567008B4A0A /* queue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = queue.h; sourceTree = "<group>"; };
 		F67BBEC42479E567008B4A0A /* queue.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = queue.c; sourceTree = "<group>"; };
+		F67C30FB2610F9A90038E7DA /* cgEventVirtualKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cgEventVirtualKeyboard.h; sourceTree = "<group>"; };
+		F67C30FC2610F9A90038E7DA /* cgEventVirtualKeyboard.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = cgEventVirtualKeyboard.mm; sourceTree = "<group>"; };
+		F67C30FF2610FA870038E7DA /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		F67C31022610FAA60038E7DA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F6EEF187235D303C003BBF2C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		F6EEF18A235D32C0003BBF2C /* stdarg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stdarg.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -65,6 +72,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F6EEF188235D303C003BBF2C /* IOKit.framework in Frameworks */,
+				F67C31032610FAA60038E7DA /* Foundation.framework in Frameworks */,
+				F67C31002610FA870038E7DA /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,12 +102,14 @@
 		F6EEF175235D2821003BBF2C /* src */ = {
 			isa = PBXGroup;
 			children = (
-				F642480B261039C7005D8FE5 /* emit.c */,
-				F642480C261039C7005D8FE5 /* emit.h */,
 				F67BBEA924719FCE008B4A0A /* binding.c */,
 				F67BBEB92479DD26008B4A0A /* binding.h */,
+				F67C30FC2610F9A90038E7DA /* cgEventVirtualKeyboard.mm */,
+				F67C30FB2610F9A90038E7DA /* cgEventVirtualKeyboard.h */,
 				F67BBEBB2479DF81008B4A0A /* config.c */,
 				F67BBEBA2479DF81008B4A0A /* config.h */,
+				F642480B261039C7005D8FE5 /* emit.c */,
+				F642480C261039C7005D8FE5 /* emit.h */,
 				F67BBEAB2471AFF0008B4A0A /* hidInformation.c */,
 				F67BBEAC2471AFF0008B4A0A /* hidInformation.h */,
 				F67BBEB52479CE49008B4A0A /* karabinerVirtualKeyboard.c */,
@@ -119,6 +130,8 @@
 		F6EEF186235D303C003BBF2C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F67C31022610FAA60038E7DA /* Foundation.framework */,
+				F67C30FF2610FA870038E7DA /* Carbon.framework */,
 				F6EEF187235D303C003BBF2C /* IOKit.framework */,
 			);
 			name = Frameworks;
@@ -194,6 +207,7 @@
 				F67BBEBC2479DF81008B4A0A /* config.c in Sources */,
 				F67BBEC22479E4E5008B4A0A /* touchcursor.c in Sources */,
 				F67BBEBF2479DFC1008B4A0A /* keys.c in Sources */,
+				F67C30FD2610F9A90038E7DA /* cgEventVirtualKeyboard.mm in Sources */,
 				F642480D261039C7005D8FE5 /* emit.c in Sources */,
 				F67BBEB82479DCBA008B4A0A /* main.c in Sources */,
 				F67BBEB32479CE2B008B4A0A /* macOSInternalKeyboard.c in Sources */,
@@ -320,8 +334,8 @@
 		F6652944235D26B800F63895 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "touchcursor-mac.entitlements";
+				CLANG_ENABLE_MODULES = NO;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
@@ -334,8 +348,8 @@
 		F6652945235D26B800F63895 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "touchcursor-mac.entitlements";
+				CLANG_ENABLE_MODULES = NO;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";

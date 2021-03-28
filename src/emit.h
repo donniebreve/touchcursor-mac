@@ -6,4 +6,9 @@
  */
 void emit(int type, int code, int value);
 
+/**
+ * Emits a key event (delayed).
+ */
+void emitDelayed(int type, int code, int value);
+
 #endif

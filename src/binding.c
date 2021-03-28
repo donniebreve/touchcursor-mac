@@ -9,17 +9,14 @@
 
 #include "hidInformation.h"
 #include "keys.h"
-#include "macOSInternalKeyboard.h"
-#include "karabinerVirtualKeyboard.h"
 #include "touchcursor.h"
+#include "macOSInternalKeyboard.h"
+#include "cgEventVirtualKeyboard.h"
+//#include "karabinerVirtualKeyboard.h"
 #include "binding.h"
 
 // The HID manager object
 static IOHIDManagerRef hidManager;
-
-// The input and output devices
-static IOHIDDeviceRef inputDevice;
-static IOHIDDeviceRef outputDevice;
 
 //std::optional<int64_t>
 //get_initial_key_repeat(iokit_registry_entry_id::value_t registry_entry_id) {
@@ -53,16 +50,11 @@ void createHIDManager()
  */
 int bindInput()
 {
-    inputDevice = bindMacOSInternalKeyboard(hidManager);
-    if (!inputDevice)
+    int result = bindMacOSInternalKeyboard(hidManager);
+    if (!result)
     {
         return 0;
     }
-    // Register the input value callback
-    IOHIDDeviceRegisterInputValueCallback(
-        inputDevice,
-        macOSKeyboardInputValueCallback,
-        NULL);
     return 1;
 }
 
@@ -71,10 +63,25 @@ int bindInput()
  */
 int bindOutput()
 {
-    outputDevice = bindKarabinerVirtualKeyboard(hidManager);
-    if (!outputDevice)
+    int result = bindCGEventVirtualKeyboard();
+    if (!result)
     {
         return 0;
     }
     return 1;
+}
+
+/**
+ * Binds the output device.
+ * Deprecated
+ */
+int bindKarabinerVirtualKeyboardOutput()
+{
+//    outputDevice = bindKarabinerVirtualKeyboard(hidManager);
+//    if (!outputDevice)
+//    {
+//        return 0;
+//    }
+//    return 1;
+    return 0;
 }

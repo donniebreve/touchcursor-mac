@@ -36,7 +36,7 @@ typedef struct {
 /**
  * Binds the macOS internal keyboard.
  */
-IOHIDDeviceRef bindMacOSInternalKeyboard(IOHIDManagerRef hidManager);
+int bindMacOSInternalKeyboard(IOHIDManagerRef hidManager);
 
 /**
  * The input value callback method.
@@ -46,11 +46,6 @@ void macOSKeyboardInputValueCallback(
     IOReturn result,
     void* sender,
     IOHIDValueRef value);
-    
-/**
- * "Sends" a key event after a short delay.
- */
-void* sendDelayed(void* arg);
 
 /**
  * Prints the input report information.

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <IOKit/IOKitLib.h>
 #include <IOKit/hid/IOHIDValue.h>
 #include <IOKit/hid/IOHIDManager.h>
 

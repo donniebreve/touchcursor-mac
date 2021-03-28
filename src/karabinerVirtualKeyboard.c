@@ -16,6 +16,8 @@ KarabinerVirtualKeyboardReport karabinerVirtualKeyboardReport;
 
 /**
  * Binds the Karabiner virtual keyboard.
+ *
+ * This has become deprecated, so it will likely stay ugly.
  */
 IOHIDDeviceRef bindKarabinerVirtualKeyboard(IOHIDManagerRef hidManager)
 {

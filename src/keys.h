@@ -3,8 +3,10 @@
 
 #include <IOKit/hid/IOHIDUsageTables.h>
 
-// linux codes   https://github.com/torvalds/linux/blob/master/include/uapi/linux/input-event-codes.h
-// windows codes http://nehe.gamedev.net/article/msdn_virtualkey_codes/15009/
+// linux codes    https://github.com/torvalds/linux/blob/master/include/uapi/linux/input-event-codes.h
+// windows codes  http://nehe.gamedev.net/article/msdn_virtualkey_codes/15009/
+// mac IOHIDUsage https://opensource.apple.com/source/IOHIDFamily/IOHIDFamily-1035.41.2/IOHIDFamily/IOHIDUsageTables.h.auto.html
+// mac events     https://github.com/phracker/MacOSX-SDKs/blob/master/MacOSX10.6.sdk/System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/HIToolbox.framework/Versions/A/Headers/Events.h
 
 #define KEY_RESERVED    0
 #define KEY_ESC         kHIDUsage_KeyboardEscape
@@ -284,5 +286,10 @@ int isExtendedKey(int code);
  * Converts a key string "KEY_I" to its corresponding code.
  */
 int convertKeyStringToCode(char* keyString);
+
+/**
+ * Converts a key KEY_I to its corresponding virtual keycode.
+ */
+int convertKeyToVirtualKeycode(int code);
 
 #endif

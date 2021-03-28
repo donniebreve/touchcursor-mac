@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <IOKit/IOKitLib.h>
+#include <IOKit/hid/IOHIDManager.h>
 
 #define karabinerVirtualHIDRootName "org_pqrs_Karabiner_DriverKit_VirtualHIDDeviceRoot" //"org_pqrs_driver_Karabiner_VirtualHIDDevice_VirtualHIDRoot_v061000"
 #define karabinerVirtualHIDKeyboardName "org_pqrs_Karabiner_DriverKit_VirtualHIDKeyboard"

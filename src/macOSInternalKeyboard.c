@@ -1,17 +1,25 @@
+#include <stdlib.h>
+#include <unistd.h>
+#include <pthread.h>
 #include <IOKit/IOKitLib.h>
 #include <IOKit/hid/IOHIDValue.h>
 #include <IOKit/hid/IOHIDDeviceTypes.h>
-#include <pthread.h>
 
 #include "hidInformation.h"
 #include "macOSInternalKeyboard.h"
 #include "touchcursor.h"
 #include "emit.h"
 
+static IOHIDDeviceRef device;
+
+static pthread_t repeatThread;
+static int repeat = 0;
+static int repeatCode = 0;
+
 /**
  * Binds the macOS internal keyboard.
  */
-IOHIDDeviceRef bindMacOSInternalKeyboard(IOHIDManagerRef hidManager)
+int bindMacOSInternalKeyboard(IOHIDManagerRef hidManager)
 {
     // Get set of devices
     CFSetRef deviceSet = IOHIDManagerCopyDevices(hidManager);
@@ -38,15 +46,76 @@ IOHIDDeviceRef bindMacOSInternalKeyboard(IOHIDManagerRef hidManager)
                 IOReturn result = IOHIDDeviceOpen(devices[i], kIOHIDOptionsTypeSeizeDevice);
                 if (result != kIOReturnSuccess)
                 {
-                    printf("%s\n", getIOReturnString(result));
-                    return NULL;
+                    printf("IOHIDDeviceOpen: %s\n", getIOReturnString(result));
+                    return 0;
                 }
+                device = inputDevice;
+                // Register the input value callback
+                IOHIDDeviceRegisterInputValueCallback(
+                    inputDevice,
+                    macOSKeyboardInputValueCallback,
+                    NULL);
                 printf("Success\n");
-                return inputDevice;
+                return 1;
             }
         }
     }
-    return NULL;
+    return 0;
+}
+
+/**
+ * Processes a key event after a short delay.
+ */
+static void* repeatLoop(void* arg)
+{
+    int code = *(int*)arg;
+    usleep(500 * 1000); // milliseconds * microseconds
+    while (repeat)
+    {
+        processKey(1, code, 1);
+        usleep(100 * 1000);
+    }
+    free(arg);
+    return 0;
+}
+
+void stopRepeatThread(void)
+{
+    if (repeatThread != 0)
+    {
+        repeat = 0;
+        pthread_join(repeatThread, (void*)-1);
+        printf("stopped %i\n", repeatThread);
+        repeatThread = 0;
+    }
+}
+
+void stopRepeat(int code)
+{
+    if (repeatCode == code)
+    {
+        repeatCode = -1;
+        stopRepeatThread();
+    }
+}
+
+/**
+ * Starts a key repeat thread.
+ * Every key down needs to kill the previous thread and start a new one.
+ */
+void startRepeat(int code)
+{
+    stopRepeatThread();
+    repeat = 1;
+    
+    int* arg = malloc(sizeof(int));
+    *arg = code;
+    
+    pthread_t thread_id;
+    pthread_create(&thread_id, NULL, repeatLoop, NULL);
+    repeatThread = thread_id;
+    printf("thread: %i\n", repeatThread);
+    pthread_detach(thread_id);
 }
 
 /**
@@ -61,40 +130,27 @@ void macOSKeyboardInputValueCallback(
     IOHIDElementRef element = IOHIDValueGetElement(value);
     uint32_t code = IOHIDElementGetUsage(element);
     uint32_t down = (int)IOHIDValueGetIntegerValue(value);
-    //printf("received code: %d value: %d\n", code, down);
+    //printf("macOSKeyboardInputValueCallback: code=%d value=%d\n", code, down);
     if (code == 3) // I've forgotten the relevance of code 3
     {
         emit(0, code, down);
     }
-    if (3 < code && code < 232)
+    if (4 <= code && code <= 231) // Most normal key codes lie in this range
     {
         processKey(0, code, down);
-        // Since we do not get repeated key down events from MacOS
-        // Send the key event again to move to the hyper state after a short delay
-        if (down && state == delay)
+        // It seems like since we have captured the device, key repeat functionality is lost.
+        // Here is my *probably bad* implementation of a key repeat.
+        // Every key down needs to kill the previous thread and start a new one.
+        // Every key up needs to kill the thread, if the code matches the current repeatCode.
+        if (!down)
         {
-            pthread_t thread_id;
-            int* arg = malloc(sizeof(int));
-            *arg = code;
-            pthread_create(&thread_id, NULL, sendDelayed, arg);
-            pthread_detach(thread_id);
+            stopRepeat(code);
+        }
+        if (down)
+        {
+            startRepeat(code);
         }
     }
-}
-
-/**
- * "Sends" a key event after a short delay.
- */
-void* sendDelayed(void* arg)
-{
-    int code = *(int*)arg;
-    usleep(100 * 1000); // milliseconds * microseconds
-    if (state == delay)
-    {
-        processKey(0, code, 1);
-    }
-    free(arg);
-    return 0;
 }
 
 /**
