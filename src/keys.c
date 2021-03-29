@@ -1,0 +1,310 @@
+#include <string.h>
+
+#include "keys.h"
+
+/**
+ * Checks if the key is a modifier key.
+ */
+int isModifier(int code)
+{
+    switch (code)
+    {
+        case KEY_LEFTSHIFT:
+        case KEY_RIGHTSHIFT:
+        case KEY_LEFTCTRL:
+        case KEY_RIGHTCTRL:
+        case KEY_LEFTALT:
+        case KEY_RIGHTALT:
+        case KEY_LEFTMETA:
+        case KEY_RIGHTMETA:
+        case KEY_CAPSLOCK:
+        case KEY_NUMLOCK:
+        case KEY_SCROLLLOCK:
+            return 1;
+        default:
+            return 0;
+    }
+}
+
+/**
+ * Checks for an extended key, specific to windows.
+ */
+int isExtendedKey(int code)
+{
+    switch (code)
+    {
+        case KEY_LEFT:
+        case KEY_UP:
+        case KEY_RIGHT:
+        case KEY_DOWN:
+        case KEY_INSERT:
+        case KEY_HOME:
+        case KEY_DELETE:
+        case KEY_END:
+        case KEY_PAGEUP:
+        case KEY_PAGEDOWN:
+        case KEY_SYSRQ:
+        case KEY_NUMLOCK:
+        case KEY_RIGHTSHIFT:
+        case KEY_RIGHTCTRL:
+        case KEY_RIGHTALT:
+        case KEY_LEFTMETA:
+        case KEY_RIGHTMETA:
+        case 0:
+            return 1;
+        default:
+            return 0;
+    }
+}
+
+/**
+ * Converts a key string (e.g. "KEY_I") to its corresponding code.
+ */
+int convertKeyStringToCode(char* keyString)
+{
+    if (strcmp(keyString, "KEY_ESC") == 0) return KEY_ESC;
+    else if (strcmp(keyString, "KEY_1") == 0) return KEY_1;
+    else if (strcmp(keyString, "KEY_2") == 0) return KEY_2;
+    else if (strcmp(keyString, "KEY_3") == 0) return KEY_3;
+    else if (strcmp(keyString, "KEY_4") == 0) return KEY_4;
+    else if (strcmp(keyString, "KEY_5") == 0) return KEY_5;
+    else if (strcmp(keyString, "KEY_6") == 0) return KEY_6;
+    else if (strcmp(keyString, "KEY_7") == 0) return KEY_7;
+    else if (strcmp(keyString, "KEY_8") == 0) return KEY_8;
+    else if (strcmp(keyString, "KEY_9") == 0) return KEY_9;
+    else if (strcmp(keyString, "KEY_0") == 0) return KEY_0;
+    else if (strcmp(keyString, "KEY_MINUS") == 0) return KEY_MINUS;
+    else if (strcmp(keyString, "KEY_EQUAL") == 0) return KEY_EQUAL;
+    else if (strcmp(keyString, "KEY_BACKSPACE") == 0) return KEY_BACKSPACE;
+    else if (strcmp(keyString, "KEY_TAB") == 0) return KEY_TAB;
+    else if (strcmp(keyString, "KEY_Q") == 0) return KEY_Q;
+    else if (strcmp(keyString, "KEY_W") == 0) return KEY_W;
+    else if (strcmp(keyString, "KEY_E") == 0) return KEY_E;
+    else if (strcmp(keyString, "KEY_R") == 0) return KEY_R;
+    else if (strcmp(keyString, "KEY_T") == 0) return KEY_T;
+    else if (strcmp(keyString, "KEY_Y") == 0) return KEY_Y;
+    else if (strcmp(keyString, "KEY_U") == 0) return KEY_U;
+    else if (strcmp(keyString, "KEY_I") == 0) return KEY_I;
+    else if (strcmp(keyString, "KEY_O") == 0) return KEY_O;
+    else if (strcmp(keyString, "KEY_P") == 0) return KEY_P;
+    else if (strcmp(keyString, "KEY_LEFTBRACE") == 0) return KEY_LEFTBRACE;
+    else if (strcmp(keyString, "KEY_RIGHTBRACE") == 0) return KEY_RIGHTBRACE;
+    else if (strcmp(keyString, "KEY_ENTER") == 0) return KEY_ENTER;
+    else if (strcmp(keyString, "KEY_LEFTCTRL") == 0) return KEY_LEFTCTRL;
+    else if (strcmp(keyString, "KEY_A") == 0) return KEY_A;
+    else if (strcmp(keyString, "KEY_S") == 0) return KEY_S;
+    else if (strcmp(keyString, "KEY_D") == 0) return KEY_D;
+    else if (strcmp(keyString, "KEY_F") == 0) return KEY_F;
+    else if (strcmp(keyString, "KEY_G") == 0) return KEY_G;
+    else if (strcmp(keyString, "KEY_H") == 0) return KEY_H;
+    else if (strcmp(keyString, "KEY_J") == 0) return KEY_J;
+    else if (strcmp(keyString, "KEY_K") == 0) return KEY_K;
+    else if (strcmp(keyString, "KEY_L") == 0) return KEY_L;
+    else if (strcmp(keyString, "KEY_SEMICOLON") == 0) return KEY_SEMICOLON;
+    else if (strcmp(keyString, "KEY_APOSTROPHE") == 0) return KEY_APOSTROPHE;
+    else if (strcmp(keyString, "KEY_GRAVE") == 0) return KEY_GRAVE;
+    else if (strcmp(keyString, "KEY_LEFTSHIFT") == 0) return KEY_LEFTSHIFT;
+    else if (strcmp(keyString, "KEY_BACKSLASH") == 0) return KEY_BACKSLASH;
+    else if (strcmp(keyString, "KEY_Z") == 0) return KEY_Z;
+    else if (strcmp(keyString, "KEY_X") == 0) return KEY_X;
+    else if (strcmp(keyString, "KEY_C") == 0) return KEY_C;
+    else if (strcmp(keyString, "KEY_V") == 0) return KEY_V;
+    else if (strcmp(keyString, "KEY_B") == 0) return KEY_B;
+    else if (strcmp(keyString, "KEY_N") == 0) return KEY_N;
+    else if (strcmp(keyString, "KEY_M") == 0) return KEY_M;
+    else if (strcmp(keyString, "KEY_COMMA") == 0) return KEY_COMMA;
+    else if (strcmp(keyString, "KEY_DOT") == 0) return KEY_DOT;
+    else if (strcmp(keyString, "KEY_SLASH") == 0) return KEY_SLASH;
+    else if (strcmp(keyString, "KEY_RIGHTSHIFT") == 0) return KEY_RIGHTSHIFT;
+    else if (strcmp(keyString, "KEY_KPASTERISK") == 0) return KEY_KPASTERISK;
+    else if (strcmp(keyString, "KEY_LEFTALT") == 0) return KEY_LEFTALT;
+    else if (strcmp(keyString, "KEY_SPACE") == 0) return KEY_SPACE;
+    else if (strcmp(keyString, "KEY_CAPSLOCK") == 0) return KEY_CAPSLOCK;
+    else if (strcmp(keyString, "KEY_F1") == 0) return KEY_F1;
+    else if (strcmp(keyString, "KEY_F2") == 0) return KEY_F2;
+    else if (strcmp(keyString, "KEY_F3") == 0) return KEY_F3;
+    else if (strcmp(keyString, "KEY_F4") == 0) return KEY_F4;
+    else if (strcmp(keyString, "KEY_F5") == 0) return KEY_F5;
+    else if (strcmp(keyString, "KEY_F6") == 0) return KEY_F6;
+    else if (strcmp(keyString, "KEY_F7") == 0) return KEY_F7;
+    else if (strcmp(keyString, "KEY_F8") == 0) return KEY_F8;
+    else if (strcmp(keyString, "KEY_F9") == 0) return KEY_F9;
+    else if (strcmp(keyString, "KEY_F10") == 0) return KEY_F10;
+    else if (strcmp(keyString, "KEY_NUMLOCK") == 0) return KEY_NUMLOCK;
+    else if (strcmp(keyString, "KEY_SCROLLLOCK") == 0) return KEY_SCROLLLOCK;
+    else if (strcmp(keyString, "KEY_KP7") == 0) return KEY_KP7;
+    else if (strcmp(keyString, "KEY_KP8") == 0) return KEY_KP8;
+    else if (strcmp(keyString, "KEY_KP9") == 0) return KEY_KP9;
+    else if (strcmp(keyString, "KEY_KPMINUS") == 0) return KEY_KPMINUS;
+    else if (strcmp(keyString, "KEY_KP4") == 0) return KEY_KP4;
+    else if (strcmp(keyString, "KEY_KP5") == 0) return KEY_KP5;
+    else if (strcmp(keyString, "KEY_KP6") == 0) return KEY_KP6;
+    else if (strcmp(keyString, "KEY_KPPLUS") == 0) return KEY_KPPLUS;
+    else if (strcmp(keyString, "KEY_KP1") == 0) return KEY_KP1;
+    else if (strcmp(keyString, "KEY_KP2") == 0) return KEY_KP2;
+    else if (strcmp(keyString, "KEY_KP3") == 0) return KEY_KP3;
+    else if (strcmp(keyString, "KEY_KP0") == 0) return KEY_KP0;
+    else if (strcmp(keyString, "KEY_KPDOT") == 0) return KEY_KPDOT;
+    else if (strcmp(keyString, "KEY_F11") == 0) return KEY_F11;
+    else if (strcmp(keyString, "KEY_F12") == 0) return KEY_F12;
+    else if (strcmp(keyString, "KEY_RIGHTCTRL") == 0) return KEY_RIGHTCTRL;
+    else if (strcmp(keyString, "KEY_KPSLASH") == 0) return KEY_KPSLASH;
+    else if (strcmp(keyString, "KEY_SYSRQ") == 0) return KEY_SYSRQ;
+    else if (strcmp(keyString, "KEY_RIGHTALT") == 0) return KEY_RIGHTALT;
+    else if (strcmp(keyString, "KEY_HOME") == 0) return KEY_HOME;
+    else if (strcmp(keyString, "KEY_UP") == 0) return KEY_UP;
+    else if (strcmp(keyString, "KEY_PAGEUP") == 0) return KEY_PAGEUP;
+    else if (strcmp(keyString, "KEY_LEFT") == 0) return KEY_LEFT;
+    else if (strcmp(keyString, "KEY_RIGHT") == 0) return KEY_RIGHT;
+    else if (strcmp(keyString, "KEY_END") == 0) return KEY_END;
+    else if (strcmp(keyString, "KEY_DOWN") == 0) return KEY_DOWN;
+    else if (strcmp(keyString, "KEY_PAGEDOWN") == 0) return KEY_PAGEDOWN;
+    else if (strcmp(keyString, "KEY_INSERT") == 0) return KEY_INSERT;
+    else if (strcmp(keyString, "KEY_DELETE") == 0) return KEY_DELETE;
+    else if (strcmp(keyString, "KEY_MUTE") == 0) return KEY_MUTE;
+    else if (strcmp(keyString, "KEY_VOLUMEDOWN") == 0) return KEY_VOLUMEDOWN;
+    else if (strcmp(keyString, "KEY_VOLUMEUP") == 0) return KEY_VOLUMEUP;
+    else if (strcmp(keyString, "KEY_PAUSE") == 0) return KEY_PAUSE;
+    else if (strcmp(keyString, "KEY_LEFTMETA") == 0) return KEY_LEFTMETA;
+    else if (strcmp(keyString, "KEY_RIGHTMETA") == 0) return KEY_RIGHTMETA;
+    else if (strcmp(keyString, "KEY_F13") == 0) return KEY_F13;
+    else if (strcmp(keyString, "KEY_F14") == 0) return KEY_F14;
+    else if (strcmp(keyString, "KEY_F15") == 0) return KEY_F15;
+    else if (strcmp(keyString, "KEY_F16") == 0) return KEY_F16;
+    else if (strcmp(keyString, "KEY_F17") == 0) return KEY_F17;
+    else if (strcmp(keyString, "KEY_F18") == 0) return KEY_F18;
+    else if (strcmp(keyString, "KEY_F19") == 0) return KEY_F19;
+    else if (strcmp(keyString, "KEY_F20") == 0) return KEY_F20;
+    else if (strcmp(keyString, "KEY_F21") == 0) return KEY_F21;
+    else if (strcmp(keyString, "KEY_F22") == 0) return KEY_F22;
+    else if (strcmp(keyString, "KEY_F23") == 0) return KEY_F23;
+    else if (strcmp(keyString, "KEY_F24") == 0) return KEY_F24;
+    else return 0;
+}
+		
+/**
+ * Converts a key KEY_I to its corresponding virtual keycode. See Events.h.
+ */
+int convertKeyToVirtualKeycode(int code)
+{
+    switch (code)
+    {
+        case KEY_ESC: return 0x35;
+        case KEY_1: return 0x12;
+        case KEY_2: return 0x13;
+        case KEY_3: return 0x14;
+        case KEY_4: return 0x15;
+        case KEY_5: return 0x17;
+        case KEY_6: return 0x16;
+        case KEY_7: return 0x1A;
+        case KEY_8: return 0x1C;
+        case KEY_9: return 0x19;
+        case KEY_0: return 0x1D;
+        case KEY_MINUS: return 0x1B;
+        case KEY_EQUAL: return 0x18;
+        case KEY_BACKSPACE: return 0x33;
+        case KEY_TAB: return 0x30;
+        case KEY_Q: return 0x0C;
+        case KEY_W: return 0x0D;
+        case KEY_E: return 0x0E;
+        case KEY_R: return 0x0F;
+        case KEY_T: return 0x11;
+        case KEY_Y: return 0x10;
+        case KEY_U: return 0x20;
+        case KEY_I: return 0x22;
+        case KEY_O: return 0x1F;
+        case KEY_P: return 0x23;
+        case KEY_LEFTBRACE: return 0x21;
+        case KEY_RIGHTBRACE: return 0x1E;
+        case KEY_ENTER: return 0x24;
+        case KEY_LEFTCTRL: return 0x3B;
+        case KEY_A: return 0x00;
+        case KEY_S: return 0x01;
+        case KEY_D: return 0x02;
+        case KEY_F: return 0x03;
+        case KEY_G: return 0x05;
+        case KEY_H: return 0x04;
+        case KEY_J: return 0x26;
+        case KEY_K: return 0x28;
+        case KEY_L: return 0x25;
+        case KEY_SEMICOLON: return 0x29;
+        case KEY_APOSTROPHE: return 0x27;
+        case KEY_GRAVE: return 0x32;
+        case KEY_LEFTSHIFT: return 0x38;
+        case KEY_BACKSLASH: return 0x2A;
+        case KEY_Z: return 0x06;
+        case KEY_X: return 0x07;
+        case KEY_C: return 0x08;
+        case KEY_V: return 0x09;
+        case KEY_B: return 0x0B;
+        case KEY_N: return 0x2D;
+        case KEY_M: return 0x2E;
+        case KEY_COMMA: return 0x2B;
+        case KEY_DOT: return 0x2F;
+        case KEY_SLASH: return 0x2C;
+        case KEY_RIGHTSHIFT: return 0x3C;
+        case KEY_KPASTERISK: return 0x43;
+        case KEY_LEFTALT: return 0x3A;
+        case KEY_SPACE: return 0x31;
+        case KEY_CAPSLOCK: return 0x39;
+        case KEY_F1: return 0x7A;
+        case KEY_F2: return 0x78;
+        case KEY_F3: return 0x63;
+        case KEY_F4: return 0x76;
+        case KEY_F5: return 0x60;
+        case KEY_F6: return 0x61;
+        case KEY_F7: return 0x62;
+        case KEY_F8: return 0x64;
+        case KEY_F9: return 0x65;
+        case KEY_F10: return 0x6D;
+        case KEY_KP7: return 0x59;
+        case KEY_KP8: return 0x5B;
+        case KEY_KP9: return 0x5C;
+        case KEY_KPMINUS: return 0x4E;
+        case KEY_KP4: return 0x56;
+        case KEY_KP5: return 0x57;
+        case KEY_KP6: return 0x58;
+        case KEY_KPPLUS: return 0x45;
+        case KEY_KP1: return 0x53;
+        case KEY_KP2: return 0x54;
+        case KEY_KP3: return 0x55;
+        case KEY_KP0: return 0x52;
+        case KEY_KPDOT: return 0x41;
+        case KEY_F11: return 0x67;
+        case KEY_F12: return 0x6F;
+        case KEY_RIGHTCTRL: return 0x3E;
+        case KEY_KPSLASH: return 0x4B;
+        case KEY_RIGHTALT: return 0x3D;
+        case KEY_HOME: return 0x73;
+        case KEY_UP: return 0x7E;
+        case KEY_PAGEUP: return 0x74;
+        case KEY_LEFT: return 0x7B;
+        case KEY_RIGHT: return 0x7C;
+        case KEY_END: return 0x77;
+        case KEY_DOWN: return 0x7D;
+        case KEY_PAGEDOWN: return 0x79;
+        case KEY_DELETE: return 0x75;
+        case KEY_MUTE: return 0x4A;
+        case KEY_VOLUMEUP: return 0x48;
+        case KEY_VOLUMEDOWN: return 0x49;
+        case KEY_LEFTMETA: return 0x37;
+        case KEY_RIGHTMETA: return 0x36;
+        case KEY_F13: return 0x69;
+        case KEY_F14: return 0x6B;
+        case KEY_F15: return 0x71;
+        case KEY_F16: return 0x6A;
+        case KEY_F17: return 0x40;
+        case KEY_F18: return 0x4F;
+        case KEY_F19: return 0x50;
+        case KEY_F20: return 0x5A;
+        /*
+        Not defined in Events.h
+        case KEY_NUMLOCK: return -1;
+        case KEY_SCROLLLOCK: return -1;
+        case KEY_SYSRQ: return -1;
+        case KEY_INSERT: return -1;
+        case KEY_PAUSE: return -1;
+        */
+    }
+    return -1;
+}

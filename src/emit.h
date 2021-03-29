@@ -1,6 +1,9 @@
-#ifndef emit_header
-#define emit_header
+#ifndef emit_h
+#define emit_h
 
-int emit(int type, int code, int value);
+/**
+ * Emits a key event.
+ */
+void emit(int type, int code, int value);
 
 #endif

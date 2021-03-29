@@ -1,10 +1,24 @@
-#ifndef binding_header
-#define binding_header
+#ifndef binding_h
+#define binding_h
 
-extern int input;
-int bindInput(char* fileDescriptor);
+/**
+ * Creates the HID manager.
+ */
+void createHIDManager(void);
 
-extern int output;
-int bindOutput();
+/**
+ * Binds the input device.
+ */
+int bindInput(void);
+
+/**
+ * Binds the output device.
+ */
+int bindOutput(void);
+
+/**
+ * Emits a key event.
+ */
+void emit(int type, int code, int value);
 
 #endif

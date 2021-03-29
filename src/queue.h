@@ -1,10 +1,12 @@
-#ifndef queue_header
-#define queue_header
+#ifndef queue_h
+#define queue_h
 
-void clearQueue();
-int lengthOfQueue();
+#include <stdio.h>
+
+void clearQueue(void);
+int lengthOfQueue(void);
 void enqueue(int value);
-int dequeue();
-int peek();
+int dequeue(void);
+int peek(void);
 
 #endif
