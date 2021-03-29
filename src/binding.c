@@ -18,20 +18,6 @@
 // The HID manager object
 static IOHIDManagerRef hidManager;
 
-//std::optional<int64_t>
-//get_initial_key_repeat(iokit_registry_entry_id::value_t registry_entry_id) {
-//    return get_integer_property<int64_t>(
-//        registry_entry_id,
-//        CFSTR(kIOHIDServiceInitialKeyRepeatDelayKey));
-//}
-//
-//std::optional<int64_t>
-//get_key_repeat(iokit_registry_entry_id::value_t registry_entry_id) {
-//    return get_integer_property<int64_t>(
-//        registry_entry_id,
-//        CFSTR(kIOHIDServiceKeyRepeatDelayKey));
-//}
-
 /**
  * Creates the HID manager.
  */

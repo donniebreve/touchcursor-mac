@@ -2,8 +2,13 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <IOKit/IOKitLib.h>
+#include <IOKit/hid/IOHIDKeys.h>
 #include <IOKit/hid/IOHIDValue.h>
-#include <IOKit/hid/IOHIDDeviceTypes.h>
+#include <IOKit/hid/IOHIDManager.h>
+#include <IOKit/hid/IOHIDEventServiceKeys.h>
+#include <IOKit/hid/IOHIDProperties.h>
+#include <IOKit/hidsystem/IOHIDServiceClient.h>
+#include <IOKit/hidsystem/IOHIDEventSystemClient.h>
 
 #include "hidInformation.h"
 #include "macOSInternalKeyboard.h"
@@ -12,8 +17,36 @@
 
 static IOHIDDeviceRef device;
 
+static useconds_t initialKeyRepeatDelay = 250000;
+static useconds_t keyRepeatDelay = 250000;
+
 static pthread_t repeatThread;
 static int repeatCode;
+
+/**
+ * Gets the system default key delays.
+ */
+static void getKeyDelays(void)
+{
+    // Get the service client
+    IOHIDEventSystemClientRef eventSystemClient = IOHIDEventSystemClientCreateSimpleClient(kCFAllocatorDefault);
+    // Get the initial key repeat delay
+    CFTypeRef property = IOHIDEventSystemClientCopyProperty(eventSystemClient, CFSTR(kIOHIDServiceInitialKeyRepeatDelayKey));
+    if (property)
+    {
+        uint64_t value;
+        CFNumberGetValue((CFNumberRef)property, kCFNumberSInt64Type, &value);
+        initialKeyRepeatDelay = (useconds_t)(value / 1000);
+    }
+    // Get the key repeat delay
+    property = IOHIDEventSystemClientCopyProperty(eventSystemClient, CFSTR(kIOHIDServiceKeyRepeatDelayKey));
+    if (property)
+    {
+        uint64_t value;
+        CFNumberGetValue((CFNumberRef)property, kCFNumberSInt64Type, &value);
+        keyRepeatDelay = (useconds_t)(value / 1000);
+    }
+}
 
 /**
  * Binds the macOS internal keyboard.
@@ -36,8 +69,7 @@ int bindMacOSInternalKeyboard(IOHIDManagerRef hidManager)
             uint32_t vendorID = getVendorID(devices[i]);
             if (productID == appleProductID && vendorID == appleVendorID)
             {
-                IOHIDDeviceRef inputDevice = devices[i];
-                printDeviceInformation(inputDevice, false, false, false, false);
+                printDeviceInformation(devices[i], false, false, false, false);
                 // Open the device and capture all input
                 printf("Capturing the MacOS Internal Keyboard... ");
                 // Use kIOHIDOptionsTypeNone to capture events without interrupting the device
@@ -48,16 +80,26 @@ int bindMacOSInternalKeyboard(IOHIDManagerRef hidManager)
                     printf("IOHIDDeviceOpen: %s\n", getIOReturnString(result));
                     return 0;
                 }
-                device = inputDevice;
+                printf("Success\n");
+                device = devices[i];
                 // Register the input value callback
                 IOHIDDeviceRegisterInputValueCallback(
-                    inputDevice,
+                    device,
                     macOSKeyboardInputValueCallback,
                     NULL);
-                printf("Success\n");
+                getKeyDelays();
                 return 1;
             }
         }
+    }
+    return 0;
+}
+
+static int isProcessable(int code)
+{
+    if (4 <= code && code <= 231)
+    {
+        return 1;
     }
     return 0;
 }
@@ -68,11 +110,12 @@ int bindMacOSInternalKeyboard(IOHIDManagerRef hidManager)
 static void* repeatLoop(void* arg)
 {
     int code = *(int*)arg;
-    usleep(500 * 1000); // milliseconds * microseconds
+    useconds_t delay = (useconds_t)initialKeyRepeatDelay;
+    usleep(delay); // milliseconds * microseconds
     while (repeatThread == pthread_self() && repeatCode == code)
     {
-        processKey(1, code, 1);
-        usleep(100 * 1000);
+        processKey(2, code, 1);
+        usleep((useconds_t)keyRepeatDelay);
     }
     free(arg);
     pthread_exit(NULL);
@@ -118,27 +161,26 @@ void macOSKeyboardInputValueCallback(
     IOHIDElementRef element = IOHIDValueGetElement(value);
     uint32_t code = IOHIDElementGetUsage(element);
     uint32_t down = (int)IOHIDValueGetIntegerValue(value);
+    
     //printf("macOSKeyboardInputValueCallback: code=%d value=%d\n", code, down);
-    if (code == 3) // I've forgotten the relevance of code 3
+    
+    // If the HID Element Usage is outside the standard keyboard values, ignore it
+    if (code <= 3 || 232 <= code)
     {
-        emit(0, code, down);
+        return;
     }
-    if (4 <= code && code <= 231) // Most normal key codes lie in this range
+    
+    processKey(0, code, down);
+    
+    // It seems like since we have captured the device, key repeat functionality is lost.
+    // Here is my *probably bad* implementation of a key repeat.
+    if (!down)
     {
-        processKey(0, code, down);
-        // It seems like since we have captured the device, key repeat functionality is lost.
-        // Here is my *probably bad* implementation of a key repeat.
-        // Every key down needs to kill the previous thread and start a new one.
-        // Maybe keep the thread, but make two threads, one for the delay and one for the repeat
-        // Every key up needs to kill the thread, if the code matches the current repeatCode.
-        if (!down)
-        {
-            stopRepeat(code);
-        }
-        if (down)
-        {
-            startRepeat(code);
-        }
+        stopRepeat(code);
+    }
+    if (down)
+    {
+        startRepeat(code);
     }
 }
 

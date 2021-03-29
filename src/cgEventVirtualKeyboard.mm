@@ -25,9 +25,11 @@ void sendCGEventVirtualKeyboardEvent(int type, int code, int value)
 {
     code = convertKeyToVirtualKeycode(code);
     CGEventRef eventReference = CGEventCreateKeyboardEvent(eventSource, code, value);
-    //CGEventSetIntegerValueField(eventReference, kCGKeyboardEventAutorepeat, 1);
+    if (type == 2)
+    {
+        CGEventSetIntegerValueField(eventReference, kCGKeyboardEventAutorepeat, 1);
+    }
     //CGEventSetFlags(f4, kCGEventFlagMaskControl);
-    //CGEventTapLocation location = kCGHIDEventTap;
     CGEventPost(kCGHIDEventTap, eventReference);
     CFRelease(eventReference);
 }
