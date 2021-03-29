@@ -1,18 +1,8 @@
-#include <stdio.h>
 #include <IOKit/IOKitLib.h>
-#include <IOKit/IOReturn.h>
-#include <IOKit/hid/IOHIDBase.h>
-#include <IOKit/hid/IOHIDValue.h>
 #include <IOKit/hid/IOHIDManager.h>
-#include <IOKit/hid/IOHIDDevice.h>
-#include <pthread.h>
 
-#include "hidInformation.h"
-#include "keys.h"
-#include "touchcursor.h"
 #include "macOSInternalKeyboard.h"
 #include "cgEventVirtualKeyboard.h"
-//#include "karabinerVirtualKeyboard.h"
 #include "binding.h"
 
 // The HID manager object
@@ -55,19 +45,4 @@ int bindOutput()
         return 0;
     }
     return 1;
-}
-
-/**
- * Binds the output device.
- * Deprecated
- */
-int bindKarabinerVirtualKeyboardOutput()
-{
-//    outputDevice = bindKarabinerVirtualKeyboard(hidManager);
-//    if (!outputDevice)
-//    {
-//        return 0;
-//    }
-//    return 1;
-    return 0;
 }

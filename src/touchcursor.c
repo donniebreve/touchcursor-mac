@@ -46,8 +46,7 @@ static int isMapped(int code)
 }
 
 /**
- * Converts input key to touch cursor key
- * To do: make this configurable
+ * Converts input key to touch cursor key.
  */
 static int convert(int code)
 {

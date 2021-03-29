@@ -25,11 +25,10 @@ void sendCGEventVirtualKeyboardEvent(int type, int code, int value)
 {
     code = convertKeyToVirtualKeycode(code);
     CGEventRef eventReference = CGEventCreateKeyboardEvent(eventSource, code, value);
-    if (type == 2)
+    if (value == 2)
     {
         CGEventSetIntegerValueField(eventReference, kCGKeyboardEventAutorepeat, 1);
     }
-    //CGEventSetFlags(f4, kCGEventFlagMaskControl);
     CGEventPost(kCGHIDEventTap, eventReference);
     CFRelease(eventReference);
 }

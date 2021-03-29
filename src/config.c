@@ -210,10 +210,11 @@ void readConfiguration()
         {
             case device:
             {
-//                if (eventPath[0] == '\0')
-//                {
-//                    findDeviceEvent(line);
-//                }
+                // TODO: make the device configurable for MacOS
+                //if (eventPath[0] == '\0')
+                //{
+                //    findDeviceEvent(line);
+                //}
                 continue;
             }
 

@@ -1,19 +1,14 @@
-#include <stdlib.h>
+#include <stdio.h>
 #include <unistd.h>
 #include <pthread.h>
-#include <IOKit/IOKitLib.h>
-#include <IOKit/hid/IOHIDKeys.h>
-#include <IOKit/hid/IOHIDValue.h>
+
+#include <CoreFoundation/CoreFoundation.h>
 #include <IOKit/hid/IOHIDManager.h>
-#include <IOKit/hid/IOHIDEventServiceKeys.h>
-#include <IOKit/hid/IOHIDProperties.h>
-#include <IOKit/hidsystem/IOHIDServiceClient.h>
 #include <IOKit/hidsystem/IOHIDEventSystemClient.h>
 
 #include "hidInformation.h"
 #include "macOSInternalKeyboard.h"
 #include "touchcursor.h"
-#include "emit.h"
 
 static IOHIDDeviceRef device;
 
@@ -28,7 +23,7 @@ static int repeatCode;
  */
 static void getKeyDelays(void)
 {
-    // Get the service client
+    // Create an event system client
     IOHIDEventSystemClientRef eventSystemClient = IOHIDEventSystemClientCreateSimpleClient(kCFAllocatorDefault);
     // Get the initial key repeat delay
     CFTypeRef property = IOHIDEventSystemClientCopyProperty(eventSystemClient, CFSTR(kIOHIDServiceInitialKeyRepeatDelayKey));
@@ -80,7 +75,6 @@ int bindMacOSInternalKeyboard(IOHIDManagerRef hidManager)
                     printf("IOHIDDeviceOpen: %s\n", getIOReturnString(result));
                     return 0;
                 }
-                printf("Success\n");
                 device = devices[i];
                 // Register the input value callback
                 IOHIDDeviceRegisterInputValueCallback(
@@ -88,6 +82,7 @@ int bindMacOSInternalKeyboard(IOHIDManagerRef hidManager)
                     macOSKeyboardInputValueCallback,
                     NULL);
                 getKeyDelays();
+                printf("Success\n");
                 return 1;
             }
         }
@@ -95,26 +90,17 @@ int bindMacOSInternalKeyboard(IOHIDManagerRef hidManager)
     return 0;
 }
 
-static int isProcessable(int code)
-{
-    if (4 <= code && code <= 231)
-    {
-        return 1;
-    }
-    return 0;
-}
-
 /**
- * Processes a key event after a short delay.
+ * After the initial delay, loops until superseded, sending repeated key down events.
  */
 static void* repeatLoop(void* arg)
 {
     int code = *(int*)arg;
     useconds_t delay = (useconds_t)initialKeyRepeatDelay;
-    usleep(delay); // milliseconds * microseconds
+    usleep(delay); // microseconds
     while (repeatThread == pthread_self() && repeatCode == code)
     {
-        processKey(2, code, 1);
+        processKey(0, code, 2);
         usleep((useconds_t)keyRepeatDelay);
     }
     free(arg);
@@ -136,7 +122,7 @@ void stopRepeat(int code)
 
 /**
  * Starts a key repeat thread.
- * Spawns new threads for every key down, the repeat loop will exit if the repeat thread has been superseded.
+ * Spawns new threads for every key down, the repeat loop will exit if the thread has been superseded.
  */
 void startRepeat(int code)
 {
@@ -161,17 +147,14 @@ void macOSKeyboardInputValueCallback(
     IOHIDElementRef element = IOHIDValueGetElement(value);
     uint32_t code = IOHIDElementGetUsage(element);
     uint32_t down = (int)IOHIDValueGetIntegerValue(value);
-    
     //printf("macOSKeyboardInputValueCallback: code=%d value=%d\n", code, down);
-    
     // If the HID Element Usage is outside the standard keyboard values, ignore it
+    // See IOKit/hid/IOHIDUsageTables.h
     if (code <= 3 || 232 <= code)
     {
         return;
     }
-    
     processKey(0, code, down);
-    
     // It seems like since we have captured the device, key repeat functionality is lost.
     // Here is my *probably bad* implementation of a key repeat.
     if (!down)
@@ -182,21 +165,4 @@ void macOSKeyboardInputValueCallback(
     {
         startRepeat(code);
     }
-}
-
-/**
- * Prints the input report information.
- */
-static int outputNum = 0;
-void printMacOSInternalKeyboardInputReport(MacOSInternalKeyboardReport* report)
-{
-    printf("%i: mac\n", outputNum++);
-    printf("  id:        %i\n", report->id);
-    printf("  modifiers: %02x\n", report->modifiers);
-    printf("  reserved:  %02x\n", report->reserved);
-    for (int i = 0; i < 6; i++)
-    {
-        printf("  keys[%i]:   %i\n", i, report->keys[i]);
-    }
-    printf("  extended:  %02x\n", report->extendedModifiers);
 }

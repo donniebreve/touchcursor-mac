@@ -20,6 +20,7 @@
 		F67C30FD2610F9A90038E7DA /* cgEventVirtualKeyboard.mm in Sources */ = {isa = PBXBuildFile; fileRef = F67C30FC2610F9A90038E7DA /* cgEventVirtualKeyboard.mm */; };
 		F67C31002610FA870038E7DA /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F67C30FF2610FA870038E7DA /* Carbon.framework */; };
 		F67C31032610FAA60038E7DA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F67C31022610FAA60038E7DA /* Foundation.framework */; };
+		F67C310E261186EC0038E7DA /* macOSInternalKeyboard.c in Sources */ = {isa = PBXBuildFile; fileRef = F67C310C261186EC0038E7DA /* macOSInternalKeyboard.c */; };
 		F6EEF188235D303C003BBF2C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6EEF187235D303C003BBF2C /* IOKit.framework */; };
 		F6EEF18B235D32C0003BBF2C /* stdarg.h in Sources */ = {isa = PBXBuildFile; fileRef = F6EEF18A235D32C0003BBF2C /* stdarg.h */; };
 /* End PBXBuildFile section */
@@ -62,6 +63,8 @@
 		F67C30FC2610F9A90038E7DA /* cgEventVirtualKeyboard.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = cgEventVirtualKeyboard.mm; sourceTree = "<group>"; };
 		F67C30FF2610FA870038E7DA /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		F67C31022610FAA60038E7DA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		F67C310C261186EC0038E7DA /* macOSInternalKeyboard.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = macOSInternalKeyboard.c; sourceTree = "<group>"; };
+		F67C310D261186EC0038E7DA /* macOSInternalKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macOSInternalKeyboard.h; sourceTree = "<group>"; };
 		F6EEF187235D303C003BBF2C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		F6EEF18A235D32C0003BBF2C /* stdarg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stdarg.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -84,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				F6492CD726105C7D003F6006 /* touchcursor-mac.entitlements */,
+				F67C310B261186AC0038E7DA /* deprecated */,
 				F6EEF189235D32A4003BBF2C /* lib */,
 				F6EEF175235D2821003BBF2C /* src */,
 				F665293D235D26B800F63895 /* Products */,
@@ -99,6 +103,17 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		F67C310B261186AC0038E7DA /* deprecated */ = {
+			isa = PBXGroup;
+			children = (
+				F67C310C261186EC0038E7DA /* macOSInternalKeyboard.c */,
+				F67C310D261186EC0038E7DA /* macOSInternalKeyboard.h */,
+				F67BBEB42479CE49008B4A0A /* karabinerVirtualKeyboard.h */,
+				F67BBEB52479CE49008B4A0A /* karabinerVirtualKeyboard.c */,
+			);
+			path = deprecated;
+			sourceTree = "<group>";
+		};
 		F6EEF175235D2821003BBF2C /* src */ = {
 			isa = PBXGroup;
 			children = (
@@ -112,8 +127,6 @@
 				F642480C261039C7005D8FE5 /* emit.h */,
 				F67BBEAB2471AFF0008B4A0A /* hidInformation.c */,
 				F67BBEAC2471AFF0008B4A0A /* hidInformation.h */,
-				F67BBEB52479CE49008B4A0A /* karabinerVirtualKeyboard.c */,
-				F67BBEB42479CE49008B4A0A /* karabinerVirtualKeyboard.h */,
 				F67BBEBE2479DFC1008B4A0A /* keys.c */,
 				F67BBEBD2479DFC1008B4A0A /* keys.h */,
 				F67BBEB22479CE2B008B4A0A /* macOSInternalKeyboard.c */,
@@ -202,6 +215,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F67C310E261186EC0038E7DA /* macOSInternalKeyboard.c in Sources */,
 				F67BBEB62479CE49008B4A0A /* karabinerVirtualKeyboard.c in Sources */,
 				F67BBEAA24719FCE008B4A0A /* binding.c in Sources */,
 				F67BBEBC2479DF81008B4A0A /* config.c in Sources */,
