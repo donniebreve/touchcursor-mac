@@ -28,16 +28,6 @@ static int isHyper(int code)
 }
 
 /**
- * Checks if the event is key down.
- * Linux input sends value=2 for repeated key down.
- * We treat them as keydown events for processing.
- */
-static int isDown(int value)
-{
-    return value == 1 || value == 2;
-}
-
-/**
  * Checks if the key has been mapped.
  */
 static int isMapped(int code)

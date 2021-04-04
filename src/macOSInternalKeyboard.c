@@ -6,6 +6,7 @@
 #include <IOKit/hid/IOHIDManager.h>
 #include <IOKit/hidsystem/IOHIDEventSystemClient.h>
 
+#include "keys.h"
 #include "hidInformation.h"
 #include "macOSInternalKeyboard.h"
 #include "touchcursor.h"
@@ -91,17 +92,28 @@ int bindMacOSInternalKeyboard(IOHIDManagerRef hidManager)
 }
 
 /**
+ * If the key is a repeatable key (basically non-modifiers).
+ */
+static int isRepeatable(int code)
+{
+    if (isModifier(code))
+    {
+        return 0;
+    }
+    return 1;
+}
+
+/**
  * After the initial delay, loops until superseded, sending repeated key down events.
  */
 static void* repeatLoop(void* arg)
 {
     int code = *(int*)arg;
-    useconds_t delay = (useconds_t)initialKeyRepeatDelay;
-    usleep(delay); // microseconds
-    while (repeatThread == pthread_self() && repeatCode == code)
+    usleep(initialKeyRepeatDelay); // microseconds
+    while (repeatThread == pthread_self())
     {
         processKey(0, code, 2);
-        usleep((useconds_t)keyRepeatDelay);
+        usleep(keyRepeatDelay);
     }
     free(arg);
     pthread_exit(NULL);
@@ -111,7 +123,7 @@ static void* repeatLoop(void* arg)
 /**
  * Stops the current key repeating thread.
  */
-void stopRepeat(int code)
+static void stopRepeat(int code)
 {
     if (repeatThread > 0 && repeatCode == code)
     {
@@ -124,7 +136,7 @@ void stopRepeat(int code)
  * Starts a key repeat thread.
  * Spawns new threads for every key down, the repeat loop will exit if the thread has been superseded.
  */
-void startRepeat(int code)
+static void startRepeat(int code)
 {
     int* arg = malloc(sizeof(int));
     *arg = code;
@@ -145,24 +157,29 @@ void macOSKeyboardInputValueCallback(
     IOHIDValueRef value)
 {
     IOHIDElementRef element = IOHIDValueGetElement(value);
+    //uint32_t page = IOHIDElementGetUsagePage(element);
     uint32_t code = IOHIDElementGetUsage(element);
     uint32_t down = (int)IOHIDValueGetIntegerValue(value);
-    //printf("macOSKeyboardInputValueCallback: code=%d value=%d\n", code, down);
     // If the HID Element Usage is outside the standard keyboard values, ignore it
     // See IOKit/hid/IOHIDUsageTables.h
-    if (code <= 3 || 232 <= code)
+    // Not entirely sure if this is correct, Fn is code 3, which is not in the usage tables...
+    if (code <= 2 || 232 <= code)
     {
         return;
     }
+    //printf("input value callback: code=%d value=%d\n", code, down);
     processKey(0, code, down);
     // It seems like since we have captured the device, key repeat functionality is lost.
     // Here is my *probably bad* implementation of a key repeat.
-    if (!down)
+    if (isRepeatable(code))
     {
-        stopRepeat(code);
-    }
-    if (down)
-    {
-        startRepeat(code);
+        if (!down)
+        {
+            stopRepeat(code);
+        }
+        if (down)
+        {
+            startRepeat(code);
+        }
     }
 }

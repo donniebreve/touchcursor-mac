@@ -8,6 +8,8 @@
 // mac IOHIDUsage https://opensource.apple.com/source/IOHIDFamily/IOHIDFamily-1035.41.2/IOHIDFamily/IOHIDUsageTables.h.auto.html
 // mac events     https://github.com/phracker/MacOSX-SDKs/blob/master/MacOSX10.6.sdk/System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/HIToolbox.framework/Versions/A/Headers/Events.h
 
+#define kHIDUsage_Csmr  0x0C00
+
 #define KEY_RESERVED    0
 #define KEY_ESC         kHIDUsage_KeyboardEscape
 #define KEY_1           kHIDUsage_Keyboard1
@@ -110,11 +112,9 @@
 
 #define KEY_RIGHTCTRL   kHIDUsage_KeyboardRightControl
 #define KEY_KPSLASH     kHIDUsage_KeypadSlash
-#define KEY_SYSRQ       kHIDUsage_KeyboardPrintScreen /* print screen, prtscr */
+#define KEY_SYSRQ       kHIDUsage_KeyboardSysReqOrAttention /* print screen, prtscr */
 #define KEY_RIGHTALT    kHIDUsage_KeyboardRightAlt
-
-//#define KEY_LINEFEED  101
-
+#define KEY_LINEFEED    kHIDUsage_KeypadEnter
 #define KEY_HOME        kHIDUsage_KeyboardHome
 #define KEY_UP          kHIDUsage_KeyboardUpArrow
 #define KEY_PAGEUP      kHIDUsage_KeyboardPageUp
@@ -126,29 +126,26 @@
 #define KEY_INSERT      kHIDUsage_KeyboardInsert
 #define KEY_DELETE      kHIDUsage_KeyboardDeleteForward
 
-//#define KEY_MACRO     112
-
-#define KEY_MUTE        kHIDUsage_KeyboardMute
-#define KEY_VOLUMEDOWN  kHIDUsage_KeyboardVolumeDown
-#define KEY_VOLUMEUP    kHIDUsage_KeyboardVolumeUp
-
-//#define KEY_POWER     116    /* SC System Power Down */
-//#define KEY_KPEQUAL   117
+//#define KEY_MACRO       112
+//#define KEY_MUTE        113
+//#define KEY_VOLUMEDOWN  114
+//#define KEY_VOLUMEUP    115
+//#define KEY_POWER       116    /* SC System Power Down */
+//#define KEY_KPEQUAL     117
 //#define KEY_KPPLUSMINUS 118
-
-#define KEY_PAUSE       kHIDUsage_KeyboardPause
-
-//#define KEY_SCALE     120    /* AL Compiz Scale (Expose) */
-//#define KEY_KPCOMMA   121
-//#define KEY_HANGEUL   122
-//#define KEY_HANGUEL   KEY_HANGEUL
-//#define KEY_HANJA     123
-//#define KEY_YEN       124
+//#define KEY_PAUSE       119
+//#define KEY_SCALE       120    /* AL Compiz Scale (Expose) */
+//#define KEY_KPCOMMA     121
+//#define KEY_HANGEUL     122
+//#define KEY_HANGUEL     KEY_HANGEUL
+//#define KEY_HANJA       123
+//#define KEY_YEN         124
 
 #define KEY_LEFTMETA    kHIDUsage_KeyboardLeftGUI
 #define KEY_RIGHTMETA   kHIDUsage_KeyboardRightGUI
 
 //#define KEY_COMPOSE   127
+
 //#define KEY_STOP      128    /* AC Stop */
 //#define KEY_AGAIN     129
 //#define KEY_PROPS     130    /* AC Properties */
@@ -186,8 +183,8 @@
 //#define KEY_CLOSECD   160
 //#define KEY_EJECTCD   161
 //#define KEY_EJECTCLOSECD 162
-//#define KEY_NEXTSONG  163
-//#define KEY_PLAYPAUSE 164
+//#define KEY_NEXTSONG     163
+//#define KEY_PLAYPAUSE    164
 //#define KEY_PREVIOUSSONG 165
 //#define KEY_STOPCD    166
 //#define KEY_RECORD    167
@@ -249,8 +246,8 @@
 //#define KEY_MEDIA     226
 //#define KEY_SWITCHVIDEOMODE 227    /* Cycle between available video outputs (Monitor/LCD/TV-out/etc) */
 //#define KEY_KBDILLUMTOGGLE  228
-//#define KEY_KBDILLUMDOWN    229
-//#define KEY_KBDILLUMUP      230
+//#define KEY_KBDILLUMDOWN 229
+//#define KEY_KBDILLUMUP   230
 //#define KEY_SEND      231    /* AC Send */
 //#define KEY_REPLY     232    /* AC Reply */
 //#define KEY_FORWARDMAIL     233    /* AC Forward Msg */
@@ -272,6 +269,14 @@
 //#define KEY_RFKILL    247    /* Key that controls all radios */
 //#define KEY_MICMUTE   248
 
+// MacOS specific
+#define KEY_FN  3
+
+/**
+ * Checks if the event is a key down.
+ */
+int isDown(int value);
+
 /**
  * Checks if the key is a modifier key.
  */
@@ -286,10 +291,5 @@ int isExtendedKey(int code);
  * Converts a key string "KEY_I" to its corresponding code.
  */
 int convertKeyStringToCode(char* keyString);
-
-/**
- * Converts a key KEY_I to its corresponding virtual keycode.
- */
-int convertKeyToVirtualKeycode(int code);
 
 #endif

@@ -21,6 +21,8 @@
 		F67C31002610FA870038E7DA /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F67C30FF2610FA870038E7DA /* Carbon.framework */; };
 		F67C31032610FAA60038E7DA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F67C31022610FAA60038E7DA /* Foundation.framework */; };
 		F67C310E261186EC0038E7DA /* macOSInternalKeyboard.c in Sources */ = {isa = PBXBuildFile; fileRef = F67C310C261186EC0038E7DA /* macOSInternalKeyboard.c */; };
+		F67C311326129CD50038E7DA /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F67C30FF2610FA870038E7DA /* Carbon.framework */; };
+		F67C3116261909EF0038E7DA /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F67C3115261909EF0038E7DA /* AppKit.framework */; };
 		F6EEF188235D303C003BBF2C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6EEF187235D303C003BBF2C /* IOKit.framework */; };
 		F6EEF18B235D32C0003BBF2C /* stdarg.h in Sources */ = {isa = PBXBuildFile; fileRef = F6EEF18A235D32C0003BBF2C /* stdarg.h */; };
 /* End PBXBuildFile section */
@@ -65,6 +67,7 @@
 		F67C310C261186EC0038E7DA /* macOSInternalKeyboard.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = macOSInternalKeyboard.c; sourceTree = "<group>"; };
 		F67C310D261186EC0038E7DA /* macOSInternalKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macOSInternalKeyboard.h; sourceTree = "<group>"; };
 		F67C311026118B340038E7DA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		F67C3115261909EF0038E7DA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		F6EEF187235D303C003BBF2C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		F6EEF18A235D32C0003BBF2C /* stdarg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stdarg.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -75,6 +78,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F6EEF188235D303C003BBF2C /* IOKit.framework in Frameworks */,
+				F67C311326129CD50038E7DA /* Carbon.framework in Frameworks */,
+				F67C3116261909EF0038E7DA /* AppKit.framework in Frameworks */,
 				F67C31032610FAA60038E7DA /* Foundation.framework in Frameworks */,
 				F67C31002610FA870038E7DA /* Carbon.framework in Frameworks */,
 			);
@@ -143,6 +148,7 @@
 		F6EEF186235D303C003BBF2C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F67C3115261909EF0038E7DA /* AppKit.framework */,
 				F67C31022610FAA60038E7DA /* Foundation.framework */,
 				F67C30FF2610FA870038E7DA /* Carbon.framework */,
 				F6EEF187235D303C003BBF2C /* IOKit.framework */,
