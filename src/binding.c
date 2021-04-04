@@ -39,7 +39,7 @@ int bindInput()
  */
 int bindOutput()
 {
-    int result = bindCGEventVirtualKeyboard();
+    int result = createCGEventSource();
     if (!result)
     {
         return 0;

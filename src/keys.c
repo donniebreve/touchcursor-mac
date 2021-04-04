@@ -1,6 +1,17 @@
 #include <string.h>
+#include <Carbon/Carbon.h>
 
 #include "keys.h"
+
+/**
+ * Checks if the event is key down.
+ * Linux input sends value=2 for repeated key down.
+ * We treat them as keydown events for processing.
+ */
+int isDown(int value)
+{
+    return value == 1 || value == 2;
+}
 
 /**
  * Checks if the key is a modifier key.
@@ -20,6 +31,7 @@ int isModifier(int code)
         case KEY_CAPSLOCK:
         case KEY_NUMLOCK:
         case KEY_SCROLLLOCK:
+        case KEY_FN:
             return 1;
         default:
             return 0;
@@ -161,10 +173,6 @@ int convertKeyStringToCode(char* keyString)
     else if (strcmp(keyString, "KEY_PAGEDOWN") == 0) return KEY_PAGEDOWN;
     else if (strcmp(keyString, "KEY_INSERT") == 0) return KEY_INSERT;
     else if (strcmp(keyString, "KEY_DELETE") == 0) return KEY_DELETE;
-    else if (strcmp(keyString, "KEY_MUTE") == 0) return KEY_MUTE;
-    else if (strcmp(keyString, "KEY_VOLUMEDOWN") == 0) return KEY_VOLUMEDOWN;
-    else if (strcmp(keyString, "KEY_VOLUMEUP") == 0) return KEY_VOLUMEUP;
-    else if (strcmp(keyString, "KEY_PAUSE") == 0) return KEY_PAUSE;
     else if (strcmp(keyString, "KEY_LEFTMETA") == 0) return KEY_LEFTMETA;
     else if (strcmp(keyString, "KEY_RIGHTMETA") == 0) return KEY_RIGHTMETA;
     else if (strcmp(keyString, "KEY_F13") == 0) return KEY_F13;
@@ -180,131 +188,4 @@ int convertKeyStringToCode(char* keyString)
     else if (strcmp(keyString, "KEY_F23") == 0) return KEY_F23;
     else if (strcmp(keyString, "KEY_F24") == 0) return KEY_F24;
     else return 0;
-}
-		
-/**
- * Converts a key KEY_I to its corresponding virtual keycode. See Events.h.
- */
-int convertKeyToVirtualKeycode(int code)
-{
-    switch (code)
-    {
-        case KEY_ESC: return 0x35;
-        case KEY_1: return 0x12;
-        case KEY_2: return 0x13;
-        case KEY_3: return 0x14;
-        case KEY_4: return 0x15;
-        case KEY_5: return 0x17;
-        case KEY_6: return 0x16;
-        case KEY_7: return 0x1A;
-        case KEY_8: return 0x1C;
-        case KEY_9: return 0x19;
-        case KEY_0: return 0x1D;
-        case KEY_MINUS: return 0x1B;
-        case KEY_EQUAL: return 0x18;
-        case KEY_BACKSPACE: return 0x33;
-        case KEY_TAB: return 0x30;
-        case KEY_Q: return 0x0C;
-        case KEY_W: return 0x0D;
-        case KEY_E: return 0x0E;
-        case KEY_R: return 0x0F;
-        case KEY_T: return 0x11;
-        case KEY_Y: return 0x10;
-        case KEY_U: return 0x20;
-        case KEY_I: return 0x22;
-        case KEY_O: return 0x1F;
-        case KEY_P: return 0x23;
-        case KEY_LEFTBRACE: return 0x21;
-        case KEY_RIGHTBRACE: return 0x1E;
-        case KEY_ENTER: return 0x24;
-        case KEY_LEFTCTRL: return 0x3B;
-        case KEY_A: return 0x00;
-        case KEY_S: return 0x01;
-        case KEY_D: return 0x02;
-        case KEY_F: return 0x03;
-        case KEY_G: return 0x05;
-        case KEY_H: return 0x04;
-        case KEY_J: return 0x26;
-        case KEY_K: return 0x28;
-        case KEY_L: return 0x25;
-        case KEY_SEMICOLON: return 0x29;
-        case KEY_APOSTROPHE: return 0x27;
-        case KEY_GRAVE: return 0x32;
-        case KEY_LEFTSHIFT: return 0x38;
-        case KEY_BACKSLASH: return 0x2A;
-        case KEY_Z: return 0x06;
-        case KEY_X: return 0x07;
-        case KEY_C: return 0x08;
-        case KEY_V: return 0x09;
-        case KEY_B: return 0x0B;
-        case KEY_N: return 0x2D;
-        case KEY_M: return 0x2E;
-        case KEY_COMMA: return 0x2B;
-        case KEY_DOT: return 0x2F;
-        case KEY_SLASH: return 0x2C;
-        case KEY_RIGHTSHIFT: return 0x3C;
-        case KEY_KPASTERISK: return 0x43;
-        case KEY_LEFTALT: return 0x3A;
-        case KEY_SPACE: return 0x31;
-        case KEY_CAPSLOCK: return 0x39;
-        case KEY_F1: return 0x7A;
-        case KEY_F2: return 0x78;
-        case KEY_F3: return 0x63;
-        case KEY_F4: return 0x76;
-        case KEY_F5: return 0x60;
-        case KEY_F6: return 0x61;
-        case KEY_F7: return 0x62;
-        case KEY_F8: return 0x64;
-        case KEY_F9: return 0x65;
-        case KEY_F10: return 0x6D;
-        case KEY_KP7: return 0x59;
-        case KEY_KP8: return 0x5B;
-        case KEY_KP9: return 0x5C;
-        case KEY_KPMINUS: return 0x4E;
-        case KEY_KP4: return 0x56;
-        case KEY_KP5: return 0x57;
-        case KEY_KP6: return 0x58;
-        case KEY_KPPLUS: return 0x45;
-        case KEY_KP1: return 0x53;
-        case KEY_KP2: return 0x54;
-        case KEY_KP3: return 0x55;
-        case KEY_KP0: return 0x52;
-        case KEY_KPDOT: return 0x41;
-        case KEY_F11: return 0x67;
-        case KEY_F12: return 0x6F;
-        case KEY_RIGHTCTRL: return 0x3E;
-        case KEY_KPSLASH: return 0x4B;
-        case KEY_RIGHTALT: return 0x3D;
-        case KEY_HOME: return 0x73;
-        case KEY_UP: return 0x7E;
-        case KEY_PAGEUP: return 0x74;
-        case KEY_LEFT: return 0x7B;
-        case KEY_RIGHT: return 0x7C;
-        case KEY_END: return 0x77;
-        case KEY_DOWN: return 0x7D;
-        case KEY_PAGEDOWN: return 0x79;
-        case KEY_DELETE: return 0x75;
-        case KEY_MUTE: return 0x4A;
-        case KEY_VOLUMEUP: return 0x48;
-        case KEY_VOLUMEDOWN: return 0x49;
-        case KEY_LEFTMETA: return 0x37;
-        case KEY_RIGHTMETA: return 0x36;
-        case KEY_F13: return 0x69;
-        case KEY_F14: return 0x6B;
-        case KEY_F15: return 0x71;
-        case KEY_F16: return 0x6A;
-        case KEY_F17: return 0x40;
-        case KEY_F18: return 0x4F;
-        case KEY_F19: return 0x50;
-        case KEY_F20: return 0x5A;
-        /*
-        Not defined in Events.h
-        case KEY_NUMLOCK: return -1;
-        case KEY_SCROLLLOCK: return -1;
-        case KEY_SYSRQ: return -1;
-        case KEY_INSERT: return -1;
-        case KEY_PAUSE: return -1;
-        */
-    }
-    return -1;
 }

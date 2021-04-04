@@ -8,6 +8,5 @@
  */
 void emit(int type, int code, int value)
 {
-    printf("emit code: %d value: %d\n", code, value);
-    sendCGEventVirtualKeyboardEvent(0, code, value);
+    sendCGEvent(0, code, value);
 }
