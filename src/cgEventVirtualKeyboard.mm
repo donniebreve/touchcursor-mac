@@ -6,28 +6,21 @@ extern "C"
 #import <Cocoa/Cocoa.h>
 #import <AppKit/NSEvent.h>
 
-#import "keys.h"
+// NX media key definitions
+#import <IOKit/hidsystem/ev_keymap.h>
 
-// hidsystem/ev_keymap.h
-#define NX_KEYTYPE_SOUND_UP     0
-#define NX_KEYTYPE_SOUND_DOWN   1
-#define NX_KEYTYPE_MUTE	        7
-#define NX_KEYTYPE_EJECT        14
-#define NX_KEYTYPE_PLAY	        16
-#define NX_KEYTYPE_NEXT         17
-#define NX_KEYTYPE_PREVIOUS     18
-#define NX_KEYTYPE_FAST         19
-#define NX_KEYTYPE_REWIND       20
+// Other special key definitions
+#define kVK_Launchpad 130
+#define kVK_Expose 160
+
+#import "keys.h"
 
 // The virtual keyboard source
 static CGEventSourceRef source;
 
-// The modifiers
-static int ctrl = 0;
-static int shft = 0;
-static int alt = 0;
-static int meta = 0;
+// The modifier flags
 static int fn = 0;
+static int modifiers = 0;
 
 /**
  * Creates the virtual CGEventSource keyboard.
@@ -198,25 +191,25 @@ void setModifierDown(int code)
         case KEY_LEFTCTRL:
         case KEY_RIGHTCTRL:
             {
-                ctrl = 1;
+                modifiers |= kCGEventFlagMaskControl;
                 break;
             }
         case KEY_LEFTSHIFT:
         case KEY_RIGHTSHIFT:
             {
-                shft = 1;
+                modifiers |= kCGEventFlagMaskShift;
                 break;
             }
         case KEY_LEFTALT:
         case KEY_RIGHTALT:
             {
-                alt = 1;
+                modifiers |= kCGEventFlagMaskAlternate;
                 break;
             }
         case KEY_LEFTMETA:
         case KEY_RIGHTMETA:
             {
-                meta = 1;
+                modifiers |= kCGEventFlagMaskCommand;
                 break;
             }
         case KEY_FN:
@@ -238,25 +231,25 @@ void setModifierUp(int code)
         case KEY_LEFTCTRL:
         case KEY_RIGHTCTRL:
             {
-                ctrl = 0;
+                modifiers &= ~kCGEventFlagMaskControl;
                 break;
             }
         case KEY_LEFTSHIFT:
         case KEY_RIGHTSHIFT:
             {
-                shft = 0;
+                modifiers &= ~kCGEventFlagMaskShift;
                 break;
             }
         case KEY_LEFTALT:
         case KEY_RIGHTALT:
             {
-                alt = 0;
+                modifiers &= ~kCGEventFlagMaskAlternate;
                 break;
             }
         case KEY_LEFTMETA:
         case KEY_RIGHTMETA:
             {
-                meta = 0;
+                modifiers &= ~kCGEventFlagMaskCommand;
                 break;
             }
         case KEY_FN:
@@ -266,6 +259,8 @@ void setModifierUp(int code)
             }
     }
 }
+
+static int specialkey = 24;
 
 /**
  * Sends a key event using CGEventPost.
@@ -297,12 +292,35 @@ void sendCGEvent(int type, int code, int value)
         switch (code)
         {
             case KEY_F1:
+                {
+                    event = CGEventCreateMediaEvent(NX_KEYTYPE_BRIGHTNESS_DOWN, isDown(value));
+                    break;
+                }
             case KEY_F2:
+                {
+                    event = CGEventCreateMediaEvent(NX_KEYTYPE_BRIGHTNESS_UP, isDown(value));
+                    break;
+                }
             case KEY_F3:
+                {
+                    event = CGEventCreateKeyboardEvent(source, kVK_Expose, isDown(value));
+                    break;
+                }
             case KEY_F4:
+                {
+                    event = CGEventCreateKeyboardEvent(source, kVK_Launchpad, isDown(value));
+                    break;
+                }
             case KEY_F5:
+                {
+                    event = CGEventCreateMediaEvent(NX_KEYTYPE_ILLUMINATION_DOWN, isDown(value));
+                    break;
+                }
             case KEY_F6:
-                break;
+                {
+                    event = CGEventCreateMediaEvent(NX_KEYTYPE_ILLUMINATION_UP, isDown(value));
+                    break;
+                }
             case KEY_F7:
                 {
                     event = CGEventCreateMediaEvent(NX_KEYTYPE_PREVIOUS, isDown(value));
@@ -351,21 +369,9 @@ void sendCGEvent(int type, int code, int value)
     {
         CGEventSetIntegerValueField(event, kCGKeyboardEventAutorepeat, 1);
     }
-    if (ctrl)
+    if (modifiers > 0)
     {
-        CGEventSetFlags(event, kCGEventFlagMaskControl);
-    }
-    if (shft)
-    {
-        CGEventSetFlags(event, kCGEventFlagMaskShift);
-    }
-    if (alt)
-    {
-        CGEventSetFlags(event, kCGEventFlagMaskAlternate);
-    }
-    if (meta)
-    {
-        CGEventSetFlags(event, kCGEventFlagMaskCommand);
+        CGEventSetFlags(event, modifiers);
     }
     CGEventPost(kCGHIDEventTap, event);
     CFRelease(event);
