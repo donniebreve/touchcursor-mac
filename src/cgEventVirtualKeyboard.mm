@@ -14,9 +14,13 @@ extern "C"
 #define kVK_Expose 160
 
 #import "keys.h"
+#import "cgEventVirtualKeyboard.h"
 
 // The virtual keyboard source
-static CGEventSourceRef source;
+CGEventSourceRef cgEventSource;
+
+// The mouse event tap
+CFMachPortRef cgEventTap;
 
 // The modifier flags
 static int fn = 0;
@@ -25,10 +29,56 @@ static int modifiers = 0;
 /**
  * Creates the virtual CGEventSource keyboard.
  */
-void createCGEventSource(void)
+int createCGEventSource(void)
 {
-    source = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
-    //CFRelease(source);
+    cgEventSource = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
+    //CFRelease(cgEventSource);
+    return 1;
+}
+
+/**
+ * Call back for mouse events. Adds modifier flags to the events.
+ */
+static CGEventRef mouseCGEventCallback(
+    CGEventTapProxy proxy,
+    CGEventType type,
+    CGEventRef event,
+    void *refcon)
+{
+    if (modifiers > 0)
+    {
+        CGEventSetFlags(event, modifiers);
+    }
+    return event;
+}
+
+/**
+ * Creates the mouse CGEventTap.
+ */
+int createCGEventTap(void)
+{
+    cgEventTap = CGEventTapCreate(
+        kCGHIDEventTap,
+        kCGHeadInsertEventTap,
+        kCGEventTapOptionDefault,
+        kCGEventLeftMouseDown
+            | kCGEventLeftMouseUp
+            | kCGEventRightMouseDown
+            | kCGEventRightMouseUp,
+        mouseCGEventCallback,
+        NULL);
+    CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(
+        kCFAllocatorDefault,
+        cgEventTap,
+        0);
+    CFRunLoopAddSource(
+        CFRunLoopGetCurrent(),
+        runLoopSource,
+        kCFRunLoopCommonModes);
+    CGEventTapEnable(
+        cgEventTap,
+        1);
+    return 1;
 }
 
 /**
@@ -260,14 +310,12 @@ void setModifierUp(int code)
     }
 }
 
-static int specialkey = 24;
-
 /**
  * Sends a key event using CGEventPost.
  */
 void sendCGEvent(int type, int code, int value)
 {
-    if (!source)
+    if (!cgEventSource)
     {
         // CGEventPost will send the event even if the source is null :\
         return;
@@ -303,12 +351,12 @@ void sendCGEvent(int type, int code, int value)
                 }
             case KEY_F3:
                 {
-                    event = CGEventCreateKeyboardEvent(source, kVK_Expose, isDown(value));
+                    event = CGEventCreateKeyboardEvent(cgEventSource, kVK_Expose, isDown(value));
                     break;
                 }
             case KEY_F4:
                 {
-                    event = CGEventCreateKeyboardEvent(source, kVK_Launchpad, isDown(value));
+                    event = CGEventCreateKeyboardEvent(cgEventSource, kVK_Launchpad, isDown(value));
                     break;
                 }
             case KEY_F5:
@@ -363,7 +411,7 @@ void sendCGEvent(int type, int code, int value)
         {
             return;
         }
-        event = CGEventCreateKeyboardEvent(source, quartzCode, isDown(value));
+        event = CGEventCreateKeyboardEvent(cgEventSource, quartzCode, isDown(value));
     }
     if (value == 2)
     {

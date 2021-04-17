@@ -26,6 +26,7 @@ void createHIDManager()
  */
 int bindInput()
 {
+    createHIDManager();
     int result = bindMacOSInternalKeyboard(hidManager);
     if (!result)
     {
@@ -44,5 +45,19 @@ int bindOutput()
     {
         return 0;
     }
+    result = createCGEventTap();
+    if (!result)
+    {
+        return 0;
+    }
+    
     return 1;
+}
+
+/**
+ * Starts the CFRunLoop.
+ */
+void startRunLoop()
+{
+    CFRunLoopRun();
 }
