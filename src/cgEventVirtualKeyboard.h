@@ -1,10 +1,24 @@
 #ifndef cgeventvirtualkeyboard_h
 #define cgeventvirtualkeyboard_h
 
+#import <CoreFoundation/CFMachPort.h>
+#import <CoreGraphics/CGEventTypes.h>
+
+// The virtual keyboard source
+extern CGEventSourceRef cgEventSource;
+
+// The mouse event tap
+extern CFMachPortRef cgEventTap;
+
 /**
- * Binds the CGEvent virtual keyboard.
+ * Creates the mouse CGEventTap.
  */
 int createCGEventSource(void);
+
+/**
+ * Creates the mouse CGEventTap.
+ */
+int createCGEventTap(void);
     
 /**
  * Adds a modifier to the state.

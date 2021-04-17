@@ -2,11 +2,6 @@
 #define binding_h
 
 /**
- * Creates the HID manager.
- */
-void createHIDManager(void);
-
-/**
  * Binds the input device.
  */
 int bindInput(void);
@@ -17,8 +12,8 @@ int bindInput(void);
 int bindOutput(void);
 
 /**
- * Emits a key event.
+ * Starts the CFRunLoop.
  */
-void emit(int type, int code, int value);
+void startRunLoop(void);
 
 #endif

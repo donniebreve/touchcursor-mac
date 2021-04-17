@@ -12,7 +12,6 @@
 int main(int argc, char* argv[])
 {
     readConfiguration();
-    createHIDManager();
     if (!bindInput())
     {
         printf("error: Failed to capture the input device. Try allowing input monitoring for this executable in 'Security & Privacy'.\n");
@@ -24,6 +23,6 @@ int main(int argc, char* argv[])
         exit(1);
     }
     printf("info: running\n");
-    CFRunLoopRun();
+    startRunLoop();
     exit(0);
 }
