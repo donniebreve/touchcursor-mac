@@ -14,8 +14,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F665293B235D26B800F63895"
-               BuildableName = "touchcursor-mac"
+               BlueprintIdentifier = "F6DA55442635E23E00146999"
+               BuildableName = "touchcursor-mac.app"
                BlueprintName = "touchcursor-mac"
                ReferencedContainer = "container:touchcursor-mac.xcodeproj">
             </BuildableReference>
@@ -45,8 +45,8 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F665293B235D26B800F63895"
-            BuildableName = "touchcursor-mac"
+            BlueprintIdentifier = "F6DA55442635E23E00146999"
+            BuildableName = "touchcursor-mac.app"
             BlueprintName = "touchcursor-mac"
             ReferencedContainer = "container:touchcursor-mac.xcodeproj">
          </BuildableReference>
@@ -62,8 +62,8 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F665293B235D26B800F63895"
-            BuildableName = "touchcursor-mac"
+            BlueprintIdentifier = "F6DA55442635E23E00146999"
+            BuildableName = "touchcursor-mac.app"
             BlueprintName = "touchcursor-mac"
             ReferencedContainer = "container:touchcursor-mac.xcodeproj">
          </BuildableReference>

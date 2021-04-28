@@ -7,173 +7,180 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F642480D261039C7005D8FE5 /* emit.c in Sources */ = {isa = PBXBuildFile; fileRef = F642480B261039C7005D8FE5 /* emit.c */; };
-		F67BBEAA24719FCE008B4A0A /* binding.c in Sources */ = {isa = PBXBuildFile; fileRef = F67BBEA924719FCE008B4A0A /* binding.c */; };
-		F67BBEAD2471AFF0008B4A0A /* hidInformation.c in Sources */ = {isa = PBXBuildFile; fileRef = F67BBEAB2471AFF0008B4A0A /* hidInformation.c */; };
-		F67BBEB32479CE2B008B4A0A /* macOSInternalKeyboard.c in Sources */ = {isa = PBXBuildFile; fileRef = F67BBEB22479CE2B008B4A0A /* macOSInternalKeyboard.c */; };
-		F67BBEB62479CE49008B4A0A /* karabinerVirtualKeyboard.c in Sources */ = {isa = PBXBuildFile; fileRef = F67BBEB52479CE49008B4A0A /* karabinerVirtualKeyboard.c */; };
-		F67BBEB82479DCBA008B4A0A /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = F67BBEB72479DCBA008B4A0A /* main.c */; };
-		F67BBEBC2479DF81008B4A0A /* config.c in Sources */ = {isa = PBXBuildFile; fileRef = F67BBEBB2479DF81008B4A0A /* config.c */; };
-		F67BBEBF2479DFC1008B4A0A /* keys.c in Sources */ = {isa = PBXBuildFile; fileRef = F67BBEBE2479DFC1008B4A0A /* keys.c */; };
-		F67BBEC22479E4E5008B4A0A /* touchcursor.c in Sources */ = {isa = PBXBuildFile; fileRef = F67BBEC12479E4E5008B4A0A /* touchcursor.c */; };
-		F67BBEC52479E567008B4A0A /* queue.c in Sources */ = {isa = PBXBuildFile; fileRef = F67BBEC42479E567008B4A0A /* queue.c */; };
-		F67C30FD2610F9A90038E7DA /* cgEventVirtualKeyboard.mm in Sources */ = {isa = PBXBuildFile; fileRef = F67C30FC2610F9A90038E7DA /* cgEventVirtualKeyboard.mm */; };
-		F67C31002610FA870038E7DA /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F67C30FF2610FA870038E7DA /* Carbon.framework */; };
-		F67C31032610FAA60038E7DA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F67C31022610FAA60038E7DA /* Foundation.framework */; };
-		F67C310E261186EC0038E7DA /* macOSInternalKeyboard.c in Sources */ = {isa = PBXBuildFile; fileRef = F67C310C261186EC0038E7DA /* macOSInternalKeyboard.c */; };
-		F67C311326129CD50038E7DA /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F67C30FF2610FA870038E7DA /* Carbon.framework */; };
-		F67C3116261909EF0038E7DA /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F67C3115261909EF0038E7DA /* AppKit.framework */; };
-		F6EEF188235D303C003BBF2C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6EEF187235D303C003BBF2C /* IOKit.framework */; };
-		F6EEF18B235D32C0003BBF2C /* stdarg.h in Sources */ = {isa = PBXBuildFile; fileRef = F6EEF18A235D32C0003BBF2C /* stdarg.h */; };
+		F6DA55492635E23E00146999 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DA55482635E23E00146999 /* AppDelegate.swift */; };
+		F6DA554B2635E23E00146999 /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DA554A2635E23E00146999 /* StatusBarController.swift */; };
+		F6DA554D2635E24100146999 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6DA554C2635E24100146999 /* Assets.xcassets */; };
+		F6DA55532635E24100146999 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6DA55512635E24100146999 /* Main.storyboard */; };
+		F6DA557C2635EF1C00146999 /* keyboard_128.png in Resources */ = {isa = PBXBuildFile; fileRef = F6DA55722635EF1B00146999 /* keyboard_128.png */; };
+		F6DA557D2635EF1C00146999 /* keyboard_512.png in Resources */ = {isa = PBXBuildFile; fileRef = F6DA55732635EF1B00146999 /* keyboard_512.png */; };
+		F6DA557F2635EF1C00146999 /* keyboard_1024.png in Resources */ = {isa = PBXBuildFile; fileRef = F6DA55752635EF1B00146999 /* keyboard_1024.png */; };
+		F6DA55812635EF1C00146999 /* keyboard_256.png in Resources */ = {isa = PBXBuildFile; fileRef = F6DA55772635EF1C00146999 /* keyboard_256.png */; };
+		F6DA55832635EF1C00146999 /* keyboard_64.png in Resources */ = {isa = PBXBuildFile; fileRef = F6DA55792635EF1C00146999 /* keyboard_64.png */; };
+		F6DA55842635EF1C00146999 /* keyboard_32.png in Resources */ = {isa = PBXBuildFile; fileRef = F6DA557A2635EF1C00146999 /* keyboard_32.png */; };
+		F6DA55852635EF1C00146999 /* keyboard_16.png in Resources */ = {isa = PBXBuildFile; fileRef = F6DA557B2635EF1C00146999 /* keyboard_16.png */; };
+		F6DA55A12635F64300146999 /* hidInformation.c in Sources */ = {isa = PBXBuildFile; fileRef = F6DA55902635F64200146999 /* hidInformation.c */; };
+		F6DA55A22635F64300146999 /* config.c in Sources */ = {isa = PBXBuildFile; fileRef = F6DA55912635F64200146999 /* config.c */; };
+		F6DA55A32635F64300146999 /* queue.c in Sources */ = {isa = PBXBuildFile; fileRef = F6DA55922635F64200146999 /* queue.c */; };
+		F6DA55A42635F64300146999 /* keys.c in Sources */ = {isa = PBXBuildFile; fileRef = F6DA55942635F64200146999 /* keys.c */; };
+		F6DA55A52635F64300146999 /* cgEventVirtualKeyboard.mm in Sources */ = {isa = PBXBuildFile; fileRef = F6DA55962635F64200146999 /* cgEventVirtualKeyboard.mm */; };
+		F6DA55A62635F64300146999 /* emit.c in Sources */ = {isa = PBXBuildFile; fileRef = F6DA559D2635F64200146999 /* emit.c */; };
+		F6DA55A72635F64300146999 /* macOSInternalKeyboard.c in Sources */ = {isa = PBXBuildFile; fileRef = F6DA559E2635F64200146999 /* macOSInternalKeyboard.c */; };
+		F6DA55A92635F64300146999 /* touchcursor.c in Sources */ = {isa = PBXBuildFile; fileRef = F6DA55A02635F64300146999 /* touchcursor.c */; };
+		F6DA55AD2635F6AC00146999 /* binding.c in Sources */ = {isa = PBXBuildFile; fileRef = F6DA55AB2635F6AC00146999 /* binding.c */; };
+		F6DA55B52635FB5200146999 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6DA55B42635FB5200146999 /* IOKit.framework */; };
+		F6DA55B82635FB7900146999 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6DA55B72635FB7900146999 /* AppKit.framework */; };
+		F6DA55BB2635FB9500146999 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6DA55BA2635FB9400146999 /* Carbon.framework */; };
+		F6DA55BD2635FBA000146999 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6DA55BC2635FBA000146999 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		F665293A235D26B800F63895 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		F642480B261039C7005D8FE5 /* emit.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = emit.c; sourceTree = "<group>"; };
-		F642480C261039C7005D8FE5 /* emit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = emit.h; sourceTree = "<group>"; };
-		F665293C235D26B800F63895 /* touchcursor-mac */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "touchcursor-mac"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F67BBEA924719FCE008B4A0A /* binding.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = binding.c; sourceTree = "<group>"; };
-		F67BBEAB2471AFF0008B4A0A /* hidInformation.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = hidInformation.c; sourceTree = "<group>"; };
-		F67BBEAC2471AFF0008B4A0A /* hidInformation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = hidInformation.h; sourceTree = "<group>"; };
-		F67BBEB12479CE2B008B4A0A /* macOSInternalKeyboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = macOSInternalKeyboard.h; sourceTree = "<group>"; };
-		F67BBEB22479CE2B008B4A0A /* macOSInternalKeyboard.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = macOSInternalKeyboard.c; sourceTree = "<group>"; };
-		F67BBEB42479CE49008B4A0A /* karabinerVirtualKeyboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = karabinerVirtualKeyboard.h; sourceTree = "<group>"; };
-		F67BBEB52479CE49008B4A0A /* karabinerVirtualKeyboard.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = karabinerVirtualKeyboard.c; sourceTree = "<group>"; };
-		F67BBEB72479DCBA008B4A0A /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
-		F67BBEB92479DD26008B4A0A /* binding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = binding.h; sourceTree = "<group>"; };
-		F67BBEBA2479DF81008B4A0A /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
-		F67BBEBB2479DF81008B4A0A /* config.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = config.c; sourceTree = "<group>"; };
-		F67BBEBD2479DFC1008B4A0A /* keys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = keys.h; sourceTree = "<group>"; };
-		F67BBEBE2479DFC1008B4A0A /* keys.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = keys.c; sourceTree = "<group>"; };
-		F67BBEC02479E4E5008B4A0A /* touchcursor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = touchcursor.h; sourceTree = "<group>"; };
-		F67BBEC12479E4E5008B4A0A /* touchcursor.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = touchcursor.c; sourceTree = "<group>"; };
-		F67BBEC32479E567008B4A0A /* queue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = queue.h; sourceTree = "<group>"; };
-		F67BBEC42479E567008B4A0A /* queue.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = queue.c; sourceTree = "<group>"; };
-		F67C30FB2610F9A90038E7DA /* cgEventVirtualKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cgEventVirtualKeyboard.h; sourceTree = "<group>"; };
-		F67C30FC2610F9A90038E7DA /* cgEventVirtualKeyboard.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = cgEventVirtualKeyboard.mm; sourceTree = "<group>"; };
-		F67C30FF2610FA870038E7DA /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
-		F67C31022610FAA60038E7DA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		F67C310C261186EC0038E7DA /* macOSInternalKeyboard.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = macOSInternalKeyboard.c; sourceTree = "<group>"; };
-		F67C310D261186EC0038E7DA /* macOSInternalKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macOSInternalKeyboard.h; sourceTree = "<group>"; };
-		F67C311026118B340038E7DA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		F67C3115261909EF0038E7DA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		F6EEF187235D303C003BBF2C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
-		F6EEF18A235D32C0003BBF2C /* stdarg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stdarg.h; sourceTree = "<group>"; };
+		F6DA55452635E23E00146999 /* touchcursor-mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "touchcursor-mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6DA55482635E23E00146999 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F6DA554A2635E23E00146999 /* StatusBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarController.swift; sourceTree = "<group>"; };
+		F6DA554C2635E24100146999 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F6DA55522635E24100146999 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F6DA55542635E24100146999 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F6DA55552635E24100146999 /* touchcursor-mac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "touchcursor-mac.entitlements"; sourceTree = "<group>"; };
+		F6DA55722635EF1B00146999 /* keyboard_128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyboard_128.png; path = interface/Assets.xcassets/AppIcon.appiconset/keyboard_128.png; sourceTree = SOURCE_ROOT; };
+		F6DA55732635EF1B00146999 /* keyboard_512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyboard_512.png; path = interface/Assets.xcassets/AppIcon.appiconset/keyboard_512.png; sourceTree = SOURCE_ROOT; };
+		F6DA55752635EF1B00146999 /* keyboard_1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyboard_1024.png; path = interface/Assets.xcassets/AppIcon.appiconset/keyboard_1024.png; sourceTree = SOURCE_ROOT; };
+		F6DA55772635EF1C00146999 /* keyboard_256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyboard_256.png; path = interface/Assets.xcassets/AppIcon.appiconset/keyboard_256.png; sourceTree = SOURCE_ROOT; };
+		F6DA55792635EF1C00146999 /* keyboard_64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyboard_64.png; path = interface/Assets.xcassets/AppIcon.appiconset/keyboard_64.png; sourceTree = SOURCE_ROOT; };
+		F6DA557A2635EF1C00146999 /* keyboard_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyboard_32.png; path = interface/Assets.xcassets/AppIcon.appiconset/keyboard_32.png; sourceTree = SOURCE_ROOT; };
+		F6DA557B2635EF1C00146999 /* keyboard_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyboard_16.png; path = interface/Assets.xcassets/AppIcon.appiconset/keyboard_16.png; sourceTree = SOURCE_ROOT; };
+		F6DA558F2635F64100146999 /* bridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bridgingHeader.h; sourceTree = "<group>"; };
+		F6DA55902635F64200146999 /* hidInformation.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hidInformation.c; sourceTree = "<group>"; };
+		F6DA55912635F64200146999 /* config.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = config.c; sourceTree = "<group>"; };
+		F6DA55922635F64200146999 /* queue.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = queue.c; sourceTree = "<group>"; };
+		F6DA55932635F64200146999 /* macOSInternalKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macOSInternalKeyboard.h; sourceTree = "<group>"; };
+		F6DA55942635F64200146999 /* keys.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = keys.c; sourceTree = "<group>"; };
+		F6DA55952635F64200146999 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		F6DA55962635F64200146999 /* cgEventVirtualKeyboard.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = cgEventVirtualKeyboard.mm; sourceTree = "<group>"; };
+		F6DA55972635F64200146999 /* cgEventVirtualKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cgEventVirtualKeyboard.h; sourceTree = "<group>"; };
+		F6DA55982635F64200146999 /* touchcursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = touchcursor.h; sourceTree = "<group>"; };
+		F6DA55992635F64200146999 /* hidInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hidInformation.h; sourceTree = "<group>"; };
+		F6DA559A2635F64200146999 /* emit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = emit.h; sourceTree = "<group>"; };
+		F6DA559B2635F64200146999 /* keys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keys.h; sourceTree = "<group>"; };
+		F6DA559C2635F64200146999 /* queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = queue.h; sourceTree = "<group>"; };
+		F6DA559D2635F64200146999 /* emit.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = emit.c; sourceTree = "<group>"; };
+		F6DA559E2635F64200146999 /* macOSInternalKeyboard.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = macOSInternalKeyboard.c; sourceTree = "<group>"; };
+		F6DA55A02635F64300146999 /* touchcursor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = touchcursor.c; sourceTree = "<group>"; };
+		F6DA55AB2635F6AC00146999 /* binding.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = binding.c; sourceTree = "<group>"; };
+		F6DA55AC2635F6AC00146999 /* binding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = binding.h; sourceTree = "<group>"; };
+		F6DA55B42635FB5200146999 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		F6DA55B72635FB7900146999 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		F6DA55BA2635FB9400146999 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		F6DA55BC2635FBA000146999 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		F6652939235D26B800F63895 /* Frameworks */ = {
+		F6DA55422635E23E00146999 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6EEF188235D303C003BBF2C /* IOKit.framework in Frameworks */,
-				F67C311326129CD50038E7DA /* Carbon.framework in Frameworks */,
-				F67C3116261909EF0038E7DA /* AppKit.framework in Frameworks */,
-				F67C31032610FAA60038E7DA /* Foundation.framework in Frameworks */,
-				F67C31002610FA870038E7DA /* Carbon.framework in Frameworks */,
+				F6DA55B52635FB5200146999 /* IOKit.framework in Frameworks */,
+				F6DA55BB2635FB9500146999 /* Carbon.framework in Frameworks */,
+				F6DA55B82635FB7900146999 /* AppKit.framework in Frameworks */,
+				F6DA55BD2635FBA000146999 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		F6652933235D26B800F63895 = {
+		F6DA553C2635E23E00146999 = {
 			isa = PBXGroup;
 			children = (
-				F67C311026118B340038E7DA /* README.md */,
-				F67C310B261186AC0038E7DA /* deprecated */,
-				F6EEF189235D32A4003BBF2C /* lib */,
-				F6EEF175235D2821003BBF2C /* src */,
-				F665293D235D26B800F63895 /* Products */,
-				F6EEF186235D303C003BBF2C /* Frameworks */,
+				F6DA55542635E24100146999 /* Info.plist */,
+				F6DA55552635E24100146999 /* touchcursor-mac.entitlements */,
+				F6DA558E2635F5E000146999 /* src */,
+				F6DA55472635E23E00146999 /* interface */,
+				F6DA55712635EF0A00146999 /* icon */,
+				F6DA55462635E23E00146999 /* Products */,
+				F6DA55B32635FB5100146999 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
-		F665293D235D26B800F63895 /* Products */ = {
+		F6DA55462635E23E00146999 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F665293C235D26B800F63895 /* touchcursor-mac */,
+				F6DA55452635E23E00146999 /* touchcursor-mac.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		F67C310B261186AC0038E7DA /* deprecated */ = {
+		F6DA55472635E23E00146999 /* interface */ = {
 			isa = PBXGroup;
 			children = (
-				F67C310C261186EC0038E7DA /* macOSInternalKeyboard.c */,
-				F67C310D261186EC0038E7DA /* macOSInternalKeyboard.h */,
-				F67BBEB42479CE49008B4A0A /* karabinerVirtualKeyboard.h */,
-				F67BBEB52479CE49008B4A0A /* karabinerVirtualKeyboard.c */,
+				F6DA558F2635F64100146999 /* bridgingHeader.h */,
+				F6DA55482635E23E00146999 /* AppDelegate.swift */,
+				F6DA554A2635E23E00146999 /* StatusBarController.swift */,
+				F6DA554C2635E24100146999 /* Assets.xcassets */,
+				F6DA55512635E24100146999 /* Main.storyboard */,
 			);
-			path = deprecated;
+			path = interface;
 			sourceTree = "<group>";
 		};
-		F6EEF175235D2821003BBF2C /* src */ = {
+		F6DA55712635EF0A00146999 /* icon */ = {
 			isa = PBXGroup;
 			children = (
-				F67BBEA924719FCE008B4A0A /* binding.c */,
-				F67BBEB92479DD26008B4A0A /* binding.h */,
-				F67C30FC2610F9A90038E7DA /* cgEventVirtualKeyboard.mm */,
-				F67C30FB2610F9A90038E7DA /* cgEventVirtualKeyboard.h */,
-				F67BBEBB2479DF81008B4A0A /* config.c */,
-				F67BBEBA2479DF81008B4A0A /* config.h */,
-				F642480B261039C7005D8FE5 /* emit.c */,
-				F642480C261039C7005D8FE5 /* emit.h */,
-				F67BBEAB2471AFF0008B4A0A /* hidInformation.c */,
-				F67BBEAC2471AFF0008B4A0A /* hidInformation.h */,
-				F67BBEBE2479DFC1008B4A0A /* keys.c */,
-				F67BBEBD2479DFC1008B4A0A /* keys.h */,
-				F67BBEB22479CE2B008B4A0A /* macOSInternalKeyboard.c */,
-				F67BBEB12479CE2B008B4A0A /* macOSInternalKeyboard.h */,
-				F67BBEB72479DCBA008B4A0A /* main.c */,
-				F67BBEC42479E567008B4A0A /* queue.c */,
-				F67BBEC32479E567008B4A0A /* queue.h */,
-				F67BBEC12479E4E5008B4A0A /* touchcursor.c */,
-				F67BBEC02479E4E5008B4A0A /* touchcursor.h */,
+				F6DA557B2635EF1C00146999 /* keyboard_16.png */,
+				F6DA557A2635EF1C00146999 /* keyboard_32.png */,
+				F6DA55792635EF1C00146999 /* keyboard_64.png */,
+				F6DA55722635EF1B00146999 /* keyboard_128.png */,
+				F6DA55772635EF1C00146999 /* keyboard_256.png */,
+				F6DA55732635EF1B00146999 /* keyboard_512.png */,
+				F6DA55752635EF1B00146999 /* keyboard_1024.png */,
+			);
+			path = icon;
+			sourceTree = "<group>";
+		};
+		F6DA558E2635F5E000146999 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				F6DA55AC2635F6AC00146999 /* binding.h */,
+				F6DA55AB2635F6AC00146999 /* binding.c */,
+				F6DA55972635F64200146999 /* cgEventVirtualKeyboard.h */,
+				F6DA55962635F64200146999 /* cgEventVirtualKeyboard.mm */,
+				F6DA55952635F64200146999 /* config.h */,
+				F6DA55912635F64200146999 /* config.c */,
+				F6DA559A2635F64200146999 /* emit.h */,
+				F6DA559D2635F64200146999 /* emit.c */,
+				F6DA55992635F64200146999 /* hidInformation.h */,
+				F6DA55902635F64200146999 /* hidInformation.c */,
+				F6DA559B2635F64200146999 /* keys.h */,
+				F6DA55942635F64200146999 /* keys.c */,
+				F6DA55932635F64200146999 /* macOSInternalKeyboard.h */,
+				F6DA559E2635F64200146999 /* macOSInternalKeyboard.c */,
+				F6DA559C2635F64200146999 /* queue.h */,
+				F6DA55922635F64200146999 /* queue.c */,
+				F6DA55982635F64200146999 /* touchcursor.h */,
+				F6DA55A02635F64300146999 /* touchcursor.c */,
 			);
 			path = src;
 			sourceTree = "<group>";
 		};
-		F6EEF186235D303C003BBF2C /* Frameworks */ = {
+		F6DA55B32635FB5100146999 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F67C3115261909EF0038E7DA /* AppKit.framework */,
-				F67C31022610FAA60038E7DA /* Foundation.framework */,
-				F67C30FF2610FA870038E7DA /* Carbon.framework */,
-				F6EEF187235D303C003BBF2C /* IOKit.framework */,
+				F6DA55BC2635FBA000146999 /* Foundation.framework */,
+				F6DA55BA2635FB9400146999 /* Carbon.framework */,
+				F6DA55B72635FB7900146999 /* AppKit.framework */,
+				F6DA55B42635FB5200146999 /* IOKit.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		F6EEF189235D32A4003BBF2C /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				F6EEF18A235D32C0003BBF2C /* stdarg.h */,
-			);
-			path = lib;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F665293B235D26B800F63895 /* touchcursor-mac */ = {
+		F6DA55442635E23E00146999 /* touchcursor-mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F6652943235D26B800F63895 /* Build configuration list for PBXNativeTarget "touchcursor-mac" */;
+			buildConfigurationList = F6DA55582635E24100146999 /* Build configuration list for PBXNativeTarget "touchcursor-mac" */;
 			buildPhases = (
-				F6652938235D26B800F63895 /* Sources */,
-				F6652939235D26B800F63895 /* Frameworks */,
-				F665293A235D26B800F63895 /* CopyFiles */,
+				F6DA55412635E23E00146999 /* Sources */,
+				F6DA55422635E23E00146999 /* Frameworks */,
+				F6DA55432635E23E00146999 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -181,24 +188,25 @@
 			);
 			name = "touchcursor-mac";
 			productName = "touchcursor-mac";
-			productReference = F665293C235D26B800F63895 /* touchcursor-mac */;
-			productType = "com.apple.product-type.tool";
+			productReference = F6DA55452635E23E00146999 /* touchcursor-mac.app */;
+			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		F6652934235D26B800F63895 /* Project object */ = {
+		F6DA553D2635E23E00146999 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1240;
 				LastUpgradeCheck = 1240;
-				ORGANIZATIONNAME = donniebreve;
 				TargetAttributes = {
-					F665293B235D26B800F63895 = {
-						CreatedOnToolsVersion = 11.1;
+					F6DA55442635E23E00146999 = {
+						CreatedOnToolsVersion = 12.4;
+						LastSwiftMigration = 1240;
 					};
 				};
 			};
-			buildConfigurationList = F6652937235D26B800F63895 /* Build configuration list for PBXProject "touchcursor-mac" */;
+			buildConfigurationList = F6DA55402635E23E00146999 /* Build configuration list for PBXProject "touchcursor-mac" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -206,41 +214,69 @@
 				en,
 				Base,
 			);
-			mainGroup = F6652933235D26B800F63895;
-			productRefGroup = F665293D235D26B800F63895 /* Products */;
+			mainGroup = F6DA553C2635E23E00146999;
+			productRefGroup = F6DA55462635E23E00146999 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F665293B235D26B800F63895 /* touchcursor-mac */,
+				F6DA55442635E23E00146999 /* touchcursor-mac */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		F6DA55432635E23E00146999 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F6DA55812635EF1C00146999 /* keyboard_256.png in Resources */,
+				F6DA557C2635EF1C00146999 /* keyboard_128.png in Resources */,
+				F6DA55532635E24100146999 /* Main.storyboard in Resources */,
+				F6DA55842635EF1C00146999 /* keyboard_32.png in Resources */,
+				F6DA55852635EF1C00146999 /* keyboard_16.png in Resources */,
+				F6DA55832635EF1C00146999 /* keyboard_64.png in Resources */,
+				F6DA557F2635EF1C00146999 /* keyboard_1024.png in Resources */,
+				F6DA554D2635E24100146999 /* Assets.xcassets in Resources */,
+				F6DA557D2635EF1C00146999 /* keyboard_512.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
-		F6652938235D26B800F63895 /* Sources */ = {
+		F6DA55412635E23E00146999 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F67C310E261186EC0038E7DA /* macOSInternalKeyboard.c in Sources */,
-				F67BBEB62479CE49008B4A0A /* karabinerVirtualKeyboard.c in Sources */,
-				F67BBEAA24719FCE008B4A0A /* binding.c in Sources */,
-				F67BBEBC2479DF81008B4A0A /* config.c in Sources */,
-				F67BBEC22479E4E5008B4A0A /* touchcursor.c in Sources */,
-				F67BBEBF2479DFC1008B4A0A /* keys.c in Sources */,
-				F67C30FD2610F9A90038E7DA /* cgEventVirtualKeyboard.mm in Sources */,
-				F642480D261039C7005D8FE5 /* emit.c in Sources */,
-				F67BBEB82479DCBA008B4A0A /* main.c in Sources */,
-				F67BBEB32479CE2B008B4A0A /* macOSInternalKeyboard.c in Sources */,
-				F67BBEC52479E567008B4A0A /* queue.c in Sources */,
-				F6EEF18B235D32C0003BBF2C /* stdarg.h in Sources */,
-				F67BBEAD2471AFF0008B4A0A /* hidInformation.c in Sources */,
+				F6DA55A92635F64300146999 /* touchcursor.c in Sources */,
+				F6DA55A52635F64300146999 /* cgEventVirtualKeyboard.mm in Sources */,
+				F6DA554B2635E23E00146999 /* StatusBarController.swift in Sources */,
+				F6DA55A42635F64300146999 /* keys.c in Sources */,
+				F6DA55AD2635F6AC00146999 /* binding.c in Sources */,
+				F6DA55A12635F64300146999 /* hidInformation.c in Sources */,
+				F6DA55A32635F64300146999 /* queue.c in Sources */,
+				F6DA55492635E23E00146999 /* AppDelegate.swift in Sources */,
+				F6DA55A72635F64300146999 /* macOSInternalKeyboard.c in Sources */,
+				F6DA55A62635F64300146999 /* emit.c in Sources */,
+				F6DA55A22635F64300146999 /* config.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXVariantGroup section */
+		F6DA55512635E24100146999 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F6DA55522635E24100146999 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
-		F6652941235D26B800F63895 /* Debug */ = {
+		F6DA55562635E24100146999 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -296,10 +332,13 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
-		F6652942235D26B800F63895 /* Release */ = {
+		F6DA55572635E24100146999 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -348,59 +387,91 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
 		};
-		F6652944235D26B800F63895 /* Debug */ = {
+		F6DA55592635E24100146999 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = "";
-				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_PREVIEWS = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_OWNER = "$(USER)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.donniebreve.touchcursor-mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = interface/bridgingHeader.h;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
-		F6652945235D26B800F63895 /* Release */ = {
+		F6DA555A2635E24100146999 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = "";
-				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_PREVIEWS = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_OWNER = "$(USER)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.donniebreve.touchcursor-mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = interface/bridgingHeader.h;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F6652937235D26B800F63895 /* Build configuration list for PBXProject "touchcursor-mac" */ = {
+		F6DA55402635E23E00146999 /* Build configuration list for PBXProject "touchcursor-mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F6652941235D26B800F63895 /* Debug */,
-				F6652942235D26B800F63895 /* Release */,
+				F6DA55562635E24100146999 /* Debug */,
+				F6DA55572635E24100146999 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F6652943235D26B800F63895 /* Build configuration list for PBXNativeTarget "touchcursor-mac" */ = {
+		F6DA55582635E24100146999 /* Build configuration list for PBXNativeTarget "touchcursor-mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F6652944235D26B800F63895 /* Debug */,
-				F6652945235D26B800F63895 /* Release */,
+				F6DA55592635E24100146999 /* Debug */,
+				F6DA555A2635E24100146999 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = F6652934235D26B800F63895 /* Project object */;
+	rootObject = F6DA553D2635E23E00146999 /* Project object */;
 }

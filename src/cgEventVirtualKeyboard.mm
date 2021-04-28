@@ -94,7 +94,7 @@ int createCGEventTap(void)
 static CGEventRef CGEventCreateMediaEvent(int code, int down)
 {
     NSEvent* event = [NSEvent
-        otherEventWithType:NSSystemDefined
+        otherEventWithType:NSEventTypeSystemDefined
         location: NSMakePoint(0, 0)
         modifierFlags:0xa00
         timestamp:0

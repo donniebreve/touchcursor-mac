@@ -1,6 +1,8 @@
 # touchcursor-mac
 Port of the touchcursor-linux project to macOS.
 
+icon by Gregor Cresnar.
+
 # [touchcursor-linux](https://github.com/donniebreve/touchcursor-linux)
 This application remaps the `uiophjklnmy` keys to different movement keys when the spacebar is pressed down, allowing you to keep your hands on the home row.
 
