@@ -7,13 +7,13 @@
       "size" : "16x16"
     },
     {
-      "filename" : "keyboard_32-1.png",
+      "filename" : "keyboard_32.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "16x16"
     },
     {
-      "filename" : "keyboard_32.png",
+      "filename" : "keyboard_32-1.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "32x32"

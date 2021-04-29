@@ -9,7 +9,9 @@ class StatusBarController {
         statusItem = statusBar.statusItem(withLength: 28.0)
         statusItem.menu = menu
         if let statusBarButton = statusItem.button {
-            statusBarButton.image = NSImage(named:NSImage.Name("keyboard_32"))
+            let image:NSImage = NSImage(named:NSImage.Name("keyboard_32"))!
+            image.isTemplate = true
+            statusBarButton.image = image
         }
     }
 }

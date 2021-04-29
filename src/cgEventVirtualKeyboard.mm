@@ -31,8 +31,10 @@ static int modifiers = 0;
  */
 int createCGEventSource(void)
 {
+    printf("info: creating the CGEventSource... ");
     cgEventSource = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
     //CFRelease(cgEventSource);
+    printf("success\n");
     return 1;
 }
 
@@ -57,6 +59,7 @@ static CGEventRef mouseCGEventCallback(
  */
 int createCGEventTap(void)
 {
+    printf("info: creating the CGEventTap... ");
     cgEventTap = CGEventTapCreate(
         kCGHIDEventTap,
         kCGHeadInsertEventTap,
@@ -78,6 +81,7 @@ int createCGEventTap(void)
     CGEventTapEnable(
         cgEventTap,
         1);
+    printf("success\n");
     return 1;
 }
 

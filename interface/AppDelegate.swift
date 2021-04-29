@@ -8,6 +8,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         statusBarController = StatusBarController.init(menu!)
+        readConfiguration()
         if bindInput() < 1 {
             print("error: Failed to capture the input device.")
             print("error:     Either the device is already captured, or input monitoring")
@@ -23,5 +24,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
+    }
+    
+    @IBAction func about(sender: AnyObject) {
+        let aboutView = AboutView()
+        let window = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 480, height: 300),
+            styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
+            backing: .buffered, defer: false)
+        window.isReleasedWhenClosed = false
+        window.center()
+        window.setFrameAutosaveName("About")
+        window.contentView = NSHostingView(rootView: aboutView)
+        window.makeKeyAndOrderFront(nil)
     }
 }

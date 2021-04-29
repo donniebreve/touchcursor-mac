@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F6D12F2F263A6DA5007F3DE1 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D12F2E263A6DA5007F3DE1 /* AboutView.swift */; };
 		F6DA55492635E23E00146999 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DA55482635E23E00146999 /* AppDelegate.swift */; };
 		F6DA554B2635E23E00146999 /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DA554A2635E23E00146999 /* StatusBarController.swift */; };
 		F6DA554D2635E24100146999 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6DA554C2635E24100146999 /* Assets.xcassets */; };
@@ -34,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F6D12F2E263A6DA5007F3DE1 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		F6DA55452635E23E00146999 /* touchcursor-mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "touchcursor-mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6DA55482635E23E00146999 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F6DA554A2635E23E00146999 /* StatusBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarController.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				F6DA558F2635F64100146999 /* bridgingHeader.h */,
 				F6DA55482635E23E00146999 /* AppDelegate.swift */,
 				F6DA554A2635E23E00146999 /* StatusBarController.swift */,
+				F6D12F2E263A6DA5007F3DE1 /* AboutView.swift */,
 				F6DA554C2635E24100146999 /* Assets.xcassets */,
 				F6DA55512635E24100146999 /* Main.storyboard */,
 			);
@@ -252,6 +255,7 @@
 				F6DA55A52635F64300146999 /* cgEventVirtualKeyboard.mm in Sources */,
 				F6DA554B2635E23E00146999 /* StatusBarController.swift in Sources */,
 				F6DA55A42635F64300146999 /* keys.c in Sources */,
+				F6D12F2F263A6DA5007F3DE1 /* AboutView.swift in Sources */,
 				F6DA55AD2635F6AC00146999 /* binding.c in Sources */,
 				F6DA55A12635F64300146999 /* hidInformation.c in Sources */,
 				F6DA55A32635F64300146999 /* queue.c in Sources */,
@@ -413,6 +417,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.donniebreve.touchcursor-mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -442,6 +447,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.donniebreve.touchcursor-mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
