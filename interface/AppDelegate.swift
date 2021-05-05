@@ -3,11 +3,13 @@ import SwiftUI
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
-    var statusBarController: StatusBarController?
-    @IBOutlet weak var menu: NSMenu?
+    var window: NSWindow!
+    var statusBarController: StatusBarController!
+    @IBOutlet weak var menu: NSMenu!
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         statusBarController = StatusBarController.init(menu!)
+        createAboutWindow()
         readConfiguration()
         if bindInput() < 1 {
             print("error: Failed to capture the input device.")
@@ -26,9 +28,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Insert code here to tear down your application
     }
     
-    @IBAction func about(sender: AnyObject) {
+    func createAboutWindow() {
         let aboutView = AboutView()
-        let window = NSWindow(
+        window = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 480, height: 300),
             styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
             backing: .buffered, defer: false)
@@ -36,6 +38,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         window.center()
         window.setFrameAutosaveName("About")
         window.contentView = NSHostingView(rootView: aboutView)
-        window.makeKeyAndOrderFront(nil)
+    }
+    
+    @IBAction func about(sender: AnyObject) {
+        window.orderFront(nil)
     }
 }

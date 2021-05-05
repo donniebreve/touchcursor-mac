@@ -70,6 +70,11 @@ int createCGEventTap(void)
             | kCGEventRightMouseUp,
         mouseCGEventCallback,
         NULL);
+    if ((long)cgEventTap <= 0)
+    {
+        printf("failed\n");
+        return 0;
+    }
     CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(
         kCFAllocatorDefault,
         cgEventTap,
@@ -423,8 +428,10 @@ void sendCGEvent(int type, int code, int value)
     }
     if (modifiers > 0)
     {
+        //printf("sendCGEvent: modifier=%i\n", modifiers);
         CGEventSetFlags(event, modifiers);
     }
+    //printf("sendCGEvent: type=%i code=%i value=%i\n", type, code, value);
     CGEventPost(kCGHIDEventTap, event);
     CFRelease(event);
 }
