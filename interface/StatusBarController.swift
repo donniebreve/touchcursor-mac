@@ -1,17 +1,14 @@
 import AppKit
 
 class StatusBarController {
-    private var statusBar: NSStatusBar
     private var statusItem: NSStatusItem
+    private var statusBarButton: NSStatusBarButton
     
     init(_ menu: NSMenu) {
-        statusBar = NSStatusBar.init()
-        statusItem = statusBar.statusItem(withLength: 28.0)
+        statusItem = NSStatusBar.system.statusItem(withLength: -1)
         statusItem.menu = menu
-        if let statusBarButton = statusItem.button {
-            let image:NSImage = NSImage(named:NSImage.Name("keyboard_32"))!
-            image.isTemplate = true
-            statusBarButton.image = image
-        }
+        statusBarButton = statusItem.button!
+        statusBarButton.image = NSImage(named:"keyboard_32")
+        statusBarButton.image?.isTemplate = true
     }
 }

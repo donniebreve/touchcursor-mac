@@ -4,4 +4,3 @@
 
 #import "config.h"
 #import "binding.h"
-#import "cgEventVirtualKeyboard.h"

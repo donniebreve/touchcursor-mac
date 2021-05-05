@@ -29,7 +29,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func createAboutWindow() {
-        let aboutView = AboutView()
         window = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 480, height: 300),
             styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
@@ -37,7 +36,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         window.isReleasedWhenClosed = false
         window.center()
         window.setFrameAutosaveName("About")
-        window.contentView = NSHostingView(rootView: aboutView)
+        window.contentView = NSHostingView(rootView: AboutView())
     }
     
     @IBAction func about(sender: AnyObject) {
