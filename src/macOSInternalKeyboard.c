@@ -67,13 +67,13 @@ int bindMacOSInternalKeyboard(IOHIDManagerRef hidManager)
             {
                 printDeviceInformation(devices[i], false, false, false, false);
                 // Open the device and capture all input
-                printf("Capturing the MacOS Internal Keyboard... ");
+                printf("info: capturing the keyboard... ");
                 // Use kIOHIDOptionsTypeNone to capture events without interrupting the device
                 // Use kIOHIDOptionsTypeSeizeDevice to capture the device and all inputs
                 IOReturn result = IOHIDDeviceOpen(devices[i], kIOHIDOptionsTypeSeizeDevice);
                 if (result != kIOReturnSuccess)
                 {
-                    printf("IOHIDDeviceOpen: %s\n", getIOReturnString(result));
+                    printf("\nerror: IOHIDDeviceOpen: %s\n", getIOReturnString(result));
                     return 0;
                 }
                 device = devices[i];
@@ -83,7 +83,7 @@ int bindMacOSInternalKeyboard(IOHIDManagerRef hidManager)
                     macOSKeyboardInputValueCallback,
                     NULL);
                 getKeyDelays();
-                printf("Success\n");
+                printf("success\n");
                 return 1;
             }
         }
@@ -160,6 +160,7 @@ void macOSKeyboardInputValueCallback(
     //uint32_t page = IOHIDElementGetUsagePage(element);
     uint32_t code = IOHIDElementGetUsage(element);
     uint32_t down = (int)IOHIDValueGetIntegerValue(value);
+    //printf("input value callback: code=%d value=%d\n", code, down);
     // If the HID Element Usage is outside the standard keyboard values, ignore it
     // See IOKit/hid/IOHIDUsageTables.h
     // Not entirely sure if this is correct, Fn is code 3, which is not in the usage tables...
@@ -167,7 +168,7 @@ void macOSKeyboardInputValueCallback(
     {
         return;
     }
-    //printf("input value callback: code=%d value=%d\n", code, down);
+    //printf("processing: code=%d\n", code);
     processKey(0, code, down);
     // It seems like since we have captured the device, key repeat functionality is lost.
     // Here is my *probably bad* implementation of a key repeat.

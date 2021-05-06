@@ -31,8 +31,10 @@ static int modifiers = 0;
  */
 int createCGEventSource(void)
 {
+    printf("info: creating the CGEventSource... ");
     cgEventSource = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
     //CFRelease(cgEventSource);
+    printf("success\n");
     return 1;
 }
 
@@ -57,6 +59,7 @@ static CGEventRef mouseCGEventCallback(
  */
 int createCGEventTap(void)
 {
+    printf("info: creating the CGEventTap... ");
     cgEventTap = CGEventTapCreate(
         kCGHIDEventTap,
         kCGHeadInsertEventTap,
@@ -67,6 +70,11 @@ int createCGEventTap(void)
             | kCGEventRightMouseUp,
         mouseCGEventCallback,
         NULL);
+    if ((long)cgEventTap <= 0)
+    {
+        printf("failed\n");
+        return 0;
+    }
     CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(
         kCFAllocatorDefault,
         cgEventTap,
@@ -78,6 +86,7 @@ int createCGEventTap(void)
     CGEventTapEnable(
         cgEventTap,
         1);
+    printf("success\n");
     return 1;
 }
 
@@ -94,7 +103,7 @@ int createCGEventTap(void)
 static CGEventRef CGEventCreateMediaEvent(int code, int down)
 {
     NSEvent* event = [NSEvent
-        otherEventWithType:NSSystemDefined
+        otherEventWithType:NSEventTypeSystemDefined
         location: NSMakePoint(0, 0)
         modifierFlags:0xa00
         timestamp:0
@@ -419,8 +428,10 @@ void sendCGEvent(int type, int code, int value)
     }
     if (modifiers > 0)
     {
+        //printf("sendCGEvent: modifier=%i\n", modifiers);
         CGEventSetFlags(event, modifiers);
     }
+    //printf("sendCGEvent: type=%i code=%i value=%i\n", type, code, value);
     CGEventPost(kCGHIDEventTap, event);
     CFRelease(event);
 }
