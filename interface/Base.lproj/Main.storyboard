@@ -23,13 +23,7 @@
                                         </menuItem>
                                         <menuItem title="Select keyboards" id="4Lw-Yy-sMh">
                                             <modifierMask key="keyEquivalentModifierMask"/>
-                                            <menu key="submenu" title="Select keyboards" id="zzx-oD-mty">
-                                                <items>
-                                                    <menuItem title="Item" id="iCy-Hg-UKo">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                    </menuItem>
-                                                </items>
-                                            </menu>
+                                            <menu key="submenu" title="Select keyboards" id="zzx-oD-mty"/>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="KjX-ms-d6a"/>
                                         <menuItem title="Quit touchcursor-mac" keyEquivalent="q" id="4sb-4s-VLi">
@@ -48,6 +42,7 @@
                 </application>
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="touchcursor_mac" customModuleProvider="target">
                     <connections>
+                        <outlet property="keyboardMenu" destination="zzx-oD-mty" id="kQd-Hk-wep"/>
                         <outlet property="menu" destination="uQy-DD-JDr" id="mg0-1y-eT0"/>
                     </connections>
                 </customObject>
