@@ -21,7 +21,17 @@
                                                 <action selector="aboutWithSender:" target="Voe-Tx-rLC" id="csM-tL-Ryk"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
+                                        <menuItem title="Select keyboards" id="4Lw-Yy-sMh">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Select keyboards" id="zzx-oD-mty">
+                                                <items>
+                                                    <menuItem title="Item" id="iCy-Hg-UKo">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="KjX-ms-d6a"/>
                                         <menuItem title="Quit touchcursor-mac" keyEquivalent="q" id="4sb-4s-VLi">
                                             <connections>
                                                 <action selector="terminate:" target="Ady-hI-5gd" id="Te7-pn-YzF"/>

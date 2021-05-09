@@ -3,8 +3,10 @@ import SwiftUI
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
-    var window: NSWindow!
+    var aboutWindow: NSWindow!
     var statusBarController: StatusBarController!
+
+    // Outlets
     @IBOutlet weak var menu: NSMenu!
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -29,17 +31,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func createAboutWindow() {
-        window = NSWindow(
+        aboutWindow = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 480, height: 300),
             styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
             backing: .buffered, defer: false)
-        window.isReleasedWhenClosed = false
-        window.center()
-        window.setFrameAutosaveName("About")
-        window.contentView = NSHostingView(rootView: AboutView())
+        aboutWindow.isReleasedWhenClosed = false
+        aboutWindow.center()
+        aboutWindow.setFrameAutosaveName("About")
+        aboutWindow.contentView = NSHostingView(rootView: AboutView())
     }
     
+    // Actions
     @IBAction func about(sender: AnyObject) {
-        window.orderFront(nil)
+        aboutWindow.orderFront(nil)
     }
 }
