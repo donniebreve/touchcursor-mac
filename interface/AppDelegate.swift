@@ -3,9 +3,12 @@ import SwiftUI
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
-    var window: NSWindow!
+    var aboutWindow: NSWindow!
     var statusBarController: StatusBarController!
+
+    // Outlets
     @IBOutlet weak var menu: NSMenu!
+    @IBOutlet weak var keyboardMenu: NSMenu!
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         statusBarController = StatusBarController.init(menu!)
@@ -21,25 +24,32 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             print("error: Failed to connect to the output device.")
             return
         }
+
         startRunLoop()
+    }
+
+    func applicationWillBecomeActive(_ notification: Notification) {
+        keyboardMenu.addItem(NSMenuItem(title: "Item 01", action: nil, keyEquivalent: ""))
+        keyboardMenu.addItem(NSMenuItem(title: "Item 02", action: nil, keyEquivalent: ""))
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
-    
+
     func createAboutWindow() {
-        window = NSWindow(
+        aboutWindow = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 480, height: 300),
             styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
             backing: .buffered, defer: false)
-        window.isReleasedWhenClosed = false
-        window.center()
-        window.setFrameAutosaveName("About")
-        window.contentView = NSHostingView(rootView: AboutView())
+        aboutWindow.isReleasedWhenClosed = false
+        aboutWindow.center()
+        aboutWindow.setFrameAutosaveName("About")
+        aboutWindow.contentView = NSHostingView(rootView: AboutView())
     }
     
+    // Actions
     @IBAction func about(sender: AnyObject) {
-        window.orderFront(nil)
+        aboutWindow.orderFront(nil)
     }
 }
