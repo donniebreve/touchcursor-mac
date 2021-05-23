@@ -61,3 +61,32 @@ void startRunLoop()
 {
     CFRunLoopRun();
 }
+
+void getKeyboards(CFStringRef** keyboards, int** count)
+{
+    // Get set of devices
+    CFSetRef deviceSet = IOHIDManagerCopyDevices(hidManager);
+    CFIndex deviceCount = CFSetGetCount(deviceSet);
+    IOHIDDeviceRef* devices = calloc(deviceCount, sizeof(IOHIDDeviceRef));
+    CFSetGetValues(deviceSet, (const void **)devices);
+
+    int index = 0;
+    CFStringRef strRef;
+    for(CFIndex i = 0; i < deviceCount; i++)
+    {
+        strRef = (CFStringRef) IOHIDDeviceGetProperty(
+            devices[i],
+            CFSTR(kIOHIDProductKey));
+        if (strRef != NULL) {
+            *keyboards = realloc(*keyboards, (index+1) * sizeof(CFStringRef));
+            (*keyboards)[index] = (CFStringRef) IOHIDDeviceGetProperty(
+                devices[i],
+                CFSTR(kIOHIDProductKey));
+            ++index;
+        }
+    }
+    *count = malloc(1 * sizeof(int));
+    **count = index;
+
+    free(devices);
+}

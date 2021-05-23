@@ -29,8 +29,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationWillBecomeActive(_ notification: Notification) {
-        keyboardMenu.addItem(NSMenuItem(title: "Item 01", action: nil, keyEquivalent: ""))
-        keyboardMenu.addItem(NSMenuItem(title: "Item 02", action: nil, keyEquivalent: ""))
+        var ckeyboards: UnsafeMutablePointer<Unmanaged<CFString>?>?
+        var count: UnsafeMutablePointer<Int32>?
+        getKeyboards(&ckeyboards, &count)
+
+        let keyboards = Array(UnsafeBufferPointer(start: ckeyboards, count: Int(count!.pointee)))
+
+        for i in 0...(Int(count!.pointee)-1) {
+            keyboardMenu.addItem(NSMenuItem(
+                title: keyboards[i]!.takeUnretainedValue() as String,
+                action: nil,
+                keyEquivalent: ""))
+        }
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -48,6 +58,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         aboutWindow.contentView = NSHostingView(rootView: AboutView())
     }
     
+    func convertCfTypeToString(cfValue: Unmanaged<CFString>!) -> String?{
+
+        let value = Unmanaged.fromOpaque(
+            cfValue.toOpaque()).takeUnretainedValue() as CFString
+        if CFGetTypeID(value) == CFStringGetTypeID(){
+            return value as String
+        } else {
+            return nil
+        }
+    }
+
     // Actions
     @IBAction func about(sender: AnyObject) {
         aboutWindow.orderFront(nil)
