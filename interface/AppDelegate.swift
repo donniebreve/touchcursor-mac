@@ -31,16 +31,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationWillBecomeActive(_ notification: Notification) {
         var ckeyboards: UnsafeMutablePointer<Unmanaged<CFString>?>?
         var count: UnsafeMutablePointer<Int32>?
+
         getKeyboards(&ckeyboards, &count)
-
         let keyboards = Array(UnsafeBufferPointer(start: ckeyboards, count: Int(count!.pointee)))
-
         for i in 0...(Int(count!.pointee)-1) {
             keyboardMenu.addItem(NSMenuItem(
                 title: keyboards[i]!.takeUnretainedValue() as String,
                 action: nil,
                 keyEquivalent: ""))
         }
+
+        ckeyboards?.deallocate()
+        count?.deallocate()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {

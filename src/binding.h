@@ -1,7 +1,7 @@
 #ifndef binding_h
 #define binding_h
 
-#import <CoreFoundation/CFBag.h>
+#import <CoreFoundation/CFBase.h>
 
 /**
  * Binds the input device.
