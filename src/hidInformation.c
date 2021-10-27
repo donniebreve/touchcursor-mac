@@ -122,7 +122,7 @@ int getKeyboardList(struct KeyboardInformation** keyboardsPointer)
 /**
  * Gets a string property from the given HID reference.
  */
-static int getStringProperty(IOHIDDeviceRef device, CFStringRef property, UInt8* buffer, size_t length)
+int getStringProperty(IOHIDDeviceRef device, CFStringRef property, UInt8* buffer, size_t length)
 {
     // Check for no length
     if (length <= 0)
@@ -161,7 +161,7 @@ static int getStringProperty(IOHIDDeviceRef device, CFStringRef property, UInt8*
 /**
  * Gets binary property from the given HID reference.
  */
-static int getDataProperty(IOHIDDeviceRef device, CFStringRef property, uint8_t* buffer, size_t length)
+int getDataProperty(IOHIDDeviceRef device, CFStringRef property, uint8_t* buffer, size_t length)
 {
     // Check for no length
     if (length <= 0)
@@ -207,7 +207,7 @@ static int32_t getIntProperty(IOHIDDeviceRef device, CFStringRef property)
 /**
  * Gets an int from the given HID reference.
  */
-static int64_t getLongProperty(IOHIDDeviceRef device, CFStringRef property)
+int64_t getLongProperty(IOHIDDeviceRef device, CFStringRef property)
 {
     CFTypeRef typeReference = IOHIDDeviceGetProperty(device, property);
     if (typeReference) {
@@ -255,7 +255,7 @@ int getProductName(IOHIDDeviceRef device, UInt8* buffer, size_t length)
 /**
  * Gets the Serial Number from the given HID reference.
  */
-static int getSerialNumber(IOHIDDeviceRef device, UInt8* buffer, size_t length)
+int getSerialNumber(IOHIDDeviceRef device, UInt8* buffer, size_t length)
 {
     return getStringProperty(device, CFSTR(kIOHIDSerialNumberKey), buffer, length);
 }
@@ -263,7 +263,7 @@ static int getSerialNumber(IOHIDDeviceRef device, UInt8* buffer, size_t length)
 /**
  * Gets the Location ID from the given HID reference.
  */
-static int getLocationID(IOHIDDeviceRef device)
+int getLocationID(IOHIDDeviceRef device)
 {
     return getIntProperty(device, CFSTR(kIOHIDLocationIDKey));
 }
@@ -271,7 +271,7 @@ static int getLocationID(IOHIDDeviceRef device)
 /**
  * Gets the Maximum Input Report Size from the given HID reference.
  */
-static long getMaxInputReportSize(IOHIDDeviceRef device)
+long getMaxInputReportSize(IOHIDDeviceRef device)
 {
     return getLongProperty(device, CFSTR(kIOHIDMaxInputReportSizeKey));
 }
@@ -279,7 +279,7 @@ static long getMaxInputReportSize(IOHIDDeviceRef device)
 /**
  * Gets the Maximum Input Report Size from the given HID reference.
  */
-static long getMaxOutputReportSize(IOHIDDeviceRef device)
+long getMaxOutputReportSize(IOHIDDeviceRef device)
 {
     return getLongProperty(device, CFSTR(kIOHIDMaxOutputReportSizeKey));
 }
@@ -287,7 +287,7 @@ static long getMaxOutputReportSize(IOHIDDeviceRef device)
 /**
  * Gets the Unique Device ID from the given HID reference.
  */
-static int getPhysicalDeviceUniqueID(IOHIDDeviceRef device, UInt8* buffer, size_t length)
+int getPhysicalDeviceUniqueID(IOHIDDeviceRef device, UInt8* buffer, size_t length)
 {
     return getStringProperty(device, CFSTR(kIOHIDPhysicalDeviceUniqueIDKey), buffer, length);
 }
@@ -295,7 +295,7 @@ static int getPhysicalDeviceUniqueID(IOHIDDeviceRef device, UInt8* buffer, size_
 /**
  * Gets the report descriptor for the given HID device.
  */
-static int getReportDescriptor(IOHIDDeviceRef device, UInt8* buffer, size_t length)
+int getReportDescriptor(IOHIDDeviceRef device, UInt8* buffer, size_t length)
 {
    return getDataProperty(device, CFSTR(kIOHIDReportDescriptorKey), buffer, length);
 }
@@ -303,7 +303,7 @@ static int getReportDescriptor(IOHIDDeviceRef device, UInt8* buffer, size_t leng
 /**
  * Gets the Path for the given HID reference.
  */
-static int getPath(IOHIDDeviceRef device, char* buffer, size_t length)
+int getPath(IOHIDDeviceRef device, char* buffer, size_t length)
 {
     io_string_t path;
     io_service_t service = IOHIDDeviceGetService(device);
@@ -318,7 +318,7 @@ static int getPath(IOHIDDeviceRef device, char* buffer, size_t length)
 /**
  * Prints the value elements for the device.
  */
-static void printElements(IOHIDDeviceRef device)
+void printElements(IOHIDDeviceRef device)
 {
     CFArrayRef elements = IOHIDDeviceCopyMatchingElements(device, NULL, kIOHIDOptionsTypeNone);
     for (CFIndex i = 0; i < CFArrayGetCount(elements); i++)
@@ -334,7 +334,7 @@ static void printElements(IOHIDDeviceRef device)
 /**
  * Creates a matching dictionary for the given device.
  */
-static CFDictionaryRef createMatchingDictionary(IOHIDDeviceRef device)
+CFDictionaryRef createMatchingDictionary(IOHIDDeviceRef device)
 {
     int vendorID = (int)getVendorID(device);
     int productID = (int)getProductID(device);
@@ -364,7 +364,7 @@ static CFDictionaryRef createMatchingDictionary(IOHIDDeviceRef device)
 /**
  * Prints the report data.
  */
-static void printReport(uint8_t* report, CFIndex length)
+void printReport(uint8_t* report, CFIndex length)
 {
     printf("Report Descriptor:\n");
     for (int i = 0; i < length; i++)
