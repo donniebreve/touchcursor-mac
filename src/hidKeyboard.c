@@ -8,7 +8,7 @@
 
 #include "keys.h"
 #include "hidInformation.h"
-#include "macOSInternalKeyboard.h"
+#include "hidKeyboard.h"
 #include "touchcursor.h"
 
 static IOHIDDeviceRef device;
@@ -42,53 +42,6 @@ static void getKeyDelays(void)
         CFNumberGetValue((CFNumberRef)property, kCFNumberSInt64Type, &value);
         keyRepeatDelay = (useconds_t)(value / 1000);
     }
-}
-
-/**
- * Binds the macOS internal keyboard.
- */
-int bindMacOSInternalKeyboard(IOHIDManagerRef hidManager)
-{
-    // Get set of devices
-    CFSetRef deviceSet = IOHIDManagerCopyDevices(hidManager);
-    CFIndex deviceCount = CFSetGetCount(deviceSet);
-    IOHIDDeviceRef* devices = calloc(deviceCount, sizeof(IOHIDDeviceRef));
-    CFSetGetValues(deviceSet, (const void **)devices);
-    // Iterate devices
-    for (CFIndex i = 0; i < deviceCount; i++)
-    {
-        // Check if the device is a keyboard, this also opens the device
-        if (IOHIDDeviceConformsTo(devices[i], kHIDPage_GenericDesktop, kHIDUsage_GD_Keyboard))
-        {
-            // Check if this is the apple keyboard, expand this later to use a GUI selection
-            uint32_t productID = getProductID(devices[i]);
-            uint32_t vendorID = getVendorID(devices[i]);
-            if (productID == appleProductID && vendorID == appleVendorID)
-            {
-                printDeviceInformation(devices[i], false, false, false, false);
-                // Open the device and capture all input
-                printf("info: capturing the keyboard... ");
-                // Use kIOHIDOptionsTypeNone to capture events without interrupting the device
-                // Use kIOHIDOptionsTypeSeizeDevice to capture the device and all inputs
-                IOReturn result = IOHIDDeviceOpen(devices[i], kIOHIDOptionsTypeSeizeDevice);
-                if (result != kIOReturnSuccess)
-                {
-                    printf("\nerror: IOHIDDeviceOpen: %s\n", getIOReturnString(result));
-                    return 0;
-                }
-                device = devices[i];
-                // Register the input value callback
-                IOHIDDeviceRegisterInputValueCallback(
-                    device,
-                    macOSKeyboardInputValueCallback,
-                    NULL);
-                getKeyDelays();
-                printf("success\n");
-                return 1;
-            }
-        }
-    }
-    return 0;
 }
 
 /**
@@ -150,7 +103,7 @@ static void startRepeat(int code)
 /**
  * The input value callback method.
  */
-void macOSKeyboardInputValueCallback(
+void inputValueCallback(
     void* context,
     IOReturn result,
     void* sender,
@@ -183,4 +136,50 @@ void macOSKeyboardInputValueCallback(
             startRepeat(code);
         }
     }
+}
+
+/**
+ * Binds the macOS internal keyboard.
+ */
+int bindKeyboard(uint32_t productID, uint32_t vendorID, IOHIDManagerRef hidManager)
+{
+    // Get set of devices
+    CFSetRef deviceSet = IOHIDManagerCopyDevices(hidManager);
+    CFIndex deviceCount = CFSetGetCount(deviceSet);
+    IOHIDDeviceRef* devices = calloc(deviceCount, sizeof(IOHIDDeviceRef));
+    CFSetGetValues(deviceSet, (const void **)devices);
+    // Iterate devices
+    for (CFIndex i = 0; i < deviceCount; i++)
+    {
+        // Check if the device is a keyboard, this also opens the device
+        if (IOHIDDeviceConformsTo(devices[i], kHIDPage_GenericDesktop, kHIDUsage_GD_Keyboard))
+        {
+            // Check if this is the apple keyboard, expand this later to use a GUI selection
+            uint32_t product = getProductID(devices[i]);
+            uint32_t vendor = getVendorID(devices[i]);
+            if (product == productID && vendor == vendorID)
+            {
+                // Open the device and capture all input
+                printf("info: capturing the keyboard... ");
+                // Use kIOHIDOptionsTypeNone to capture events without interrupting the device
+                // Use kIOHIDOptionsTypeSeizeDevice to capture the device and all inputs
+                IOReturn result = IOHIDDeviceOpen(devices[i], kIOHIDOptionsTypeSeizeDevice);
+                if (result != kIOReturnSuccess)
+                {
+                    printf("\nerror: IOHIDDeviceOpen: %s\n", getIOReturnString(result));
+                    return 0;
+                }
+                device = devices[i];
+                // Register the input value callback
+                IOHIDDeviceRegisterInputValueCallback(
+                    device,
+                    inputValueCallback,
+                    NULL);
+                getKeyDelays();
+                printf("success\n");
+                return 1;
+            }
+        }
+    }
+    return 0;
 }

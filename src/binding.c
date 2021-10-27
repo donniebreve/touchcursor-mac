@@ -1,33 +1,17 @@
 #include <IOKit/IOKitLib.h>
 #include <IOKit/hid/IOHIDManager.h>
 
-#include "macOSInternalKeyboard.h"
+#include "hidInformation.h"
+#include "hidKeyboard.h"
 #include "cgEventVirtualKeyboard.h"
 #include "binding.h"
-
-// The HID manager object
-static IOHIDManagerRef hidManager;
-
-/**
- * Creates the HID manager.
- */
-void createHIDManager()
-{
-    // Create the HID manager
-    hidManager = IOHIDManagerCreate(kCFAllocatorDefault, kIOHIDOptionsTypeNone);
-    // Match all devices
-    IOHIDManagerSetDeviceMatching(hidManager, NULL);
-    // Set the run loop
-    IOHIDManagerScheduleWithRunLoop(hidManager, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
-}
 
 /**
  * Binds the input device.
  */
 int bindInput()
 {
-    createHIDManager();
-    int result = bindMacOSInternalKeyboard(hidManager);
+    int result = bindKeyboard(630, 1452, hidManager);
     if (!result)
     {
         return 0;

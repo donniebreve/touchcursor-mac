@@ -21,6 +21,11 @@
                                                 <action selector="aboutWithSender:" target="Voe-Tx-rLC" id="csM-tL-Ryk"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="5Ds-nf-tam"/>
+                                        <menuItem title="Select Keyboard" id="7Lm-HK-4ZO">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Select Keyboard" id="qgs-VP-tek"/>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
                                         <menuItem title="Quit touchcursor-mac" keyEquivalent="q" id="4sb-4s-VLi">
                                             <connections>
@@ -38,6 +43,7 @@
                 </application>
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="touchcursor_mac" customModuleProvider="target">
                     <connections>
+                        <outlet property="keyboardMenu" destination="qgs-VP-tek" id="2Sa-em-7BJ"/>
                         <outlet property="menu" destination="uQy-DD-JDr" id="mg0-1y-eT0"/>
                     </connections>
                 </customObject>

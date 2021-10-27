@@ -3,13 +3,16 @@ import SwiftUI
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
+    @IBOutlet weak var menu: NSMenu!
+    @IBOutlet weak var keyboardMenu: NSMenu!
+    
     var window: NSWindow!
     var statusBarController: StatusBarController!
-    @IBOutlet weak var menu: NSMenu!
-
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        statusBarController = StatusBarController.init(menu!)
         createAboutWindow()
+        createHIDManager()
+        statusBarController = StatusBarController.init(menu, keyboardMenu)
         readConfiguration()
         if bindInput() < 1 {
             print("error: Failed to capture the input device.")

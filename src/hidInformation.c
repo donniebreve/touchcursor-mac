@@ -5,6 +5,9 @@
 
 #include "hidInformation.h"
 
+// The HID manager object
+IOHIDManagerRef hidManager;
+
 // Information
 
 // Super useful "wiki"
@@ -71,10 +74,47 @@ const uint8_t genericKeyboardReportDescriptor[] = {
 };
 
 // Buffer for printing device information
-static wchar_t buffer[256];
+static char buffer[256];
 
 // Buffer for printing report information
 static uint8_t reportBuffer[256];
+
+/**
+ * Creates the HID manager.
+ */
+void createHIDManager()
+{
+    // Create the HID manager
+    hidManager = IOHIDManagerCreate(kCFAllocatorDefault, kIOHIDOptionsTypeNone);
+    // Match all devices
+    IOHIDManagerSetDeviceMatching(hidManager, NULL);
+    // Set the run loop
+    IOHIDManagerScheduleWithRunLoop(hidManager, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
+}
+
+CFArrayRef getKeyboardList()
+{
+    int index = 0;
+    CFStringRef* keyboards = 0;
+    // Get set of devices
+    CFSetRef deviceSet = IOHIDManagerCopyDevices(hidManager);
+    CFIndex deviceCount = CFSetGetCount(deviceSet);
+    IOHIDDeviceRef* devices = calloc(deviceCount, sizeof(IOHIDDeviceRef));
+    CFSetGetValues(deviceSet, (const void **)devices);
+    // Iterate devices
+    for (CFIndex i = 0; i < deviceCount; i++)
+    {
+        // Check if the device is a keyboard, this also opens the device
+        if (IOHIDDeviceConformsTo(devices[i], kHIDPage_GenericDesktop, kHIDUsage_GD_Keyboard))
+        {
+            keyboards = realloc(keyboards, (index + 1) * sizeof(CFStringRef));
+            keyboards[index] = (CFStringRef)IOHIDDeviceGetProperty(devices[i], CFSTR(kIOHIDProductKey));
+            ++index;
+        }
+    }
+    free(devices);
+    return CFArrayCreate(kCFAllocatorDefault, (const void **)keyboards, index, &kCFTypeArrayCallBacks);
+}
 
 /**
  * Gets a string property from the given HID reference.
@@ -396,10 +436,22 @@ char* getIOReturnString(IOReturn ioReturn)
     return "Unknown";
 }
 
+void printDeviceName(IOHIDDeviceRef device)
+{
+    if (getProductName(device, buffer, 256) > 0)
+    {
+        printf("name=%ls", buffer);
+    }
+}
+
 /**
  * Prints information about the device.
  */
-void printDeviceInformation(IOHIDDeviceRef device, bool path, bool reportSize, bool reportDescriptor, bool elements)
+void printDeviceInformation(IOHIDDeviceRef device,
+    bool path,
+    bool reportSize,
+    bool reportDescriptor,
+    bool elements)
 {
     int valueLength = 0;
     if ((valueLength = getProductName(device, buffer, 256)) > 0)

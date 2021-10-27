@@ -33,7 +33,6 @@ int createCGEventSource(void)
 {
     printf("info: creating the CGEventSource... ");
     cgEventSource = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
-    //CFRelease(cgEventSource);
     printf("success\n");
     return 1;
 }
