@@ -139,7 +139,7 @@ void inputValueCallback(
 }
 
 /**
- * Binds the macOS internal keyboard.
+ * Binds the keyboard.
  */
 int bindKeyboard(uint32_t productID, uint32_t vendorID, IOHIDManagerRef hidManager)
 {
@@ -182,4 +182,15 @@ int bindKeyboard(uint32_t productID, uint32_t vendorID, IOHIDManagerRef hidManag
         }
     }
     return 0;
+}
+
+/**
+ * Releases the keyboard.
+ */
+void releaseKeyboard()
+{
+    if ((long)device > 0)
+    {
+        IOHIDDeviceClose(device, kIOHIDOptionsTypeNone);
+    }
 }

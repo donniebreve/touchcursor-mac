@@ -3,6 +3,13 @@
 
 #include <IOKit/hid/IOHIDValue.h>
 
+struct KeyboardInformation {
+   CFStringRef  Name;
+   int          ProductID;
+   int          VendorID;
+   
+};
+
 // The HID manager object
 extern IOHIDManagerRef hidManager;
 
@@ -14,11 +21,11 @@ void createHIDManager(void);
 /**
  * Gets a list of available keyboard devices.
  */
-CFArrayRef getKeyboardList(void);
+int getKeyboardList(struct KeyboardInformation**);
 
+int getProductName(IOHIDDeviceRef device, UInt8* buffer, size_t length);
 int getProductID(IOHIDDeviceRef device);
 int getVendorID(IOHIDDeviceRef device);
-int getProductName(IOHIDDeviceRef device, wchar_t* buffer, size_t length);
 char* getIOReturnString(IOReturn ioReturn);
 
 void printDeviceName(IOHIDDeviceRef device);
