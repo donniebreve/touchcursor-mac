@@ -74,7 +74,7 @@ const uint8_t genericKeyboardReportDescriptor[] = {
 };
 
 // Buffer for printing device information
-static char buffer[256];
+static UInt8 buffer[256];
 
 // Buffer for printing report information
 static uint8_t reportBuffer[256];
@@ -443,7 +443,7 @@ void printDeviceName(IOHIDDeviceRef device)
 {
     if (getProductName(device, buffer, 256) > 0)
     {
-        printf("name=%ls", buffer);
+        printf("name=%s", buffer);
     }
 }
 
@@ -459,19 +459,19 @@ void printDeviceInformation(IOHIDDeviceRef device,
     int valueLength = 0;
     if ((valueLength = getProductName(device, buffer, 256)) > 0)
     {
-        printf("Device: %ls\n", buffer);
+        printf("Device: %s\n", buffer);
     }
     if ((valueLength = getPhysicalDeviceUniqueID(device, buffer, 256)) > 0)
     {
-        printf("ID: %ls\n", buffer);
+        printf("ID: %s\n", buffer);
     }
     if ((valueLength = getSerialNumber(device, buffer, 256)) > 0)
     {
-        printf("Serial: %ls\n", buffer);
+        printf("Serial: %s\n", buffer);
     }
     if ((valueLength = getManufacturerName(device, buffer, 256)) > 0)
     {
-        printf("Manufacturer: %ls\n", buffer);
+        printf("Manufacturer: %s\n", buffer);
     }
     printf("ProductID: %d", getProductID(device));
     printf(", VendorID: %d", getVendorID(device));

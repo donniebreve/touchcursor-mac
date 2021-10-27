@@ -11,6 +11,6 @@ int bindKeyboard(uint32_t productID, uint32_t vendorID, IOHIDManagerRef hidManag
 /**
  * Releases the keyboard.
  */
-void releaseKeyboard();
+void releaseKeyboard(void);
 
 #endif
