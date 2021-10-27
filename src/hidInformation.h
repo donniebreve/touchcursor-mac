@@ -7,7 +7,6 @@ struct KeyboardInformation {
    CFStringRef  Name;
    int          ProductID;
    int          VendorID;
-   
 };
 
 // The HID manager object
