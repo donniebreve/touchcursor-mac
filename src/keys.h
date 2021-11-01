@@ -1,5 +1,5 @@
-#ifndef keys_h
-#define keys_h
+#ifndef keys_header
+#define keys_header
 
 #include <IOKit/hid/IOHIDUsageTables.h>
 
@@ -281,11 +281,6 @@ int isDown(int value);
  * Checks if the key is a modifier key.
  */
 int isModifier(int code);
-
-/**
- * Checks for an extended key, specific to windows.
- */
-int isExtendedKey(int code);
 
 /**
  * Converts a key string "KEY_I" to its corresponding code.
