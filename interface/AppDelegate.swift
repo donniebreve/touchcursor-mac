@@ -16,7 +16,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
+        stopCapture()
     }
     
     func createAboutWindow() {
@@ -35,9 +35,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func startCapture(_ productID: Int32, _ vendorID: Int32) {
-        releaseInput()
-        releaseOutput()
-        stopRunLoop()
+        stopCapture()
         readConfiguration()
         if bindInput(productID, vendorID) < 1 {
             print("error: Failed to capture the input device.")
@@ -50,5 +48,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return
         }
         startRunLoop()
+    }
+    
+    func stopCapture() {
+        releaseInput()
+        releaseOutput()
+        stopRunLoop()
     }
 }
