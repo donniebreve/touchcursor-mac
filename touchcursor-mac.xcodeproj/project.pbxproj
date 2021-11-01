@@ -3,22 +3,22 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F6703CD42730510500D571DE /* keyboard_512.png in Resources */ = {isa = PBXBuildFile; fileRef = F6703CCD2730510500D571DE /* keyboard_512.png */; };
+		F6703CD52730510500D571DE /* keyboard_128.png in Resources */ = {isa = PBXBuildFile; fileRef = F6703CCE2730510500D571DE /* keyboard_128.png */; };
+		F6703CD62730510500D571DE /* keyboard_32.png in Resources */ = {isa = PBXBuildFile; fileRef = F6703CCF2730510500D571DE /* keyboard_32.png */; };
+		F6703CD72730510500D571DE /* keyboard_16.png in Resources */ = {isa = PBXBuildFile; fileRef = F6703CD02730510500D571DE /* keyboard_16.png */; };
+		F6703CD82730510500D571DE /* keyboard_64.png in Resources */ = {isa = PBXBuildFile; fileRef = F6703CD12730510500D571DE /* keyboard_64.png */; };
+		F6703CD92730510500D571DE /* keyboard_1024.png in Resources */ = {isa = PBXBuildFile; fileRef = F6703CD22730510500D571DE /* keyboard_1024.png */; };
+		F6703CDA2730510500D571DE /* keyboard_256.png in Resources */ = {isa = PBXBuildFile; fileRef = F6703CD32730510500D571DE /* keyboard_256.png */; };
 		F6D12F2F263A6DA5007F3DE1 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D12F2E263A6DA5007F3DE1 /* AboutView.swift */; };
 		F6DA55492635E23E00146999 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DA55482635E23E00146999 /* AppDelegate.swift */; };
 		F6DA554B2635E23E00146999 /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DA554A2635E23E00146999 /* StatusBarController.swift */; };
 		F6DA554D2635E24100146999 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6DA554C2635E24100146999 /* Assets.xcassets */; };
 		F6DA55532635E24100146999 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6DA55512635E24100146999 /* Main.storyboard */; };
-		F6DA557C2635EF1C00146999 /* keyboard_128.png in Resources */ = {isa = PBXBuildFile; fileRef = F6DA55722635EF1B00146999 /* keyboard_128.png */; };
-		F6DA557D2635EF1C00146999 /* keyboard_512.png in Resources */ = {isa = PBXBuildFile; fileRef = F6DA55732635EF1B00146999 /* keyboard_512.png */; };
-		F6DA557F2635EF1C00146999 /* keyboard_1024.png in Resources */ = {isa = PBXBuildFile; fileRef = F6DA55752635EF1B00146999 /* keyboard_1024.png */; };
-		F6DA55812635EF1C00146999 /* keyboard_256.png in Resources */ = {isa = PBXBuildFile; fileRef = F6DA55772635EF1C00146999 /* keyboard_256.png */; };
-		F6DA55832635EF1C00146999 /* keyboard_64.png in Resources */ = {isa = PBXBuildFile; fileRef = F6DA55792635EF1C00146999 /* keyboard_64.png */; };
-		F6DA55842635EF1C00146999 /* keyboard_32.png in Resources */ = {isa = PBXBuildFile; fileRef = F6DA557A2635EF1C00146999 /* keyboard_32.png */; };
-		F6DA55852635EF1C00146999 /* keyboard_16.png in Resources */ = {isa = PBXBuildFile; fileRef = F6DA557B2635EF1C00146999 /* keyboard_16.png */; };
 		F6DA55A12635F64300146999 /* hidInformation.c in Sources */ = {isa = PBXBuildFile; fileRef = F6DA55902635F64200146999 /* hidInformation.c */; };
 		F6DA55A22635F64300146999 /* config.c in Sources */ = {isa = PBXBuildFile; fileRef = F6DA55912635F64200146999 /* config.c */; };
 		F6DA55A32635F64300146999 /* queue.c in Sources */ = {isa = PBXBuildFile; fileRef = F6DA55922635F64200146999 /* queue.c */; };
@@ -35,6 +35,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F6703CCD2730510500D571DE /* keyboard_512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyboard_512.png; sourceTree = "<group>"; };
+		F6703CCE2730510500D571DE /* keyboard_128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyboard_128.png; sourceTree = "<group>"; };
+		F6703CCF2730510500D571DE /* keyboard_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyboard_32.png; sourceTree = "<group>"; };
+		F6703CD02730510500D571DE /* keyboard_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyboard_16.png; sourceTree = "<group>"; };
+		F6703CD12730510500D571DE /* keyboard_64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyboard_64.png; sourceTree = "<group>"; };
+		F6703CD22730510500D571DE /* keyboard_1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyboard_1024.png; sourceTree = "<group>"; };
+		F6703CD32730510500D571DE /* keyboard_256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyboard_256.png; sourceTree = "<group>"; };
 		F6D12F2E263A6DA5007F3DE1 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		F6DA55452635E23E00146999 /* touchcursor-mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "touchcursor-mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6DA55482635E23E00146999 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -43,13 +50,6 @@
 		F6DA55522635E24100146999 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F6DA55542635E24100146999 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F6DA55552635E24100146999 /* touchcursor-mac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "touchcursor-mac.entitlements"; sourceTree = "<group>"; };
-		F6DA55722635EF1B00146999 /* keyboard_128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyboard_128.png; path = interface/Assets.xcassets/AppIcon.appiconset/keyboard_128.png; sourceTree = SOURCE_ROOT; };
-		F6DA55732635EF1B00146999 /* keyboard_512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyboard_512.png; path = interface/Assets.xcassets/AppIcon.appiconset/keyboard_512.png; sourceTree = SOURCE_ROOT; };
-		F6DA55752635EF1B00146999 /* keyboard_1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyboard_1024.png; path = interface/Assets.xcassets/AppIcon.appiconset/keyboard_1024.png; sourceTree = SOURCE_ROOT; };
-		F6DA55772635EF1C00146999 /* keyboard_256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyboard_256.png; path = interface/Assets.xcassets/AppIcon.appiconset/keyboard_256.png; sourceTree = SOURCE_ROOT; };
-		F6DA55792635EF1C00146999 /* keyboard_64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyboard_64.png; path = interface/Assets.xcassets/AppIcon.appiconset/keyboard_64.png; sourceTree = SOURCE_ROOT; };
-		F6DA557A2635EF1C00146999 /* keyboard_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyboard_32.png; path = interface/Assets.xcassets/AppIcon.appiconset/keyboard_32.png; sourceTree = SOURCE_ROOT; };
-		F6DA557B2635EF1C00146999 /* keyboard_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyboard_16.png; path = interface/Assets.xcassets/AppIcon.appiconset/keyboard_16.png; sourceTree = SOURCE_ROOT; };
 		F6DA558F2635F64100146999 /* bridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bridgingHeader.h; sourceTree = "<group>"; };
 		F6DA55902635F64200146999 /* hidInformation.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hidInformation.c; sourceTree = "<group>"; };
 		F6DA55912635F64200146999 /* config.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = config.c; sourceTree = "<group>"; };
@@ -95,8 +95,9 @@
 			children = (
 				F6DA55542635E24100146999 /* Info.plist */,
 				F6DA55552635E24100146999 /* touchcursor-mac.entitlements */,
-				F6DA558E2635F5E000146999 /* src */,
+				F6DA554C2635E24100146999 /* Assets.xcassets */,
 				F6DA55472635E23E00146999 /* interface */,
+				F6DA558E2635F5E000146999 /* src */,
 				F6DA55712635EF0A00146999 /* icon */,
 				F6DA55462635E23E00146999 /* Products */,
 				F6DA55B32635FB5100146999 /* Frameworks */,
@@ -118,7 +119,6 @@
 				F6DA55482635E23E00146999 /* AppDelegate.swift */,
 				F6DA554A2635E23E00146999 /* StatusBarController.swift */,
 				F6D12F2E263A6DA5007F3DE1 /* AboutView.swift */,
-				F6DA554C2635E24100146999 /* Assets.xcassets */,
 				F6DA55512635E24100146999 /* Main.storyboard */,
 			);
 			path = interface;
@@ -127,13 +127,13 @@
 		F6DA55712635EF0A00146999 /* icon */ = {
 			isa = PBXGroup;
 			children = (
-				F6DA557B2635EF1C00146999 /* keyboard_16.png */,
-				F6DA557A2635EF1C00146999 /* keyboard_32.png */,
-				F6DA55792635EF1C00146999 /* keyboard_64.png */,
-				F6DA55722635EF1B00146999 /* keyboard_128.png */,
-				F6DA55772635EF1C00146999 /* keyboard_256.png */,
-				F6DA55732635EF1B00146999 /* keyboard_512.png */,
-				F6DA55752635EF1B00146999 /* keyboard_1024.png */,
+				F6703CD02730510500D571DE /* keyboard_16.png */,
+				F6703CCF2730510500D571DE /* keyboard_32.png */,
+				F6703CD12730510500D571DE /* keyboard_64.png */,
+				F6703CCE2730510500D571DE /* keyboard_128.png */,
+				F6703CD32730510500D571DE /* keyboard_256.png */,
+				F6703CCD2730510500D571DE /* keyboard_512.png */,
+				F6703CD22730510500D571DE /* keyboard_1024.png */,
 			);
 			path = icon;
 			sourceTree = "<group>";
@@ -210,7 +210,7 @@
 				};
 			};
 			buildConfigurationList = F6DA55402635E23E00146999 /* Build configuration list for PBXProject "touchcursor-mac" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -232,15 +232,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6DA55812635EF1C00146999 /* keyboard_256.png in Resources */,
-				F6DA557C2635EF1C00146999 /* keyboard_128.png in Resources */,
+				F6703CDA2730510500D571DE /* keyboard_256.png in Resources */,
+				F6703CD82730510500D571DE /* keyboard_64.png in Resources */,
+				F6703CD42730510500D571DE /* keyboard_512.png in Resources */,
+				F6703CD72730510500D571DE /* keyboard_16.png in Resources */,
 				F6DA55532635E24100146999 /* Main.storyboard in Resources */,
-				F6DA55842635EF1C00146999 /* keyboard_32.png in Resources */,
-				F6DA55852635EF1C00146999 /* keyboard_16.png in Resources */,
-				F6DA55832635EF1C00146999 /* keyboard_64.png in Resources */,
-				F6DA557F2635EF1C00146999 /* keyboard_1024.png in Resources */,
+				F6703CD92730510500D571DE /* keyboard_1024.png in Resources */,
+				F6703CD52730510500D571DE /* keyboard_128.png in Resources */,
 				F6DA554D2635E24100146999 /* Assets.xcassets in Resources */,
-				F6DA557D2635EF1C00146999 /* keyboard_512.png in Resources */,
+				F6703CD62730510500D571DE /* keyboard_32.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,13 +331,15 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = interface/brigingHeader.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -387,12 +389,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = interface/brigingHeader.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;

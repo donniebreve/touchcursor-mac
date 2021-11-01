@@ -6,8 +6,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var menu: NSMenu!
     @IBOutlet weak var keyboardMenu: NSMenu!
     
-    var aboutWindow: NSWindow!
-    var statusBarController: StatusBarController!
+    private var aboutWindow: NSWindow!
+    private var statusBarController: StatusBarController!
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         createAboutWindow()
