@@ -31,7 +31,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func about(sender: AnyObject) {
-        aboutWindow.orderFront(nil)
+        aboutWindow.orderFrontRegardless()
     }
     
     func startCapture(_ productID: Int32, _ vendorID: Int32) {

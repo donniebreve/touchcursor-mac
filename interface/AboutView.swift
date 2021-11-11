@@ -5,12 +5,12 @@ struct AboutView: View {
         HStack{
             Image(nsImage:NSImage(named:NSImage.Name("keyboard_128"))!).padding()
             VStack {
-                Text("touchcursor").font(.title) + Text("mac")
+                Text("Touchcursor for Mac").font(.title)
                 Text("Version 0.1")
-                Text("A lightweight key mapper.")
+                Text("A lightweight key mapper, designed to remap the homerow keys to movement keys.")
                     .font(Font.system(size: 10))
                     .italic()
-                    .frame(minWidth: 0, idealWidth: 0, maxWidth: 200, minHeight: 0, idealHeight: 0, maxHeight: 50, alignment: .center)
+                    .frame(minWidth: 0, idealWidth: 0, maxWidth: 200, minHeight: 0, idealHeight: 0, maxHeight: 75, alignment: .center)
                     .padding()
                 Button(
                     action: {

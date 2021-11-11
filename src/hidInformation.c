@@ -108,7 +108,11 @@ int getKeyboardList(struct KeyboardInformation** keyboardsPointer)
         if (IOHIDDeviceConformsTo(devices[i], kHIDPage_GenericDesktop, kHIDUsage_GD_Keyboard))
         {
             keyboards = (struct KeyboardInformation*)realloc(keyboards, (index + 1) * sizeof(struct KeyboardInformation));
-            keyboards[index].Name = CFStringCreateCopy(kCFAllocatorDefault, IOHIDDeviceGetProperty(devices[i], CFSTR(kIOHIDProductKey)));
+            keyboards[index].Name = CFSTR("Unknown");
+            CFTypeRef productKeyProperty = IOHIDDeviceGetProperty(devices[i], CFSTR(kIOHIDProductKey));
+            if (productKeyProperty != NULL) {
+                keyboards[index].Name = CFStringCreateCopy(kCFAllocatorDefault, productKeyProperty);
+            }
             keyboards[index].ProductID = getProductID(devices[i]);
             keyboards[index].VendorID = getVendorID(devices[i]);
             ++index;
