@@ -1,10 +1,10 @@
 SRCPATH = ./src
-OBJPATH = ./obj
 OUTPATH = ./out
-TARGET = touchcursor
-# LIBS = -lm
+TARGET = touchcursor-mac.app
+
 CC = gcc
 CFLAGS = -g -Wall
+
 INSTALLPATH?=/usr/local/bin
 
 .PHONY: default all clean
@@ -12,24 +12,26 @@ INSTALLPATH?=/usr/local/bin
 default: $(OUTPATH)/$(TARGET)
 all: default
 
-# All c files, excluding test.c
-SOURCES = $(filter-out $(SRCPATH)/test.c, $(wildcard $(SRCPATH)/*.c))
-# All h files
-HEADERS = $(wildcard $(SRCPATH)/*.h)
-# Replace c files with obj/filename.o from sources
-OBJECTS = $(patsubst $(SRCPATH)/%.c, $(OBJPATH)/%.o, $(SOURCES))
+# # All c files, excluding test.c
+# SOURCES = $(filter-out $(SRCPATH)/test.c, $(wildcard $(SRCPATH)/*.c))
+# # All h files
+# HEADERS = $(wildcard $(SRCPATH)/*.h)
+# # Replace c files with obj/filename.o from sources
+# OBJECTS = $(patsubst $(SRCPATH)/%.c, $(OBJPATH)/%.o, $(SOURCES))
 
 .PRECIOUS: $(TARGET) $(OBJECTS)
 
 # Each .o file depends on its .c file and .h file (we include all headers)
-$(OBJPATH)/%.o: $(SRCPATH)/%.c $(HEADERS)
-	@mkdir -p $(OBJPATH)
-	$(CC) $(CFLAGS) -c $< -o $@
+# $(OBJPATH)/%.o: $(SRCPATH)/%.c $(HEADERS)
+# 	@mkdir -p $(OBJPATH)
+# 	$(CC) $(CFLAGS) -c $< -o $@
 
 # The target depends on all the .o files
-$(OUTPATH)/$(TARGET): $(OBJECTS)
-	@mkdir -p $(OUTPATH)
-	$(CC) $(OBJECTS) -Wall -o $@
+# $(OUTPATH)/$(TARGET): $(OBJECTS)
+# 	@mkdir -p $(OUTPATH)
+# 	$(CC) $(OBJECTS) -Wall -o $@
+
+xcodebuild -arch x86_64 -destination $(OUTPATH)
 
 clean:
 	-rm -f obj/*.o

@@ -1,6 +1,8 @@
 # touchcursor-mac
 Port of the [touchcursor-linux](https://github.com/donniebreve/touchcursor-linux) project to macOS.
 
+<img width="489" alt="image" src="https://user-images.githubusercontent.com/23609591/139715717-538a932f-e61a-4381-b137-7a8a5c533fd1.png">
+
 _Icon by Gregor Cresnar_
 
 # Description 

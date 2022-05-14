@@ -1,38 +1,33 @@
 #include <IOKit/IOKitLib.h>
 #include <IOKit/hid/IOHIDManager.h>
 
-#include "macOSInternalKeyboard.h"
+#include "hidInformation.h"
+#include "hidKeyboard.h"
 #include "cgEventVirtualKeyboard.h"
 #include "binding.h"
 
-// The HID manager object
-static IOHIDManagerRef hidManager;
-
-/**
- * Creates the HID manager.
- */
-void createHIDManager()
-{
-    // Create the HID manager
-    hidManager = IOHIDManagerCreate(kCFAllocatorDefault, kIOHIDOptionsTypeNone);
-    // Match all devices
-    IOHIDManagerSetDeviceMatching(hidManager, NULL);
-    // Set the run loop
-    IOHIDManagerScheduleWithRunLoop(hidManager, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
-}
+// The Run Loop
+CFRunLoopRef runLoop;
 
 /**
  * Binds the input device.
  */
-int bindInput()
+int bindInput(int productID, int vendorID)
 {
-    createHIDManager();
-    int result = bindMacOSInternalKeyboard(hidManager);
+    int result = bindKeyboard(productID, vendorID, hidManager);
     if (!result)
     {
         return 0;
     }
     return 1;
+}
+
+/**
+ * Releases the input device.
+ */
+void releaseInput()
+{
+    releaseKeyboard();
 }
 
 /**
@@ -50,8 +45,15 @@ int bindOutput()
     {
         return 0;
     }
-    
     return 1;
+}
+
+/**
+ * Releases the output device.
+ */
+void releaseOutput()
+{
+    // TODO
 }
 
 /**
@@ -59,5 +61,17 @@ int bindOutput()
  */
 void startRunLoop()
 {
+    runLoop = CFRunLoopGetCurrent();
     CFRunLoopRun();
+}
+
+/**
+ * Starts the CFRunLoop.
+ */
+void stopRunLoop()
+{
+    if ((long)runLoop > 1)
+    {
+        CFRunLoopStop(runLoop);
+    }
 }

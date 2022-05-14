@@ -3,4 +3,5 @@
 //
 
 #import "config.h"
+#import "hidInformation.h"
 #import "binding.h"
