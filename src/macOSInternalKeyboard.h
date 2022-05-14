@@ -4,7 +4,6 @@
 #include <IOKit/hid/IOHIDManager.h>
 
 #define appleVendorID 1452
-#define appleProductID 630
 
 #define logitechVendorID 1133
 #define logitechProductID 49949
