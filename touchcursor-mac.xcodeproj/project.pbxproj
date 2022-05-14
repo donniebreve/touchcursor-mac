@@ -20,7 +20,6 @@
 		F6DA55842635EF1C00146999 /* keyboard_32.png in Resources */ = {isa = PBXBuildFile; fileRef = F6DA557A2635EF1C00146999 /* keyboard_32.png */; };
 		F6DA55852635EF1C00146999 /* keyboard_16.png in Resources */ = {isa = PBXBuildFile; fileRef = F6DA557B2635EF1C00146999 /* keyboard_16.png */; };
 		F6DA55A12635F64300146999 /* hidInformation.c in Sources */ = {isa = PBXBuildFile; fileRef = F6DA55902635F64200146999 /* hidInformation.c */; };
-		F6DA55A22635F64300146999 /* config.c in Sources */ = {isa = PBXBuildFile; fileRef = F6DA55912635F64200146999 /* config.c */; };
 		F6DA55A32635F64300146999 /* queue.c in Sources */ = {isa = PBXBuildFile; fileRef = F6DA55922635F64200146999 /* queue.c */; };
 		F6DA55A42635F64300146999 /* keys.c in Sources */ = {isa = PBXBuildFile; fileRef = F6DA55942635F64200146999 /* keys.c */; };
 		F6DA55A52635F64300146999 /* cgEventVirtualKeyboard.mm in Sources */ = {isa = PBXBuildFile; fileRef = F6DA55962635F64200146999 /* cgEventVirtualKeyboard.mm */; };
@@ -52,11 +51,9 @@
 		F6DA557B2635EF1C00146999 /* keyboard_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyboard_16.png; path = interface/Assets.xcassets/AppIcon.appiconset/keyboard_16.png; sourceTree = SOURCE_ROOT; };
 		F6DA558F2635F64100146999 /* bridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bridgingHeader.h; sourceTree = "<group>"; };
 		F6DA55902635F64200146999 /* hidInformation.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hidInformation.c; sourceTree = "<group>"; };
-		F6DA55912635F64200146999 /* config.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = config.c; sourceTree = "<group>"; };
 		F6DA55922635F64200146999 /* queue.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = queue.c; sourceTree = "<group>"; };
 		F6DA55932635F64200146999 /* macOSInternalKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macOSInternalKeyboard.h; sourceTree = "<group>"; };
 		F6DA55942635F64200146999 /* keys.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = keys.c; sourceTree = "<group>"; };
-		F6DA55952635F64200146999 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		F6DA55962635F64200146999 /* cgEventVirtualKeyboard.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = cgEventVirtualKeyboard.mm; sourceTree = "<group>"; };
 		F6DA55972635F64200146999 /* cgEventVirtualKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cgEventVirtualKeyboard.h; sourceTree = "<group>"; };
 		F6DA55982635F64200146999 /* touchcursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = touchcursor.h; sourceTree = "<group>"; };
@@ -145,8 +142,6 @@
 				F6DA55AB2635F6AC00146999 /* binding.c */,
 				F6DA55972635F64200146999 /* cgEventVirtualKeyboard.h */,
 				F6DA55962635F64200146999 /* cgEventVirtualKeyboard.mm */,
-				F6DA55952635F64200146999 /* config.h */,
-				F6DA55912635F64200146999 /* config.c */,
 				F6DA559A2635F64200146999 /* emit.h */,
 				F6DA559D2635F64200146999 /* emit.c */,
 				F6DA55992635F64200146999 /* hidInformation.h */,
@@ -262,7 +257,6 @@
 				F6DA55492635E23E00146999 /* AppDelegate.swift in Sources */,
 				F6DA55A72635F64300146999 /* macOSInternalKeyboard.c in Sources */,
 				F6DA55A62635F64300146999 /* emit.c in Sources */,
-				F6DA55A22635F64300146999 /* config.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

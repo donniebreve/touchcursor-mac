@@ -162,11 +162,11 @@ void macOSKeyboardInputValueCallback(
     {
         return;
     }
-    //printf("processing: code=%d\n", code);
+
     processKey(0, code, down);
     // It seems like since we have captured the device, key repeat functionality is lost.
     // Here is my *probably bad* implementation of a key repeat.
-    if (isRepeatable(code))
+    if (isRepeatable(code) || code == KEY_BACKSPACE)
     {
         if (!down)
         {

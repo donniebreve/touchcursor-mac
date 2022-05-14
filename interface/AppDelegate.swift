@@ -10,7 +10,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         statusBarController = StatusBarController.init(menu!)
         createAboutWindow()
-        readConfiguration()
         if bindInput() < 1 {
             print("error: Failed to capture the input device.")
             print("error:     Either the device is already captured, or input monitoring")
@@ -18,7 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return
         }
         if bindOutput() < 1 {
-            print("error: Failed to connect to the output device.")
+            print("error: Failed to connect to the output device. Make sure Accessibility is set in settings")
             return
         }
         startRunLoop()

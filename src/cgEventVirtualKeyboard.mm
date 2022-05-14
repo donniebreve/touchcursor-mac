@@ -343,74 +343,70 @@ void sendCGEvent(int type, int code, int value)
         }
     }
     CGEventRef event = 0;
-    // If fn is down, send media keys for f keys (TODO: make this configurable?)
-    if (fn)
+    switch (code)
     {
-        switch (code)
-        {
-            case KEY_F1:
-                {
-                    event = CGEventCreateMediaEvent(NX_KEYTYPE_BRIGHTNESS_DOWN, isDown(value));
-                    break;
-                }
-            case KEY_F2:
-                {
-                    event = CGEventCreateMediaEvent(NX_KEYTYPE_BRIGHTNESS_UP, isDown(value));
-                    break;
-                }
-            case KEY_F3:
-                {
-                    event = CGEventCreateKeyboardEvent(cgEventSource, kVK_Expose, isDown(value));
-                    break;
-                }
-            case KEY_F4:
-                {
-                    event = CGEventCreateKeyboardEvent(cgEventSource, kVK_Launchpad, isDown(value));
-                    break;
-                }
-            case KEY_F5:
-                {
-                    event = CGEventCreateMediaEvent(NX_KEYTYPE_ILLUMINATION_DOWN, isDown(value));
-                    break;
-                }
-            case KEY_F6:
-                {
-                    event = CGEventCreateMediaEvent(NX_KEYTYPE_ILLUMINATION_UP, isDown(value));
-                    break;
-                }
-            case KEY_F7:
-                {
-                    event = CGEventCreateMediaEvent(NX_KEYTYPE_PREVIOUS, isDown(value));
-                    break;
-                }
-            case KEY_F8:
-                {
-                    event = CGEventCreateMediaEvent(NX_KEYTYPE_PLAY, isDown(value));
-                    break;
-                }
-            case KEY_F9:
-                {
-                    event = CGEventCreateMediaEvent(NX_KEYTYPE_NEXT, isDown(value));
-                    break;
-                }
-            case KEY_F10:
-                {
-                    event = CGEventCreateMediaEvent(NX_KEYTYPE_MUTE, isDown(value));
-                    break;
-                }
-            case KEY_F11:
-                {
-                    event = CGEventCreateMediaEvent(NX_KEYTYPE_SOUND_DOWN, isDown(value));
-                    break;
-                }
-            case KEY_F12:
-                {
-                    event = CGEventCreateMediaEvent(NX_KEYTYPE_SOUND_UP, isDown(value));
-                    break;
-                }
-            default:
+        case KEY_F1:
+            {
+                event = CGEventCreateMediaEvent(NX_KEYTYPE_BRIGHTNESS_DOWN, isDown(value));
                 break;
-        }
+            }
+        case KEY_F2:
+            {
+                event = CGEventCreateMediaEvent(NX_KEYTYPE_BRIGHTNESS_UP, isDown(value));
+                break;
+            }
+        case KEY_F3:
+            {
+                event = CGEventCreateKeyboardEvent(cgEventSource, kVK_Expose, isDown(value));
+                break;
+            }
+        case KEY_F4:
+            {
+                event = CGEventCreateKeyboardEvent(cgEventSource, kVK_Launchpad, isDown(value));
+                break;
+            }
+        case KEY_F5:
+            {
+                event = CGEventCreateMediaEvent(NX_KEYTYPE_ILLUMINATION_DOWN, isDown(value));
+                break;
+            }
+        case KEY_F6:
+            {
+                event = CGEventCreateMediaEvent(NX_KEYTYPE_ILLUMINATION_UP, isDown(value));
+                break;
+            }
+        case KEY_F7:
+            {
+                event = CGEventCreateMediaEvent(NX_KEYTYPE_PREVIOUS, isDown(value));
+                break;
+            }
+        case KEY_F8:
+            {
+                event = CGEventCreateMediaEvent(NX_KEYTYPE_PLAY, isDown(value));
+                break;
+            }
+        case KEY_F9:
+            {
+                event = CGEventCreateMediaEvent(NX_KEYTYPE_NEXT, isDown(value));
+                break;
+            }
+        case KEY_F10:
+            {
+                event = CGEventCreateMediaEvent(NX_KEYTYPE_MUTE, isDown(value));
+                break;
+            }
+        case KEY_F11:
+            {
+                event = CGEventCreateMediaEvent(NX_KEYTYPE_SOUND_DOWN, isDown(value));
+                break;
+            }
+        case KEY_F12:
+            {
+                event = CGEventCreateMediaEvent(NX_KEYTYPE_SOUND_UP, isDown(value));
+                break;
+            }
+        default:
+            break;
     }
     // Otherwise send normal keys
     if ((long)event <= 0)

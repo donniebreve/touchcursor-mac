@@ -7,7 +7,6 @@
 enum states
 {
     idle,
-    hyper,
     delay,
     map
 };
