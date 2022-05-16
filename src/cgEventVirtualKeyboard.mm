@@ -16,6 +16,8 @@ extern "C"
 #import "keys.h"
 #import "cgEventVirtualKeyboard.h"
 
+static int (*currentFilterCallback)(int, int);
+
 // The virtual keyboard source
 CGEventSourceRef cgEventSource;
 
@@ -49,7 +51,8 @@ static CGEventRef mouseCGEventCallback(
 {
     if (modifiers > 0)
     {
-        CGEventSetFlags(event, modifiers);
+        int mouseModifiers = modifiers &= ~NX_NONCOALSESCEDMASK;
+        CGEventSetFlags(event, mouseModifiers);
     }
     return event;
 }
@@ -248,29 +251,59 @@ void setModifierDown(int code)
     switch (code)
     {
         case KEY_LEFTCTRL:
+        {
+            modifiers |= kCGEventFlagMaskControl;
+            break;
+        }
         case KEY_RIGHTCTRL:
-            {
-                modifiers |= kCGEventFlagMaskControl;
-                break;
-            }
+        {
+            modifiers |= kCGEventFlagMaskControl;
+            break;
+        }
         case KEY_LEFTSHIFT:
+        {
+            modifiers |= NX_DEVICERSHIFTKEYMASK;
+            modifiers |= NX_SHIFTMASK;
+            break;
+        }
         case KEY_RIGHTSHIFT:
-            {
-                modifiers |= kCGEventFlagMaskShift;
-                break;
-            }
+        {
+            modifiers |= NX_DEVICELSHIFTKEYMASK;
+            modifiers |= NX_SHIFTMASK;
+            break;
+        }
         case KEY_LEFTALT:
+        {
+            modifiers |= NX_ALTERNATEMASK;
+            modifiers |= NX_DEVICELALTKEYMASK;
+            break;
+        }
         case KEY_RIGHTALT:
-            {
-                modifiers |= kCGEventFlagMaskAlternate;
-                break;
-            }
+        {
+            modifiers |= NX_ALTERNATEMASK;
+            modifiers |= NX_DEVICERALTKEYMASK;
+            break;
+        }
         case KEY_LEFTMETA:
+        {
+            modifiers |= NX_COMMANDMASK;
+            modifiers |= NX_DEVICELCMDKEYMASK;
+            break;
+        }
         case KEY_RIGHTMETA:
-            {
-                modifiers |= kCGEventFlagMaskCommand;
-                break;
-            }
+        {
+            modifiers |= NX_COMMANDMASK;
+            modifiers |= NX_DEVICERCMDKEYMASK;
+            break;
+        }
+        case KEY_UP:
+        case KEY_DOWN:
+        case KEY_LEFT:
+        case KEY_RIGHT:
+        {
+            modifiers |= NX_NUMERICPADMASK;
+            break;
+        }
         case KEY_FN:
             {
                 fn = 1;
@@ -288,29 +321,57 @@ void setModifierUp(int code)
     switch (code)
     {
         case KEY_LEFTCTRL:
+        {
+            modifiers &= ~kCGEventFlagMaskControl;
+            break;
+        }
         case KEY_RIGHTCTRL:
-            {
-                modifiers &= ~kCGEventFlagMaskControl;
-                break;
-            }
-        case KEY_LEFTSHIFT:
+        {
+            modifiers &= ~kCGEventFlagMaskControl;
+            break;
+        }
+        case KEY_LEFTSHIFT: {
+            modifiers &= ~NX_DEVICELSHIFTKEYMASK;
+            modifiers &= ~NX_SHIFTMASK;
+        }
         case KEY_RIGHTSHIFT:
-            {
-                modifiers &= ~kCGEventFlagMaskShift;
-                break;
-            }
+        {
+            modifiers &= ~NX_DEVICERSHIFTKEYMASK;
+            modifiers &= ~NX_SHIFTMASK;
+            break;
+        }
         case KEY_LEFTALT:
+        {
+            modifiers &= ~NX_ALTERNATEMASK;
+            modifiers &= ~NX_DEVICELALTKEYMASK;
+            break;
+        }
         case KEY_RIGHTALT:
-            {
-                modifiers &= ~kCGEventFlagMaskAlternate;
-                break;
-            }
+        {
+            modifiers &= ~NX_ALTERNATEMASK;
+            modifiers &= ~NX_DEVICERALTKEYMASK;
+            break;
+        }
         case KEY_LEFTMETA:
+        {
+            modifiers &= ~NX_COMMANDMASK;
+            modifiers &= ~NX_DEVICELCMDKEYMASK;
+            break;
+        }
         case KEY_RIGHTMETA:
-            {
-                modifiers &= ~kCGEventFlagMaskCommand;
-                break;
-            }
+        {
+            modifiers &= ~NX_COMMANDMASK;
+            modifiers &= ~NX_DEVICERCMDKEYMASK;
+            break;
+        }
+        case KEY_UP:
+        case KEY_DOWN:
+        case KEY_LEFT:
+        case KEY_RIGHT:
+        {
+            modifiers &= ~NX_NUMERICPADMASK;
+            break;
+        }
         case KEY_FN:
             {
                 fn = 0;
@@ -319,19 +380,25 @@ void setModifierUp(int code)
     }
 }
 
+void setFilterCallback(int filterCallback(int, int)) {
+    currentFilterCallback = filterCallback;
+}
+
 /**
  * Sends a key event using CGEventPost.
  */
 void sendCGEvent(int type, int code, int value)
 {
+    // check modifiers ok
     if (!cgEventSource)
     {
         // CGEventPost will send the event even if the source is null :\
         return;
     }
+
     //printf("sendCGEvent: type=%i code=%i value=%i\n", type, code, value);
     // Update the modifier state
-    if (isModifier(code))
+    if (isModifier(code) || code == KEY_UP || code == KEY_DOWN || code == KEY_LEFT || code == KEY_RIGHT)
     {
         if (value)
         {
@@ -342,75 +409,77 @@ void sendCGEvent(int type, int code, int value)
             setModifierUp(code);
         }
     }
+
+    // Check if client wants to filter first.
+    if (currentFilterCallback(code, modifiers) != 1) {
+        return;
+    }
+
     CGEventRef event = 0;
-    // If fn is down, send media keys for f keys (TODO: make this configurable?)
-    if (fn)
+    switch (code)
     {
-        switch (code)
-        {
-            case KEY_F1:
-                {
-                    event = CGEventCreateMediaEvent(NX_KEYTYPE_BRIGHTNESS_DOWN, isDown(value));
-                    break;
-                }
-            case KEY_F2:
-                {
-                    event = CGEventCreateMediaEvent(NX_KEYTYPE_BRIGHTNESS_UP, isDown(value));
-                    break;
-                }
-            case KEY_F3:
-                {
-                    event = CGEventCreateKeyboardEvent(cgEventSource, kVK_Expose, isDown(value));
-                    break;
-                }
-            case KEY_F4:
-                {
-                    event = CGEventCreateKeyboardEvent(cgEventSource, kVK_Launchpad, isDown(value));
-                    break;
-                }
-            case KEY_F5:
-                {
-                    event = CGEventCreateMediaEvent(NX_KEYTYPE_ILLUMINATION_DOWN, isDown(value));
-                    break;
-                }
-            case KEY_F6:
-                {
-                    event = CGEventCreateMediaEvent(NX_KEYTYPE_ILLUMINATION_UP, isDown(value));
-                    break;
-                }
-            case KEY_F7:
-                {
-                    event = CGEventCreateMediaEvent(NX_KEYTYPE_PREVIOUS, isDown(value));
-                    break;
-                }
-            case KEY_F8:
-                {
-                    event = CGEventCreateMediaEvent(NX_KEYTYPE_PLAY, isDown(value));
-                    break;
-                }
-            case KEY_F9:
-                {
-                    event = CGEventCreateMediaEvent(NX_KEYTYPE_NEXT, isDown(value));
-                    break;
-                }
-            case KEY_F10:
-                {
-                    event = CGEventCreateMediaEvent(NX_KEYTYPE_MUTE, isDown(value));
-                    break;
-                }
-            case KEY_F11:
-                {
-                    event = CGEventCreateMediaEvent(NX_KEYTYPE_SOUND_DOWN, isDown(value));
-                    break;
-                }
-            case KEY_F12:
-                {
-                    event = CGEventCreateMediaEvent(NX_KEYTYPE_SOUND_UP, isDown(value));
-                    break;
-                }
-            default:
+        case KEY_F1:
+            {
+                event = CGEventCreateMediaEvent(NX_KEYTYPE_BRIGHTNESS_DOWN, isDown(value));
                 break;
-        }
+            }
+        case KEY_F2:
+            {
+                event = CGEventCreateMediaEvent(NX_KEYTYPE_BRIGHTNESS_UP, isDown(value));
+                break;
+            }
+        case KEY_F3:
+            {
+                event = CGEventCreateKeyboardEvent(cgEventSource, kVK_Expose, isDown(value));
+                break;
+            }
+        case KEY_F4:
+            {
+                event = CGEventCreateKeyboardEvent(cgEventSource, kVK_Launchpad, isDown(value));
+                break;
+            }
+        case KEY_F5:
+            {
+                event = CGEventCreateMediaEvent(NX_KEYTYPE_ILLUMINATION_DOWN, isDown(value));
+                break;
+            }
+        case KEY_F6:
+            {
+                event = CGEventCreateMediaEvent(NX_KEYTYPE_ILLUMINATION_UP, isDown(value));
+                break;
+            }
+        case KEY_F7:
+            {
+                event = CGEventCreateMediaEvent(NX_KEYTYPE_PREVIOUS, isDown(value));
+                break;
+            }
+        case KEY_F8:
+            {
+                event = CGEventCreateMediaEvent(NX_KEYTYPE_PLAY, isDown(value));
+                break;
+            }
+        case KEY_F9:
+            {
+                event = CGEventCreateMediaEvent(NX_KEYTYPE_NEXT, isDown(value));
+                break;
+            }
+        case KEY_F10:
+            {
+                event = CGEventCreateMediaEvent(NX_KEYTYPE_MUTE, isDown(value));
+                break;
+            }
+        case KEY_F11:
+            {
+                event = CGEventCreateMediaEvent(NX_KEYTYPE_SOUND_DOWN, isDown(value));
+                break;
+            }
+        case KEY_F12:
+            {
+                event = CGEventCreateMediaEvent(NX_KEYTYPE_SOUND_UP, isDown(value));
+                break;
+            }
+        default:
+            break;
     }
     // Otherwise send normal keys
     if ((long)event <= 0)
@@ -426,12 +495,11 @@ void sendCGEvent(int type, int code, int value)
     {
         CGEventSetIntegerValueField(event, kCGKeyboardEventAutorepeat, 1);
     }
-    if (modifiers > 0)
-    {
-        //printf("sendCGEvent: modifier=%i\n", modifiers);
-        CGEventSetFlags(event, modifiers);
-    }
-    //printf("sendCGEvent: type=%i code=%i value=%i\n", type, code, value);
+
+    // to indicate mouse is not involved, we will reset the bit later if mouse event occurs
+    modifiers |= NX_NONCOALSESCEDMASK;
+    CGEventSetFlags(event, modifiers);
+    // printf("sendCGEvent: type=%i code=%i value=%i modifiers=%i\n", type, code, value, modifiers);
     CGEventPost(kCGHIDEventTap, event);
     CFRelease(event);
 }

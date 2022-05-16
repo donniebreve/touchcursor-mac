@@ -57,36 +57,31 @@ int bindMacOSInternalKeyboard(IOHIDManagerRef hidManager)
     // Iterate devices
     for (CFIndex i = 0; i < deviceCount; i++)
     {
-        // Check if the device is a keyboard, this also opens the device
-        if (IOHIDDeviceConformsTo(devices[i], kHIDPage_GenericDesktop, kHIDUsage_GD_Keyboard))
+        // Check if this is the apple keyboard, expand this later to use a GUI selection
+        uint32_t vendorID = getVendorID(devices[i]);
+        printDeviceInformation(devices[i], false, false, false, false);
+        if (vendorID == appleVendorID)
         {
-            // Check if this is the apple keyboard, expand this later to use a GUI selection
-            uint32_t productID = getProductID(devices[i]);
-            uint32_t vendorID = getVendorID(devices[i]);
-            if (productID == appleProductID && vendorID == appleVendorID)
+            // Open the device and capture all input
+            printf("info: capturing the keyboard... ");
+            // Use kIOHIDOptionsTypeNone to capture events without interrupting the device
+            // Use kIOHIDOptionsTypeSeizeDevice to capture the device and all inputs
+            IOReturn result = IOHIDDeviceOpen(devices[i], kIOHIDOptionsTypeSeizeDevice);
+            if (result != kIOReturnSuccess)
             {
-                printDeviceInformation(devices[i], false, false, false, false);
-                // Open the device and capture all input
-                printf("info: capturing the keyboard... ");
-                // Use kIOHIDOptionsTypeNone to capture events without interrupting the device
-                // Use kIOHIDOptionsTypeSeizeDevice to capture the device and all inputs
-                IOReturn result = IOHIDDeviceOpen(devices[i], kIOHIDOptionsTypeSeizeDevice);
-                if (result != kIOReturnSuccess)
-                {
-                    printf("\nerror: IOHIDDeviceOpen: %s\n", getIOReturnString(result));
-                    return 0;
-                }
-                device = devices[i];
-                // Register the input value callback
-                IOHIDDeviceRegisterInputValueCallback(
-                    device,
-                    macOSKeyboardInputValueCallback,
-                    NULL);
-                getKeyDelays();
-                printf("success\n");
-                return 1;
+                printf("\nerror: IOHIDDeviceOpen: %s\n", getIOReturnString(result));
+                return 0;
             }
-        }
+            device = devices[i];
+            // Register the input value callback
+            IOHIDDeviceRegisterInputValueCallback(
+                device,
+                macOSKeyboardInputValueCallback,
+                NULL);
+            getKeyDelays();
+            printf("success\n");
+            return 1;
+         }
     }
     return 0;
 }
@@ -96,6 +91,10 @@ int bindMacOSInternalKeyboard(IOHIDManagerRef hidManager)
  */
 static int isRepeatable(int code)
 {
+    if (code == KEY_ENTER || code == KEY_BACKSPACE || code == KEY_DELETE) {
+        return 1;
+    }
+
     if (isModifier(code))
     {
         return 0;
@@ -157,7 +156,6 @@ void macOSKeyboardInputValueCallback(
     IOHIDValueRef value)
 {
     IOHIDElementRef element = IOHIDValueGetElement(value);
-    //uint32_t page = IOHIDElementGetUsagePage(element);
     uint32_t code = IOHIDElementGetUsage(element);
     uint32_t down = (int)IOHIDValueGetIntegerValue(value);
     //printf("input value callback: code=%d value=%d\n", code, down);
@@ -168,7 +166,7 @@ void macOSKeyboardInputValueCallback(
     {
         return;
     }
-    //printf("processing: code=%d\n", code);
+
     processKey(0, code, down);
     // It seems like since we have captured the device, key repeat functionality is lost.
     // Here is my *probably bad* implementation of a key repeat.

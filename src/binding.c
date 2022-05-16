@@ -8,6 +8,38 @@
 // The HID manager object
 static IOHIDManagerRef hidManager;
 
+CFMutableDictionaryRef myCreateDeviceMatchingDictionary(UInt32 usagePage,
+        UInt32 usage) {
+    CFMutableDictionaryRef ret = CFDictionaryCreateMutable(kCFAllocatorDefault,
+            0, &kCFTypeDictionaryKeyCallBacks,
+            &kCFTypeDictionaryValueCallBacks);
+    if (!ret)
+        return NULL;
+
+    CFNumberRef pageNumberRef = CFNumberCreate(kCFAllocatorDefault,
+            kCFNumberIntType, &usagePage );
+    if (!pageNumberRef) {
+        CFRelease(ret);
+        return NULL;
+    }
+
+    CFDictionarySetValue(ret, CFSTR(kIOHIDDeviceUsagePageKey), pageNumberRef);
+    CFRelease(pageNumberRef);
+
+    CFNumberRef usageNumberRef = CFNumberCreate(kCFAllocatorDefault,
+            kCFNumberIntType, &usage);
+    if (!usageNumberRef) {
+        CFRelease(ret);
+        return NULL;
+    }
+
+    CFDictionarySetValue(ret, CFSTR(kIOHIDDeviceUsageKey), usageNumberRef);
+    CFRelease(usageNumberRef);
+
+    return ret;
+}
+
+
 /**
  * Creates the HID manager.
  */
@@ -15,8 +47,20 @@ void createHIDManager()
 {
     // Create the HID manager
     hidManager = IOHIDManagerCreate(kCFAllocatorDefault, kIOHIDOptionsTypeNone);
-    // Match all devices
-    IOHIDManagerSetDeviceMatching(hidManager, NULL);
+
+    CFMutableDictionaryRef keyboard =
+        myCreateDeviceMatchingDictionary(0x01, 6);
+    CFMutableDictionaryRef keypad =
+        myCreateDeviceMatchingDictionary(0x01, 7);
+
+    CFMutableDictionaryRef matchesList[] = {
+        keyboard,
+        keypad,
+    };
+    CFArrayRef matches = CFArrayCreate(kCFAllocatorDefault,
+            (const void **)matchesList, 2, NULL);
+    IOHIDManagerSetDeviceMatchingMultiple(hidManager, matches);
+
     // Set the run loop
     IOHIDManagerScheduleWithRunLoop(hidManager, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
 }
@@ -24,9 +68,11 @@ void createHIDManager()
 /**
  * Binds the input device.
  */
-int bindInput()
+int bindInput(int filterCallback(int, int))
 {
+    setFilterCallback(filterCallback);
     createHIDManager();
+
     int result = bindMacOSInternalKeyboard(hidManager);
     if (!result)
     {

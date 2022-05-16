@@ -8,7 +8,6 @@
 
 #include "keys.h"
 #include "queue.h"
-#include "config.h"
 #include "binding.h"
 #include "emit.h"
 #include "touchcursor.h"
@@ -16,23 +15,14 @@
 // The state machine state
 enum states state = idle;
 
-// Flag if the hyper key has been emitted
-static int hyperEmitted;
-
-/**
- * Checks if the key is the hyper key.
- */
-static int isHyper(int code)
-{
-    return code == hyperKey;
-}
 
 /**
  * Checks if the key has been mapped.
  */
 static int isMapped(int code)
 {
-    return keymap[code] != 0;
+    // return keymap[code] != 0;
+    return false;
 }
 
 /**
@@ -40,7 +30,8 @@ static int isMapped(int code)
  */
 static int convert(int code)
 {
-    return keymap[code];
+    // return keymap[code];
+    return code;
 }
 
 /**
@@ -52,87 +43,11 @@ void processKey(int type, int code, int value)
     switch (state)
     {
         case idle: // 0
-            if (isHyper(code))
-            {
-                if (isDown(value))
-                {
-                    state = hyper;
-                    hyperEmitted = 0;
-                    clearQueue();
-                }
-                else
-                {
-                    emit(0, code, value);
-                }
-            }
-            else
-            {
-                emit(0, code, value);
-            }
+            emit(0, code, value);
             break;
 
-        case hyper: // 1
-            if (isHyper(code))
-            {
-                if (!isDown(value))
-                {
-                    state = idle;
-                    if (!hyperEmitted)
-                    {
-                        emit(0, hyperKey, 1);
-                    }
-                    emit(0, hyperKey, 0);
-                }
-            }
-            else if (isMapped(code))
-            {
-                if (isDown(value))
-                {
-                    state = delay;
-                    enqueue(code);
-                }
-                else
-                {
-                    emit(0, code, value);
-                }
-            }
-            else
-            {
-                if (!isModifier(code) && isDown(value))
-                {
-                    if (!hyperEmitted)
-                    {
-                        emit(0, hyperKey, 1);
-                        hyperEmitted = 1;
-                    }
-                    emit(0, code, value);
-                }
-                else
-                {
-                    emit(0, code, value);
-                }
-            }
-            break;
-
-        case delay: // 2
-            if (isHyper(code))
-            {
-                if (!isDown(value))
-                {
-                    state = idle;
-                    if (!hyperEmitted)
-                    {
-                        emit(0, hyperKey, 1);
-                    }
-                    int length = lengthOfQueue();
-                    for (int i = 0; i < length; i++)
-                    {
-                        emit(0, dequeue(), 1);
-                    }
-                    emit(0, hyperKey, 0);
-                }
-            }
-            else if (isMapped(code))
+        case delay: // 1
+            if (isMapped(code))
             {
                 state = map;
                 if (isDown(value))
@@ -161,20 +76,8 @@ void processKey(int type, int code, int value)
             }
             break;
 
-        case map: // 3
-            if (isHyper(code))
-            {
-                if (!isDown(value))
-                {
-                    state = idle;
-                    int length = lengthOfQueue();
-                    for (int i = 0; i < length; i++)
-                    {
-                        emit(0, convert(dequeue()), 0);
-                    }
-                }
-            }
-            else if (isMapped(code))
+        case map: // 2
+            if (isMapped(code))
             {
                 if (isDown(value))
                 {
