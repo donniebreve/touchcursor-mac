@@ -4,7 +4,7 @@
 /**
  * Binds the input device.
  */
-int bindInput(void);
+int bindInput(int filterCallback(int, int));
 
 /**
  * Binds the output device.

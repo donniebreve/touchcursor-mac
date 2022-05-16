@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E4576AC2831A8DD004AB9E3 /* BidirectionalMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4576AB2831A8DD004AB9E3 /* BidirectionalMap.swift */; };
+		3E4576AE2831AC8D004AB9E3 /* .KeyMappingConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E4576AD2831AC8D004AB9E3 /* .KeyMappingConfig.json */; };
+		3E4576B02831D07C004AB9E3 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E4576AF2831D07C004AB9E3 /* ApplicationServices.framework */; };
+		3E4576B22831F587004AB9E3 /* setup.sh in Resources */ = {isa = PBXBuildFile; fileRef = 3E4576B12831F587004AB9E3 /* setup.sh */; };
 		F6D12F2F263A6DA5007F3DE1 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D12F2E263A6DA5007F3DE1 /* AboutView.swift */; };
 		F6DA55492635E23E00146999 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DA55482635E23E00146999 /* AppDelegate.swift */; };
 		F6DA554B2635E23E00146999 /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DA554A2635E23E00146999 /* StatusBarController.swift */; };
@@ -34,6 +38,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3E4576AB2831A8DD004AB9E3 /* BidirectionalMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BidirectionalMap.swift; sourceTree = "<group>"; };
+		3E4576AD2831AC8D004AB9E3 /* .KeyMappingConfig.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = .KeyMappingConfig.json; sourceTree = "<group>"; };
+		3E4576AF2831D07C004AB9E3 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
+		3E4576B12831F587004AB9E3 /* setup.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = setup.sh; sourceTree = "<group>"; };
 		F6D12F2E263A6DA5007F3DE1 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		F6DA55452635E23E00146999 /* touchcursor-mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "touchcursor-mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6DA55482635E23E00146999 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -77,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E4576B02831D07C004AB9E3 /* ApplicationServices.framework in Frameworks */,
 				F6DA55B52635FB5200146999 /* IOKit.framework in Frameworks */,
 				F6DA55BB2635FB9500146999 /* Carbon.framework in Frameworks */,
 				F6DA55B82635FB7900146999 /* AppKit.framework in Frameworks */,
@@ -111,12 +120,15 @@
 		F6DA55472635E23E00146999 /* interface */ = {
 			isa = PBXGroup;
 			children = (
+				3E4576AD2831AC8D004AB9E3 /* .KeyMappingConfig.json */,
 				F6DA558F2635F64100146999 /* bridgingHeader.h */,
 				F6DA55482635E23E00146999 /* AppDelegate.swift */,
+				3E4576AB2831A8DD004AB9E3 /* BidirectionalMap.swift */,
 				F6DA554A2635E23E00146999 /* StatusBarController.swift */,
 				F6D12F2E263A6DA5007F3DE1 /* AboutView.swift */,
 				F6DA554C2635E24100146999 /* Assets.xcassets */,
 				F6DA55512635E24100146999 /* Main.storyboard */,
+				3E4576B12831F587004AB9E3 /* setup.sh */,
 			);
 			path = interface;
 			sourceTree = "<group>";
@@ -161,6 +173,7 @@
 		F6DA55B32635FB5100146999 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3E4576AF2831D07C004AB9E3 /* ApplicationServices.framework */,
 				F6DA55BC2635FBA000146999 /* Foundation.framework */,
 				F6DA55BA2635FB9400146999 /* Carbon.framework */,
 				F6DA55B72635FB7900146999 /* AppKit.framework */,
@@ -227,7 +240,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E4576B22831F587004AB9E3 /* setup.sh in Resources */,
 				F6DA55812635EF1C00146999 /* keyboard_256.png in Resources */,
+				3E4576AE2831AC8D004AB9E3 /* .KeyMappingConfig.json in Resources */,
 				F6DA557C2635EF1C00146999 /* keyboard_128.png in Resources */,
 				F6DA55532635E24100146999 /* Main.storyboard in Resources */,
 				F6DA55842635EF1C00146999 /* keyboard_32.png in Resources */,
@@ -250,6 +265,7 @@
 				F6DA55A52635F64300146999 /* cgEventVirtualKeyboard.mm in Sources */,
 				F6DA554B2635E23E00146999 /* StatusBarController.swift in Sources */,
 				F6DA55A42635F64300146999 /* keys.c in Sources */,
+				3E4576AC2831A8DD004AB9E3 /* BidirectionalMap.swift in Sources */,
 				F6D12F2F263A6DA5007F3DE1 /* AboutView.swift in Sources */,
 				F6DA55AD2635F6AC00146999 /* binding.c in Sources */,
 				F6DA55A12635F64300146999 /* hidInformation.c in Sources */,
@@ -412,7 +428,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.donniebreve.touchcursor-mac";
+				PRODUCT_BUNDLE_IDENTIFIER = com.charltonprovatas.KeyMapping;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = interface/bridgingHeader.h;
@@ -442,7 +458,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.donniebreve.touchcursor-mac";
+				PRODUCT_BUNDLE_IDENTIFIER = com.charltonprovatas.KeyMapping;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = interface/bridgingHeader.h;

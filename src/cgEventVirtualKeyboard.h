@@ -35,4 +35,8 @@ void setModifierUp(int code);
  */
 void sendCGEvent(int type, int code, int down);
 
+void setFilterCallback(int filterCallback(int, int));
+
+void setApplicationWindow();
+
 #endif

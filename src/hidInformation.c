@@ -234,14 +234,6 @@ static long getMaxInputReportSize(IOHIDDeviceRef device)
 }
 
 /**
- * Gets the Maximum Input Report Size from the given HID reference.
- */
-static long getMaxOutputReportSize(IOHIDDeviceRef device)
-{
-    return getLongProperty(device, CFSTR(kIOHIDMaxOutputReportSizeKey));
-}
-
-/**
  * Gets the Unique Device ID from the given HID reference.
  */
 static int getPhysicalDeviceUniqueID(IOHIDDeviceRef device, wchar_t* buffer, size_t length)
@@ -286,36 +278,6 @@ static void printElements(IOHIDDeviceRef device)
         printf("element[%ld]: usagePage(%i) usage (%i)\n", i, usagePage, usage);
     }
     printf("\n");
-}
-
-/**
- * Creates a matching dictionary for the given device.
- */
-static CFDictionaryRef createMatchingDictionary(IOHIDDeviceRef device)
-{
-    int vendorID = (int)getVendorID(device);
-    int productID = (int)getProductID(device);
-    int usagePage = kHIDPage_GenericDesktop;
-    int usage = kHIDUsage_GD_Keyboard;
-    CFStringRef keys[4] = {
-        CFSTR(kIOHIDVendorIDKey),
-        CFSTR(kIOHIDProductIDKey),
-        CFSTR(kIOHIDDeviceUsagePageKey),
-        CFSTR(kIOHIDDeviceUsageKey),
-    };
-    CFNumberRef values[4] = {
-        CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &vendorID),
-        CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &productID),
-        CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &usagePage),
-        CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &usage),
-    };
-    return CFDictionaryCreate(
-        kCFAllocatorDefault,
-        (const void **)keys,
-        (const void **)values,
-        4,
-        &kCFTypeDictionaryKeyCallBacks,
-        &kCFTypeDictionaryValueCallBacks);
 }
 
 /**

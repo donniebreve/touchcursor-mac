@@ -1,0 +1,128 @@
+[
+   {
+       "flags": "rightShift",
+       "character": "c",
+       "appName": "Google Chrome",
+   },
+   {
+       "flags": "rightCommandAndRightShift",
+       "character": "s",
+       "appName": "Safari",
+   },
+   {
+       "flags": "rightShift",
+       "character": "x",
+       "appName": "Xcode",
+   },
+   {
+       "flags": "rightShift",
+       "character": "p",
+       "appName": "Mail",
+   },
+   {
+       "flags": "rightShift",
+       "character": "s",
+       "appName": "Slack",
+   },
+   {
+       "flags": "rightCommandAndRightShift",
+       "character": "x",
+       "appName": "XCLink",
+   },
+   {
+       "flags": "rightShift",
+       "character": "m",
+       "appName": "Messages",
+   },
+   {
+       "flags": "rightShift",
+       "character": "i",
+       "appName": "Calendar",
+   },
+   {
+       "flags": "rightShift",
+       "character": "t",
+       "appName": "Terminal",
+   },
+   {
+       "flags": "rightCommandAndRightShift",
+       "character": "o",
+       "appName": "iOS Toolbox",
+   },
+   {
+       "flags": "rightCommandAndRightShift",
+       "character": "p",
+       "appName": "System Preferences",
+   },
+   {
+       "flags": "rightShift",
+       "character": "a",
+       "appName": "Activity Monitor",
+   },
+   {
+       "flags": "rightShift",
+       "character": "u",
+       "appName": "Sublime Text",
+   },
+   {
+       "flags": "rightShift",
+       "character": "f",
+       "appName": "Finder",
+   },
+   {
+       "flags": "rightCommandAndRightShift",
+       "character": "i",
+       "appName": "In App Messages Utility App",
+   },
+   {
+       "flags": "rightShift",
+       "character": "h",
+       "appName": "Charles",
+   },
+   {
+       "flags": "rightShift",
+       "character": "g",
+       "appName": "GitHub Desktop",
+   },
+   {
+       "flags": "rightShift",
+       "character": "e",
+       "appName": "Radar",
+   },
+   {
+       "flags": "rightShift",
+       "character": "l",
+       "appName": "SourceEdit",
+   },
+   {
+       "flags": "rightShift",
+       "character": "v",
+       "appName": "Visual Studio Code",
+   },
+   {
+       "flags": "rightShift",
+       "character": "o",
+       "appName": "Spotify",
+   },
+   {
+       "flags": "rightShift",
+       "character": "b",
+       "appName": "Music",
+   },
+   {
+       "flags": "rightShift",
+       "character": "n",
+       "appName": "Postman",
+   },
+   {
+       "flags": "rightShift",
+       "character": "r",
+       "appName": "Reminders",
+   },
+   {
+       "flags": "rightShift",
+       "character": "q",
+       "appName": "Simulator",
+   },
+]
+

@@ -91,6 +91,10 @@ int bindMacOSInternalKeyboard(IOHIDManagerRef hidManager)
  */
 static int isRepeatable(int code)
 {
+    if (code == KEY_ENTER || code == KEY_BACKSPACE || code == KEY_DELETE) {
+        return 1;
+    }
+
     if (isModifier(code))
     {
         return 0;
@@ -166,7 +170,7 @@ void macOSKeyboardInputValueCallback(
     processKey(0, code, down);
     // It seems like since we have captured the device, key repeat functionality is lost.
     // Here is my *probably bad* implementation of a key repeat.
-    if (isRepeatable(code) || code == KEY_BACKSPACE)
+    if (isRepeatable(code))
     {
         if (!down)
         {

@@ -47,9 +47,6 @@ void createHIDManager()
 {
     // Create the HID manager
     hidManager = IOHIDManagerCreate(kCFAllocatorDefault, kIOHIDOptionsTypeNone);
-    CFMutableDictionaryRef ret = CFDictionaryCreateMutable(kCFAllocatorDefault,
-                0, &kCFTypeDictionaryKeyCallBacks,
-                &kCFTypeDictionaryValueCallBacks);
 
     CFMutableDictionaryRef keyboard =
         myCreateDeviceMatchingDictionary(0x01, 6);
@@ -71,9 +68,11 @@ void createHIDManager()
 /**
  * Binds the input device.
  */
-int bindInput()
+int bindInput(int filterCallback(int, int))
 {
+    setFilterCallback(filterCallback);
     createHIDManager();
+
     int result = bindMacOSInternalKeyboard(hidManager);
     if (!result)
     {

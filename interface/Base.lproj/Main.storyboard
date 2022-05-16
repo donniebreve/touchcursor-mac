@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21157" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21157"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -11,18 +11,18 @@
                 <application id="hnw-xV-0zn" sceneMemberID="viewController">
                     <menu key="mainMenu" title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
                         <items>
-                            <menuItem title="touchcursor-mac" id="1Xt-HY-uBw">
+                            <menuItem title="Charlton's KeyMapper" id="1Xt-HY-uBw">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="touchcursor-mac" systemMenu="apple" id="uQy-DD-JDr">
+                                <menu key="submenu" title="Charlton's KeyMapper" systemMenu="apple" id="uQy-DD-JDr">
                                     <items>
-                                        <menuItem title="About touchcursor-mac" id="5kV-Vb-QxS">
+                                        <menuItem title="About Charlton's KeyMapper" id="5kV-Vb-QxS">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="aboutWithSender:" target="Voe-Tx-rLC" id="csM-tL-Ryk"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
-                                        <menuItem title="Quit touchcursor-mac" keyEquivalent="q" id="4sb-4s-VLi">
+                                        <menuItem title="Quit Charlton's KeyMapper" keyEquivalent="q" id="4sb-4s-VLi">
                                             <connections>
                                                 <action selector="terminate:" target="Ady-hI-5gd" id="Te7-pn-YzF"/>
                                             </connections>
