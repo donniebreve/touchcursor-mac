@@ -25,3 +25,15 @@ In progress, but for now you may download this repository and build with XCode.
 
 # Thanks to  
 [Martin Stone, Touch Cursor](https://github.com/martin-stone/touchcursor): wonderful project for cursor movement when coding.
+
+
+# Installation
+- Create automator wrapper app
+- add shell script that runs what is in 'setup.sh' script
+- i added the executable to my sudo visudo path
+- add automator wrapper app as login item
+
+in sudo visudo
+
+charltonprovatas ALL=(ALL) NOPASSWD: /Applications/touchcursor-mac.app/Contents/Resources/setup.sh
+charltonprovatas ALL=(ALL) NOPASSWD: /Applications/touchcursor-mac.app/Contents/MacOS/touchcursor-mac
