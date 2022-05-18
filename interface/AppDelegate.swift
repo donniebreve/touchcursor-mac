@@ -332,15 +332,18 @@ func setApplicationWindow(with position: WindowPosition) {
         return
     }
 
-    var screenSize = screen.visibleFrame.size
-    var halfScreenSize = NSSize(width: screenSize.width / 2, height: screenSize.height)
+    let deviceDescriptionKey = NSDeviceDescriptionKey(rawValue: "NSScreenNumber")
+    let displayID = screen.deviceDescription[deviceDescriptionKey] as? UInt32 ?? 1
+    let screenFrame = CGDisplayBounds(displayID)
+    var screenSize = screen.frame.size
+    var halfScreenSize = NSSize(width: screenFrame.size.width / 2, height: screenFrame.size.height)
     switch position {
         case .left:
             guard let size = AXValueCreate(sizeKey, &halfScreenSize) else { return }
             // Won't let me conditional cast.... 'Conditional downcast to CoreFoundation type 'AXUIElement' will always succeed'
             AXUIElementSetAttributeValue(frontWindow as! AXUIElement, kAXSizeAttribute as CFString, size)
 
-            var position = CGPoint.zero
+            var position = screenFrame.origin
             guard let positionValue = AXValueCreate(positionKey, &position) else { return }
             AXUIElementSetAttributeValue(frontWindow as! AXUIElement, kAXPositionAttribute as CFString, positionValue)
         case .right:
@@ -348,11 +351,11 @@ func setApplicationWindow(with position: WindowPosition) {
             // Won't let me conditional cast.... 'Conditional downcast to CoreFoundation type 'AXUIElement' will always succeed'
             AXUIElementSetAttributeValue(frontWindow as! AXUIElement, kAXSizeAttribute as CFString, size)
 
-            var position = CGPoint(x: screenSize.width / 2, y: 0)
+            var position = CGPoint(x: screenFrame.origin.x + screenSize.width / 2, y: screenFrame.origin.y)
             guard let positionValue = AXValueCreate(positionKey, &position) else { return }
             AXUIElementSetAttributeValue(frontWindow as! AXUIElement, kAXPositionAttribute as CFString, positionValue)
         case .maximum:
-            var position = CGPoint.zero
+            var position = screenFrame.origin
             guard let positionValue = AXValueCreate(positionKey, &position) else { return }
             AXUIElementSetAttributeValue(frontWindow as! AXUIElement, kAXPositionAttribute as CFString, positionValue)
 
