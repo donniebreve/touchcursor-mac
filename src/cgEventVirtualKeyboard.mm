@@ -421,15 +421,15 @@ void sendCGEvent(int type, int code, int value)
         }
         event = CGEventCreateKeyboardEvent(cgEventSource, quartzCode, isDown(value));
     }
+    // Set the repeat flag (0 up, 1 down, 2 repeat)
     if (value == 2)
     {
         CGEventSetIntegerValueField(event, kCGKeyboardEventAutorepeat, 1);
     }
-    if (modifiers > 0)
-    {
-        //printf("sendCGEvent: modifier=%i\n", modifiers);
-        CGEventSetFlags(event, modifiers);
-    }
+    // Set modifiers
+    //printf("sendCGEvent: modifier=%i\n", modifiers);
+    CGEventSetFlags(event, modifiers);
+    // Send event
     //printf("sendCGEvent: type=%i code=%i value=%i\n", type, code, value);
     CGEventPost(kCGHIDEventTap, event);
     CFRelease(event);

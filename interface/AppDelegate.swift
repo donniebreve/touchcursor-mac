@@ -11,6 +11,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         createAboutWindow()
+        readConfiguration()
         createHIDManager()
         statusBarController = StatusBarController.init(self, menu, keyboardMenu)
     }
@@ -36,7 +37,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func startCapture(_ productID: Int32, _ vendorID: Int32) {
         stopCapture()
-        readConfiguration()
         if bindInput(productID, vendorID) < 1 {
             print("error: Failed to capture the input device.")
             print("error:     Either the device is already captured, or input monitoring")

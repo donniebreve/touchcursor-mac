@@ -61,8 +61,11 @@ void releaseOutput()
  */
 void startRunLoop()
 {
-    runLoop = CFRunLoopGetCurrent();
-    CFRunLoopRun();
+    if ((long)runLoop == 0)
+    {
+        runLoop = CFRunLoopGetCurrent();
+        CFRunLoopRun();
+    }
 }
 
 /**
