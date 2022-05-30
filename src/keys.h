@@ -283,6 +283,11 @@ int isDown(int value);
 int isModifier(int code);
 
 /**
+ * Checks if the key is a keypad key.
+ */
+int isKeypad(int code);
+
+/**
  * Converts a key string "KEY_I" to its corresponding code.
  */
 int convertKeyStringToCode(char* keyString);

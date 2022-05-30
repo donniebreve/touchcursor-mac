@@ -154,13 +154,12 @@ int bindKeyboard(uint32_t productID, uint32_t vendorID, IOHIDManagerRef hidManag
         // Check if the device is a keyboard, this also opens the device
         if (IOHIDDeviceConformsTo(devices[i], kHIDPage_GenericDesktop, kHIDUsage_GD_Keyboard))
         {
-            // Check if this is the apple keyboard, expand this later to use a GUI selection
-            uint32_t product = getProductID(devices[i]);
-            uint32_t vendor = getVendorID(devices[i]);
-            if (product == productID && vendor == vendorID)
+            uint32_t deviceProductID = getProductID(devices[i]);
+            uint32_t deviceVendorID = getVendorID(devices[i]);
+            if (productID == deviceProductID && vendorID == deviceVendorID)
             {
                 // Open the device and capture all input
-                printf("info: capturing the keyboard... ");
+                printf("info: capturing the device... ");
                 // Use kIOHIDOptionsTypeNone to capture events without interrupting the device
                 // Use kIOHIDOptionsTypeSeizeDevice to capture the device and all inputs
                 IOReturn result = IOHIDDeviceOpen(devices[i], kIOHIDOptionsTypeSeizeDevice);
