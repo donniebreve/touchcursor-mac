@@ -44,7 +44,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return
         }
         if bindOutput() < 1 {
-            print("error: Failed to connect to the output device.")
+            print("error: Failed to create to the output device.")
+            print("error:     Please ensure accessibility has been allowed for this executable in 'Security & Privacy'.")
             return
         }
         startRunLoop()
