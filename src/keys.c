@@ -20,10 +20,6 @@ int isModifier(int code)
 {
     switch (code)
     {
-        case KEY_ESC:
-        case KEY_BACKSPACE:
-        case KEY_TAB:
-        case KEY_ENTER:
         case KEY_LEFTSHIFT:
         case KEY_RIGHTSHIFT:
         case KEY_LEFTCTRL:
