@@ -377,6 +377,21 @@ void sendCGEvent(int type, int code, int value)
             setModifierUp(code);
         }
     }
+    // Set the capslock modifier
+    if (code == KEY_CAPSLOCK)
+    {
+        if (isDown(value))
+        {
+            if (modifiers & kCGEventFlagMaskAlphaShift)
+            {
+                modifiers &= ~kCGEventFlagMaskAlphaShift;
+            }
+            else
+            {
+                modifiers |= kCGEventFlagMaskAlphaShift;
+            }
+        }
+    }
     // Set the keypad modifier
     if (isKeypad(code))
     {
