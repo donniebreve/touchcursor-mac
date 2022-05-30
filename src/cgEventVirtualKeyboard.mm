@@ -102,15 +102,15 @@ int createCGEventTap(void)
 static CGEventRef CGEventCreateMediaEvent(int code, int down)
 {
     NSEvent* event = [NSEvent
-        otherEventWithType:NSEventTypeSystemDefined
+        otherEventWithType: NSEventTypeSystemDefined
         location: NSMakePoint(0, 0)
-        modifierFlags:0xa00
-        timestamp:0
-        windowNumber:0
-        context:0
-        subtype:8
-        data1:(code << 16) | (down ? (0xa << 8) : (0xb << 8))
-        data2:-1];
+        modifierFlags: 0xa00
+        timestamp: 0
+        windowNumber: 0
+        context: 0
+        subtype: 8
+        data1: (code << 16) | (down ? (0xa << 8) : (0xb << 8))
+        data2: -1];
 	return CGEventCreateCopy([event CGEvent]);
 }
 
@@ -253,20 +253,38 @@ void setModifierDown(int code)
                 break;
             }
         case KEY_LEFTSHIFT:
+            {
+                modifiers |= NX_DEVICELSHIFTKEYMASK;
+                modifiers |= kCGEventFlagMaskShift;
+                break;
+            }
         case KEY_RIGHTSHIFT:
             {
+                modifiers |= NX_DEVICERSHIFTKEYMASK;
                 modifiers |= kCGEventFlagMaskShift;
                 break;
             }
         case KEY_LEFTALT:
+            {
+                modifiers |= NX_DEVICELALTKEYMASK;
+                modifiers |= kCGEventFlagMaskAlternate;
+                break;
+            }
         case KEY_RIGHTALT:
             {
+                modifiers |= NX_DEVICERALTKEYMASK;
                 modifiers |= kCGEventFlagMaskAlternate;
                 break;
             }
         case KEY_LEFTMETA:
+            {
+                modifiers |= NX_DEVICELCMDKEYMASK;
+                modifiers |= kCGEventFlagMaskCommand;
+                break;
+            }
         case KEY_RIGHTMETA:
             {
+                modifiers |= NX_DEVICERCMDKEYMASK;
                 modifiers |= kCGEventFlagMaskCommand;
                 break;
             }
@@ -293,20 +311,38 @@ void setModifierUp(int code)
                 break;
             }
         case KEY_LEFTSHIFT:
+            {
+                modifiers &= ~NX_DEVICELSHIFTKEYMASK;
+                modifiers &= ~kCGEventFlagMaskShift;
+                break;
+            }
         case KEY_RIGHTSHIFT:
             {
+                modifiers &= ~NX_DEVICERSHIFTKEYMASK;
                 modifiers &= ~kCGEventFlagMaskShift;
                 break;
             }
         case KEY_LEFTALT:
+            {
+                modifiers &= ~NX_DEVICELALTKEYMASK;
+                modifiers &= ~kCGEventFlagMaskAlternate;
+                break;
+            }
         case KEY_RIGHTALT:
             {
+                modifiers &= ~NX_DEVICERALTKEYMASK;
                 modifiers &= ~kCGEventFlagMaskAlternate;
                 break;
             }
         case KEY_LEFTMETA:
+            {
+                modifiers &= ~NX_DEVICELCMDKEYMASK;
+                modifiers &= ~kCGEventFlagMaskCommand;
+                break;
+            }
         case KEY_RIGHTMETA:
             {
+                modifiers &= ~NX_DEVICERCMDKEYMASK;
                 modifiers &= ~kCGEventFlagMaskCommand;
                 break;
             }
@@ -332,13 +368,25 @@ void sendCGEvent(int type, int code, int value)
     // Update the modifier state
     if (isModifier(code))
     {
-        if (value)
+        if (isDown(value))
         {
             setModifierDown(code);
         }
         else
         {
             setModifierUp(code);
+        }
+    }
+    // Set the keypad modifier
+    if (isKeypad(code))
+    {
+        if (isDown(value))
+        {
+            modifiers |= kCGEventFlagMaskNumericPad;
+        }
+        else
+        {
+            modifiers &= ~kCGEventFlagMaskNumericPad;
         }
     }
     CGEventRef event = 0;

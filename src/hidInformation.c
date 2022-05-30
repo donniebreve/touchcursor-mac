@@ -86,8 +86,9 @@ void createHIDManager()
 {
     // Create the HID manager
     hidManager = IOHIDManagerCreate(kCFAllocatorDefault, kIOHIDOptionsTypeNone);
-    // Match all devices
-    IOHIDManagerSetDeviceMatching(hidManager, NULL);
+    // Match keyboard and keypad type devices
+    CFArrayRef matchingArray = createKeyboardKeypadMatchingArray();
+    IOHIDManagerSetDeviceMatchingMultiple(hidManager, matchingArray);
     // Set the run loop
     IOHIDManagerScheduleWithRunLoop(hidManager, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
 }
@@ -338,7 +339,7 @@ void printElements(IOHIDDeviceRef device)
 /**
  * Creates a matching dictionary for the given device.
  */
-CFDictionaryRef createMatchingDictionary(IOHIDDeviceRef device)
+CFDictionaryRef createDeviceMatchingDictionary(IOHIDDeviceRef device)
 {
     int vendorID = (int)getVendorID(device);
     int productID = (int)getProductID(device);
@@ -363,6 +364,46 @@ CFDictionaryRef createMatchingDictionary(IOHIDDeviceRef device)
         4,
         &kCFTypeDictionaryKeyCallBacks,
         &kCFTypeDictionaryValueCallBacks);
+}
+
+/**
+ * Creates a device type matching dictionary.
+ */
+CFDictionaryRef createDeviceTypeMatchingDictionary(int usagePage, int usage)
+{
+    CFStringRef keys[2] = {
+        CFSTR(kIOHIDDeviceUsagePageKey),
+        CFSTR(kIOHIDDeviceUsageKey)
+    };
+    CFNumberRef values[2] = {
+        CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &usagePage),
+        CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &usage)
+    };
+    return CFDictionaryCreate(
+        kCFAllocatorDefault,
+        (const void **)keys,
+        (const void **)values,
+        2,
+        &kCFTypeDictionaryKeyCallBacks,
+        &kCFTypeDictionaryValueCallBacks);
+}
+
+/**
+ * Creates a matching array for keyboard and keypad device types.
+ */
+CFArrayRef createKeyboardKeypadMatchingArray(void)
+{
+    CFDictionaryRef keyboard = createDeviceTypeMatchingDictionary(0x01, 6);
+    CFDictionaryRef keypad = createDeviceTypeMatchingDictionary(0x01, 7);
+    CFDictionaryRef matches[] = {
+        keyboard,
+        keypad
+    };
+    return CFArrayCreate(
+        kCFAllocatorDefault,
+        (const void **)matches,
+        2,
+        NULL);
 }
 
 /**

@@ -22,6 +22,10 @@ void createHIDManager(void);
  */
 int getKeyboardList(struct KeyboardInformation**);
 
+CFDictionaryRef createDeviceMatchingDictionary(IOHIDDeviceRef device);
+CFDictionaryRef createDeviceTypeMatchingDictionary(int usagePage, int usage);
+CFArrayRef createKeyboardKeypadMatchingArray(void);
+
 int getProductName(IOHIDDeviceRef device, UInt8* buffer, size_t length);
 int getProductID(IOHIDDeviceRef device);
 int getVendorID(IOHIDDeviceRef device);
