@@ -9,7 +9,7 @@
 #include "keys.h"
 #include "hidInformation.h"
 #include "hidKeyboard.h"
-#include "touchcursor.h"
+#include "mapper.h"
 
 static IOHIDDeviceRef device;
 
