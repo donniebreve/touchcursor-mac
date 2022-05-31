@@ -1,5 +1,5 @@
-#ifndef touchcursor_h
-#define touchcursor_h
+#ifndef mapper_h
+#define mapper_h
 
 #include <stdio.h>
 

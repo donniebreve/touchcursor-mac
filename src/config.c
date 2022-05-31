@@ -8,6 +8,9 @@
 
 char configFilePath[256];
 char eventPath[18];
+
+int remap[256];
+
 int hyperKey;
 int keymap[256];
 
@@ -139,10 +142,11 @@ void findDeviceEvent(char* deviceConfigValue)
 
 static enum sections
 {
-    none,
-    device,
-    hyper,
-    bindings
+    configuration_none,
+    configuration_device,
+    configuration_remap,
+    configuration_hyper,
+    configuration_bindings
 } section;
 
 /**
@@ -150,9 +154,9 @@ static enum sections
  */
 void readConfiguration()
 {
+    // Find the configuration file
     configFilePath[0] = '\0';
     FILE* configFile = NULL;
-
     char* homePath = getenv("HOME");
     if (!homePath)
     {
@@ -177,98 +181,81 @@ void readConfiguration()
         return;
     }
     fprintf(stdout, "info: found the configuration file\n");
-
+    // Parse the configuration file
     char* buffer = NULL;
     size_t length = 0;
     ssize_t result = -1;
     while ((result = getline(&buffer, &length, configFile)) != -1)
     {
         char* line = trimString(buffer);
-
         // Comment or empty line
-        if (isCommentOrEmpty(line)) continue;
-
+        if (isCommentOrEmpty(line))
+        {
+            continue;
+        }
         // Check for section
         if (strncmp(line, "[Device]", strlen(line)) == 0)
         {
-            section = device;
+            section = configuration_device;
+            continue;
+        }
+        if (strncmp(line, "[Remap]", strlen(line)) == 0)
+        {
+            section = configuration_remap;
             continue;
         }
         if (strncmp(line, "[Hyper]", strlen(line)) == 0)
         {
-            section = hyper;
+            section = configuration_hyper;
             continue;
         }
         if (strncmp(line, "[Bindings]", strlen(line)) == 0)
         {
-            section = bindings;
+            section = configuration_bindings;
             continue;
         }
-
         // Read configurations
         switch (section)
         {
-            case device:
-            {
-                // TODO: make the device configurable for MacOS
-                //if (eventPath[0] == '\0')
-                //{
-                //    findDeviceEvent(line);
-                //}
-                continue;
-            }
-
-            case hyper:
-            {
-                char* tokens = line;
-                char* token = strsep(&tokens, "=");
-                token = strsep(&tokens, "=");
-                int code = convertKeyStringToCode(token);
-                hyperKey = code;
-                break;
-            }
-
-            case bindings:
-            {
-                char* tokens = line;
-                char* token = strsep(&tokens, "=");
-                int fromCode = convertKeyStringToCode(token);
-                token = strsep(&tokens, "=");
-                int toCode = convertKeyStringToCode(token);
-                keymap[fromCode] = toCode;
-                break;
-            }
-
-            case none:
+            case configuration_remap:
+                {
+                    char* tokens = line;
+                    char* token = strsep(&tokens, "=");
+                    int fromCode = convertKeyStringToCode(token);
+                    token = strsep(&tokens, "=");
+                    int toCode = convertKeyStringToCode(token);
+                    remap[fromCode] = toCode;
+                    break;
+                }
+            case configuration_hyper:
+                {
+                    char* tokens = line;
+                    char* token = strsep(&tokens, "=");
+                    token = strsep(&tokens, "=");
+                    int code = convertKeyStringToCode(token);
+                    hyperKey = code;
+                    break;
+                }
+            case configuration_bindings:
+                {
+                    char* tokens = line;
+                    char* token = strsep(&tokens, "=");
+                    int fromCode = convertKeyStringToCode(token);
+                    token = strsep(&tokens, "=");
+                    int toCode = convertKeyStringToCode(token);
+                    keymap[fromCode] = toCode;
+                    break;
+                }
+            case configuration_none:
             default:
-                continue;
+                {
+                    continue;
+                }
         }
     }
-
     fclose(configFile);
-    if (buffer) free(buffer);
+    if (buffer)
+    {
+        free(buffer);
+    }
 }
-
-/**
- * Helper method to print existing keyboard devices.
- * Does not work for bluetooth keyboards.
- */
-// Need to revisit this
-// void printKeyboardDevices()
-// {
-//     DIR* directoryStream = opendir("/dev/input/");
-//     if (!directoryStream)
-//     {
-//         printf("error: could not open /dev/input/\n");
-//         return; //EXIT_FAILURE;
-//     }
-//     fprintf(stdout, "suggestion: use any of the following in the configuration file for this application:\n");
-//     struct dirent* directory = NULL;
-//     while ((directory = readdir(directoryStream)))
-//     {
-//         if (strstr(directory->d_name, "kbd"))
-//         {
-//             printf ("keyboard=/dev/input/by-id/%s\n", directory->d_name);
-//         }
-//     }
-// }

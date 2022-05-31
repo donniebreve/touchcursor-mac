@@ -26,7 +26,7 @@
 		F6DA55A52635F64300146999 /* cgEventVirtualKeyboard.mm in Sources */ = {isa = PBXBuildFile; fileRef = F6DA55962635F64200146999 /* cgEventVirtualKeyboard.mm */; };
 		F6DA55A62635F64300146999 /* emit.c in Sources */ = {isa = PBXBuildFile; fileRef = F6DA559D2635F64200146999 /* emit.c */; };
 		F6DA55A72635F64300146999 /* hidKeyboard.c in Sources */ = {isa = PBXBuildFile; fileRef = F6DA559E2635F64200146999 /* hidKeyboard.c */; };
-		F6DA55A92635F64300146999 /* touchcursor.c in Sources */ = {isa = PBXBuildFile; fileRef = F6DA55A02635F64300146999 /* touchcursor.c */; };
+		F6DA55A92635F64300146999 /* mapper.c in Sources */ = {isa = PBXBuildFile; fileRef = F6DA55A02635F64300146999 /* mapper.c */; };
 		F6DA55AD2635F6AC00146999 /* binding.c in Sources */ = {isa = PBXBuildFile; fileRef = F6DA55AB2635F6AC00146999 /* binding.c */; };
 		F6DA55B52635FB5200146999 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6DA55B42635FB5200146999 /* IOKit.framework */; };
 		F6DA55B82635FB7900146999 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6DA55B72635FB7900146999 /* AppKit.framework */; };
@@ -59,14 +59,14 @@
 		F6DA55952635F64200146999 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		F6DA55962635F64200146999 /* cgEventVirtualKeyboard.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = cgEventVirtualKeyboard.mm; sourceTree = "<group>"; };
 		F6DA55972635F64200146999 /* cgEventVirtualKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cgEventVirtualKeyboard.h; sourceTree = "<group>"; };
-		F6DA55982635F64200146999 /* touchcursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = touchcursor.h; sourceTree = "<group>"; };
+		F6DA55982635F64200146999 /* mapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mapper.h; sourceTree = "<group>"; };
 		F6DA55992635F64200146999 /* hidInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hidInformation.h; sourceTree = "<group>"; };
 		F6DA559A2635F64200146999 /* emit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = emit.h; sourceTree = "<group>"; };
 		F6DA559B2635F64200146999 /* keys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keys.h; sourceTree = "<group>"; };
 		F6DA559C2635F64200146999 /* queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = queue.h; sourceTree = "<group>"; };
 		F6DA559D2635F64200146999 /* emit.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = emit.c; sourceTree = "<group>"; };
 		F6DA559E2635F64200146999 /* hidKeyboard.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hidKeyboard.c; sourceTree = "<group>"; };
-		F6DA55A02635F64300146999 /* touchcursor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = touchcursor.c; sourceTree = "<group>"; };
+		F6DA55A02635F64300146999 /* mapper.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mapper.c; sourceTree = "<group>"; };
 		F6DA55AB2635F6AC00146999 /* binding.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = binding.c; sourceTree = "<group>"; };
 		F6DA55AC2635F6AC00146999 /* binding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = binding.h; sourceTree = "<group>"; };
 		F6DA55B42635FB5200146999 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
@@ -157,8 +157,8 @@
 				F6DA55942635F64200146999 /* keys.c */,
 				F6DA559C2635F64200146999 /* queue.h */,
 				F6DA55922635F64200146999 /* queue.c */,
-				F6DA55982635F64200146999 /* touchcursor.h */,
-				F6DA55A02635F64300146999 /* touchcursor.c */,
+				F6DA55982635F64200146999 /* mapper.h */,
+				F6DA55A02635F64300146999 /* mapper.c */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -251,7 +251,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6DA55A92635F64300146999 /* touchcursor.c in Sources */,
+				F6DA55A92635F64300146999 /* mapper.c in Sources */,
 				F6DA55A52635F64300146999 /* cgEventVirtualKeyboard.mm in Sources */,
 				F6DA554B2635E23E00146999 /* StatusBarController.swift in Sources */,
 				F6DA55A42635F64300146999 /* keys.c in Sources */,
